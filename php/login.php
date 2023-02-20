@@ -14,7 +14,7 @@ session_start();
                         $_SESSION["fristname"]=$row['fristname'];
                         $_SESSION["lastname"]=$row['lastname'];
                         $_SESSION["department"]=$row['department'];
-                        $show=header( "location:/Couponweb/Home.php");
+                        $show=header( "location:/Couponweb/Home.php"); // เอาออกนะ
                         header( "refresh: 0.1; url=/Couponweb/Home.php" );
  
                 }else{
@@ -22,5 +22,5 @@ session_start();
                         echo '<script>alert("!ยูสเซอร์หรือรหัสผ่านไม่ถูกต้องกรุณาลองใหม่อีกครั้ง!")</script>';
 
                 }
-                echo $show
+                echo $show // เอาออกนะ
 ?>

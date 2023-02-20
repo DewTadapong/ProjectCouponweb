@@ -205,8 +205,8 @@ if(isset($_SESSION['fristname']))
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                        <div class="small text-gray-500">February 17, 2023</div>
+                                        <span class="font-weight-bold">ทดสอบแจ้งเตื่อนเฉยๆอย่ารีบสิ</span>
                                     </div>
                                 </a>           
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
