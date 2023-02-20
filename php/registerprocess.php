@@ -1,7 +1,7 @@
 <!--include ตัวไฟล์ connect-->
 <?php
 include 'connect.php';
-
+ 
   // ชื่อตัวแปร  ส่งค่าแบบ post 
   $fristname = $_POST['fristname'];
   $lastname = $_POST['lastname'];
@@ -15,14 +15,18 @@ include 'connect.php';
  $sql = "INSERT INTO user (fristname,lastname,username,password,department,phone,idline,status)
       VALUES('$fristname','$lastname','$username','$password','$department','$phone','$idline','User') ";
       $result = mysqli_query($connect,$sql);
-      if($result){
-        echo '<script>alert("Register Success Please Login!")</script>'; 
-        header( "refresh: 1; url=/Couponweb/index.html" );
-        exit(0);
-      }else{
-        echo '<script>alert("!!!Error Add Member!!!")</script>'; 
-        header( "refresh: 1; url=/Couponweb/register.html" );
+           if($result){
+                echo '<script>alert("Register Success Please Login!")</script>'; 
+                echo '<script type="text/javascript">
+                window.location = "/index.html"
+                </script>';      
+           }else{
+                echo '<script>alert("!!!Error Add Member!!!")</script>'; 
+                echo '<script type="text/javascript">
+                window.location = "/register.html"
+                </script>';  
       }
-  mysqli_close($connect);
+        mysqli_close($connect);
+
 ?>
  
