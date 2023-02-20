@@ -4,7 +4,6 @@ if(isset($_SESSION['fristname']))
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
     <meta charset="utf-8">
@@ -23,11 +22,13 @@ if(isset($_SESSION['fristname']))
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-     
+    <!-- sweetalert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.css">
+    
 </head>
-
 <body id="page-top">
-
+ 
     <!-- Page Wrapper -->
     <div id="wrapper">
 
