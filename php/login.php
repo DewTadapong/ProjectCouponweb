@@ -14,10 +14,10 @@ session_start();
                         $_SESSION["fristname"]=$row['fristname'];
                         $_SESSION["lastname"]=$row['lastname'];
                         $_SESSION["department"]=$row['department'];
-                        header( "refresh: 0.1; url=/Home.php" );
+                        header( "refresh: 0.1; url=/Couponweb/Home.php" );
  
                 }else{
-                        header( "refresh: 0.1; url=/index.html" );
+                        header( "refresh: 0.1; url=/Couponweb/index.html" );
                         echo '<script>alert("!ยูสเซอร์หรือรหัสผ่านไม่ถูกต้องกรุณาลองใหม่อีกครั้ง!")</script>';
 
                 }
