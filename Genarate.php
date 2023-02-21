@@ -35,7 +35,7 @@ require_once('php/connect.php');
 
 </head>
 <body id="page-top">
-
+ 
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -296,7 +296,7 @@ require_once('php/connect.php');
                                     <tr class="text-center">
                                         <td> <?php echo $row['id'] ?> </td>
                                         <td> <?php echo $row['name'] ?> </td>
-                                        <td> <?php echo $row['detail'] ?> </td>
+                                        <td style="column-width:250px;white-space: normal; "><div id="hidden-text"><?php echo $row['detail'] ?></div></td>
                                         <td> <?php echo number_format($row['price'], 0)  ?> </td>
                                         <td> <?php echo $row['amount'] ?> </td>
                                         <td> </td>
@@ -391,6 +391,17 @@ require_once('php/connect.php');
         </div>
     </div>
 
+    <!-- กันข้อความล้นขอบตางรางกับโมเดิล-->
+    <style>
+        #hidden-text{
+            width:100%;
+            width:inherit !important; /* hack firefox , chrome ,safari*/
+            overflow:hidden
+        }
+        .modal-body{
+            word-break: break-all;
+        }
+    </style>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

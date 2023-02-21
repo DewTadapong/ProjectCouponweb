@@ -10,10 +10,10 @@ include 'connect.php';
                 WHERE id = '".mysqli_real_escape_string($connect, $_POST['id'])."' ";
         if (mysqli_query($connect, $sql)) {
             echo '<script> alert("แก้ไขข้อมูลเสร็จเรียบร้อย")</script>';
-            header('Refresh:0; url= ../');
+            header('Refresh:0; url= /Couponweb/Genarate.php');
         } else {
             echo '<script> alert("แก้ไขข้อมูลไม่สำเร็จ")</script>';
-            header('Refresh:0; url= ../form-update.php');
+            header('Refresh:0; url= /Couponweb/Genarate.php');
         }
     }
     mysqli_close($connect);

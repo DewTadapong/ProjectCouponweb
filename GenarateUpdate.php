@@ -289,7 +289,7 @@ $row = mysqli_fetch_assoc($result);
                                             <label for="detail" class="form-label">รายละเอียดคูปอง</label>
                                             <textarea type="text" class="form-control" id="detail" name="detail" rows="5" 
                                             placeholder="ลดราคา kiku ทุกสาขา 5% เมื่อมียอดสั่งซื้อมากกว่า 2000 บาท" required>
-                                            value="<?php echo $row['detail'] ?>"</textarea>
+                                            <?php echo $row['detail'] ?></textarea>
                                         </div>
                                         <div class="col-md-6">
                                             <br>

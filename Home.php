@@ -29,13 +29,34 @@ if(isset($_SESSION['fristname']))
     <link rel="shortcut icon" type="image/x-icon" href="img/logoheadweb.ico">
 </head>
 <body id="page-top">
-<script>Swal.fire({
-  position: 'top-end',
-  title: 'DashBoard ทดลองนะ',
-  showConfirmButton: false,
-  timer: 500
-})
-</script>
+
+
+                                    <script>
+                                    let timerInterval
+                                    Swal.fire({
+                                    title: 'ลองดู Userlogin มุมขวาบนชื่อตรงป่าวก่อนนะ ไปเมนู AddCoupon ลองเพิ่มแก้ไขข้อมูลดูน้าา',
+                                    html: 'เดี่ยวปิดเองนะอีกใน <b></b> วินาที<br>จะปิดเองกดที่ว่างๆ ได้เลยนะ',
+                                    timer: 6000,
+                                    timerProgressBar: true,
+                                    didOpen: () => {
+                                        Swal.showLoading()
+                                        const b = Swal.getHtmlContainer().querySelector('b')
+                                        timerInterval = setInterval(() => {
+                                        b.textContent = Swal.getTimerLeft()
+                                        }, 100)
+                                    },
+                                    willClose: () => {
+                                        clearInterval(timerInterval)
+                                    }
+                                    }).then((result) => {
+                                    /* Read more about handling dismissals below */
+                                    if (result.dismiss === Swal.DismissReason.timer) {
+                                        console.log('I was closed by the timer')
+                                    }
+                                    })
+                                    </script>
+
+
     <!-- Page Wrapper -->
     <div id="wrapper">
 

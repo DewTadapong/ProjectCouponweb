@@ -293,7 +293,8 @@ require_once('php/connect.php');
                                         </div>
                                         <div class="col-12">
                                             <br>
-                                            <button type="submit" name="submit" class="btn btn-primary d-block mx-auto">บันทึกการเปลี่ยนแปลง</button>
+                                            <button type="submit" name="submit" class="btn btn-primary d-block mx-auto">บันทึกการเปลี่ยนแปลง
+                                            </button>
                                         </div>
                                     </form>
                                     <a href="/Couponweb/Genarate.php">ย้อนกลับ</a>
