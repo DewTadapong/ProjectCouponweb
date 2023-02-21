@@ -25,10 +25,16 @@ if(isset($_SESSION['fristname']))
     <!-- sweetalert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.css">
-    
+
 </head>
 <body id="page-top">
- 
+<script>Swal.fire({
+  position: 'top-end',
+  title: 'DashBoard ทดลองนะ',
+  showConfirmButton: false,
+  timer: 500
+})
+</script>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
