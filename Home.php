@@ -53,7 +53,7 @@ if(isset($_SESSION['fristname']))
             <hr class="sidebar-divider my-0">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="Home.html">
+                <a class="nav-link" href="Home.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -76,8 +76,8 @@ if(isset($_SESSION['fristname']))
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                        <!--  <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="Genarate.html">GenarateCoupon</a>
-                        <a class="collapse-item" href="Allcoupon.html">AllCoupon</a>
+                        <a class="collapse-item" href="Genarate.php">GenarateCoupon</a>
+                        <a class="collapse-item" href="Allcoupon.php">AllCoupon</a>
                     </div>
                 </div>
             </li>
@@ -99,8 +99,8 @@ if(isset($_SESSION['fristname']))
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="Usecoupon.html">UseCoupon</a>
-                        <a class="collapse-item" href="Usehistory.html">UseHistory</a>
+                        <a class="collapse-item" href="Usecoupon.php">UseCoupon</a>
+                        <a class="collapse-item" href="Usehistory.php">UseHistory</a>
                     </div>
                 </div>
             </li>
@@ -112,7 +112,7 @@ if(isset($_SESSION['fristname']))
                  การเคลียคูปองหมดอายุ
             </div>
             <li class="nav-item">
-                <a class="nav-link" href="Timeoutcoupon.html">
+                <a class="nav-link" href="Timeoutcoupon.php">
                     <i class="fa fa-trash" aria-hidden="true"></i>
                     <span>&nbsp;TimeoutCoupon</span></a>
             </li>
@@ -246,7 +246,7 @@ if(isset($_SESSION['fristname']))
                                 <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Settings
                             </a> 
-                            <a class="dropdown-item" href="index.html" onclick="return confirm('Do you want to sign out?')">                                
+                            <a class="dropdown-item" href="index.php" onclick="return confirm('Do you want to sign out?')">                                
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Logout
                             </a> 
@@ -525,27 +525,7 @@ if(isset($_SESSION['fristname']))
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
-     
+      
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -560,7 +540,7 @@ if(isset($_SESSION['fristname']))
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="index.html">Logout</a>
+                <a class="btn btn-primary" href="index.php">Logout</a>
             </div>
         </div>
     </div>

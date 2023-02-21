@@ -28,10 +28,10 @@ session_start();
                                 title: 'Login Success',
                                 text: '!Welcome to Miniproject!',
                                 showComfirmButton: false,
-                                timer: 2000
+                                timer: 1300
                         }).then((result) => {
                                 if(result){
-                                        window.location.herf = 'Home.php';
+                                        window.location = '/Couponweb/Home.php';
                                 }
                         })";
                         echo "</script>";          
@@ -44,10 +44,10 @@ session_start();
                                 title: '!-Login Falls-!',
                                 text: '!ยูสเซอร์หรือรหัสผ่านไม่ถูกต้องกรุณาลองใหม่อีกครั้ง!',
                                 showComfirmButton: false,
-                                timer: 2000
+                                timer: 1400
                         }).then((result) => {
                                 if(result){
-                                        window.location.herf = 'index.html';
+                                        window.location.herf = '/Couponweb/index.html';
                                 }
                         })";
                         echo "</script>";          
