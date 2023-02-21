@@ -261,6 +261,22 @@ if(isset($_SESSION['fristname']))
             </nav>
             <!-- End of Topbar -->
                   
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+            <!-- 404 Error Text -->
+            <div class="text-center">
+                <div class="error mx-auto" data-text="404">404</div>
+                <p class="lead text-gray-800 mb-5">Page Not Found</p>
+                <p class="text-gray-500 mb-0">หน้ายังบ่ทำจ้าาลองสมัครสมาชิกล็อกอินดูUserloginมุมขวาบนว่าตรงป่าวก่อนนะลองเพิ่มแก้ไขข้อมูลดูน้าา</p>
+                <a href="Home.php">&larr; Back to Dashboard</a>
+            </div>
+            </div>
+            <!-- /.container-fluid -->
+            </div>
+            <!-- End of Main Content -->
+
+
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
