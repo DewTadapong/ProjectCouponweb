@@ -19,7 +19,8 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
+    <!-- logo headtab wev -->
+    <link rel="shortcut icon" type="image/x-icon" href="img/logoheadweb.ico">
 </head>
 
 <body class="bg-gradient-primary">

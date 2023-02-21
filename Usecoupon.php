@@ -26,7 +26,8 @@ if(isset($_SESSION['fristname']))
     <!-- sweetalert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.css">
-
+    <!-- logo headtab wev -->
+    <link rel="shortcut icon" type="image/x-icon" href="img/logoheadweb.ico">
 </head>
 
 <body id="page-top">
