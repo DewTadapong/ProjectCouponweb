@@ -28,7 +28,7 @@ session_start();
                                 title: 'Login Success',
                                 text: '!Welcome to Miniproject!',
                                 showComfirmButton: false,
-                                timer: 1300
+                                timer: 1000
                         }).then((result) => {
                                 if(result){
                                         window.location = '/Couponweb/Home.php';
