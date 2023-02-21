@@ -1,6 +1,9 @@
 <?php
 session_start();
 if(isset($_SESSION['fristname']))
+require_once('php/connect.php');
+    $sql = "SELECT * FROM products";
+    $result = mysqli_query($connect, $sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +23,8 @@ if(isset($_SESSION['fristname']))
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
+    <!-- logo headtab wev -->
+    <link rel="shortcut icon" type="image/x-icon" href="img/logoheadweb.ico">
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <!-- sweetalert2 -->
@@ -128,9 +132,6 @@ if(isset($_SESSION['fristname']))
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
-      
-
         </ul>
         <!-- End of Sidebar -->
 
@@ -262,11 +263,99 @@ if(isset($_SESSION['fristname']))
                 </nav>
                 <!-- End of Topbar -->
              
+<!-- Page Heading -->
+    <div class="container-fluid">
+            <div class="shadow rounded p-4 bg-body h-100">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="d-sm-flex align-items-center justify-content-between mb-2">
+                        <h1 class="pb">สร้างคูปอง</h1>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                            &nbsp;<i class="fa fa-plus-square"></i>&nbsp;&nbsp;&nbsp;เพิ่มคูปอง&nbsp;&nbsp;</a>
+                        </div>
+                            <span class="text-right" >มีข้อมูลสินค้าทั้งหมด <?php echo mysqli_num_rows($result) ?> รายการ </span>  
+                    </div>
+                    <div class="col-lg-14">
+                        <div class="table-responsive" >
+                            <?php if (mysqli_num_rows($result) > 0): ?>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr class="text-center text-light bg-dark">
+                                    <th>ลำดับ</th>
+                                    <th>ชื่อคูปอง</th>
+                                    <th>รายละเอียด</th>
+                                    <th>ฟังชั่น</th>
+                                    <th>จำนวน</th>
+                                    <th>จัดการ</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php while ($row = mysqli_fetch_assoc($result)):?>
+                                    <tr class="text-center">
+                                        <td> <?php echo $row['id'] ?> </td>
+                                        <td> <?php echo $row['name'] ?> </td>
+                                        <td> <?php echo $row['detail'] ?> </td>
+                                        <td> <?php echo number_format($row['price'], 0)  ?> </td>
+                                        <td> <?php echo $row['amount'] ?> </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-primary" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#my-modal<?php echo $row['id'] ?>" 
+                                                        style="width: 105px;"> รายละเอียด </button>
+                                                <a href="form-update.php?id=<?php echo $row['id'] ?>" class="btn btn-warning"> แก้ไข </a>
+                                                <a href="php/delete.php?id=<?php echo $row['id'] ?>" class="btn btn-danger"> ลบ </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="my-modal<?php echo $row['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">รายละเอียดสินค้า</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>ชื่อสินค้า: <?php echo $row['name'] ?></p>
+                                                    <p>รายละเอียด: <?php echo $row['detail'] ?></p>
+                                                    <p>ราคา: <?php echo number_format($row['price'], 0) ?> บาท</p>
+                                                    <p>จำนวน: <?php echo number_format($row['amount'], 0) ?> รายการ</p>
+                                                    <p>ราคาสุทธิ: <?php echo number_format($row['price'] * $row['amount'], 0) ?> บาท</p>
+                                                    <hr>
+                                                    <p>วันที่สร้าง: <?php echo dateThai($row['created_at']) ?></p>
+                                                    <p>วันที่แก้ไข: <?php echo dateThai($row['updated_at']) ?></p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endwhile; ?>
+                                </tbody>
+                            </table>    
+                            <?php 
+                                else: 
+                                    echo "<p class='mt-5'>ไม่มีข้อมูลในฐานข้อมูล</p>"; 
+                                endif; 
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <!-- Bootstrap5 แบบ bundle คือการนำ Popper มารวมไว้ในไฟล์เดียว -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <?php mysqli_close($connect) ?>
+
+
+
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Dew Tadapong Sutthikitrungtoj Website</span>
+                        <span>Copyright &copy; ♥️Dew Tadapong Sutthikitrungtoj Website♥️</span>
                     </div>
                 </div>
             </footer>
