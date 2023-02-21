@@ -7,8 +7,8 @@ include 'connect.php';
                 price = '".$_POST['price']."', 
                 amount = '".$_POST['amount']."', 
                 updated_at = '".date("Y-m-d H:i:s")."'
-                WHERE id = '".mysqli_real_escape_string($conn, $_POST['id'])."' ";
-        if (mysqli_query($conn, $sql)) {
+                WHERE id = '".mysqli_real_escape_string($connect, $_POST['id'])."' ";
+        if (mysqli_query($connect, $sql)) {
             echo '<script> alert("แก้ไขข้อมูลเสร็จเรียบร้อย")</script>';
             header('Refresh:0; url= ../');
         } else {
@@ -16,5 +16,5 @@ include 'connect.php';
             header('Refresh:0; url= ../form-update.php');
         }
     }
-    mysqli_close($conn);
+    mysqli_close($connect);
 ?>

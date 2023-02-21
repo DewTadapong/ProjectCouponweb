@@ -10,13 +10,12 @@ if (isset($_POST['submit'])) {
                     '".date("Y-m-d H:i:s")."', 
                     '".date("Y-m-d H:i:s")."')";
         
-        if (mysqli_query($conn, $sql)) {
+        if (mysqli_query($connect, $sql)) {
             echo '<script> alert("เพิ่มข้อมูลเสร็จเรียบร้อย")</script>';
-            header('Refresh:0; url= ../');
+            header('Refresh:0; url= /Couponweb/Genarate.php');
         } else {
             echo '<script> alert("เพิ่มข้อมูลไม่สำเร็จ")</script>';
-            header('Refresh:0; url= ../form-create.php');
-        }
+         }
     }
-    mysqli_close($conn);
+    mysqli_close($connect);
 ?>
