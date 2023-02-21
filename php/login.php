@@ -22,23 +22,35 @@ session_start();
                         $_SESSION["lastname"]=$row['lastname'];
                         $_SESSION["department"]=$row['department'];
                         echo "<script>";
-                        echo "Swal.fire(
-                                'Login Success',
-                                'Welcome To Miniproject',
-                                'success'
-                               )";
-                        echo "</script>";                        
-                        header( "refresh: 0.90; url=/Couponweb/Home.php" );
+                        echo "Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: 'Login Success',
+                                text: '!Welcome to Miniproject!',
+                                showComfirmButton: false,
+                                timer: 2000
+                        }).then((result) => {
+                                if(result){
+                                        window.location.herf = 'Home.php';
+                                }
+                        })";
+                        echo "</script>";          
 
                 }else{
                         echo "<script>";
-                        echo "Swal.fire(
-                                'Login Falls',
-                                '!ยูสเซอร์หรือรหัสผ่านไม่ถูกต้องกรุณาลองใหม่อีกครั้ง!',
-                                'error'
-                                )";
+                        echo "Swal.fire({
+                                position: 'center',
+                                icon: 'error',
+                                title: '!-Login Falls-!',
+                                text: '!ยูสเซอร์หรือรหัสผ่านไม่ถูกต้องกรุณาลองใหม่อีกครั้ง!',
+                                showComfirmButton: false,
+                                timer: 2000
+                        }).then((result) => {
+                                if(result){
+                                        window.location.herf = 'index.html';
+                                }
+                        })";
                         echo "</script>";          
-                        header( "refresh: 1.8; url=/Couponweb/index.html" );
                 }
  ?>
 </html>
