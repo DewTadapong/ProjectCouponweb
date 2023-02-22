@@ -300,8 +300,8 @@ if ($_SESSION['fristname']=""){
                                         <td> <?php echo $row['id'] ?> </td>
                                         <td> <?php echo $row['name'] ?> </td>
                                         <td style="column-width:250px;white-space: normal; "><div id="hidden-text"><?php echo $row['detail'] ?></div></td>
-                                        <td> <?php echo number_format($row['price'], 0)  ?> </td>
-                                        <td> <?php echo $row['amount'] ?> </td>
+                                        <td> <?php echo $row['amount'] ?></td>
+                                        <td> </td>
                                         <td> </td>
                                         <td>
                                             <div class="btn-group">
@@ -320,16 +320,16 @@ if ($_SESSION['fristname']=""){
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">รายละเอียดสินค้า</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">รายละเอียดคูปอง</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>ชื่อสินค้า: <?php echo $row['name'] ?></p>
+                                                    <p>ชื่อคูปอง: <?php echo $row['name'] ?></p>
                                                     <p>รายละเอียด: <?php echo $row['detail'] ?></p>
-                                                    <p>ราคา: <?php echo number_format($row['price'], 0) ?> บาท</p>
-                                                    <p>จำนวน: <?php echo number_format($row['amount'], 0) ?> รายการ</p>
-                                                    <p>ราคาสุทธิ: <?php echo number_format($row['price'] * $row['amount'], 0) ?> บาท</p>
-                                                    <hr>
+                                                    <p>จำนวนคูปอง: <?php echo number_format($row['amount'], 0) ?> รายการ</p>
+                                                    <p>วันหมดอายุ:</p>
+                                                    <p>บาร์โค้ด:</p>
+                                                     <hr>
                                                     <p>วันที่สร้าง: <?php echo dateThai($row['created_at']) ?></p>
                                                     <p>วันที่แก้ไข: <?php echo dateThai($row['updated_at']) ?></p>
                                                 </div>

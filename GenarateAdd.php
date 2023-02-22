@@ -289,7 +289,7 @@ require_once('php/connect.php');
                                         <div class="col-md-6">
                                             <br>
                                             <label for="price" class="form-label">วันหมดอายุ</label>
-                                            <input type="number" class="form-control" id="price" name="price" min="0" max="999999" placeholder="วันหมดอายุ" required>
+                                       <!--<input type="number" class="form-control" id="price" name="price" min="0" max="999999" placeholder="วันหมดอายุ" required>-->
                                         </div>
                                         <div class="col-12">
                                             <br>
