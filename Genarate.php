@@ -1,7 +1,10 @@
 <?php
+require_once('php/connect.php');
 session_start();
 if(isset($_SESSION['fristname']))
-require_once('php/connect.php');
+if ($_SESSION['fristname']=""){
+    header('Refresh:0; url= /Couponweb/index.php');
+}
     $sql = "SELECT * FROM products";
     $result = mysqli_query($connect, $sql);
 ?>
@@ -307,7 +310,24 @@ require_once('php/connect.php');
                                                         data-bs-target="#my-modal<?php echo $row['id'] ?>" 
                                                         style="width: 105px;"> รายละเอียด </button>
                                                 <a href="GenarateUpdate.php?id=<?php echo $row['id'] ?>" class="btn btn-warning"> แก้ไข </a>
-                                                <a href="php/delete.php?id=<?php echo $row['id'] ?>" class="btn btn-danger"> ลบ </a>
+                                                <div class="btn btn-danger" onclick="alertdelete()" ?id=<?php echo $row['id'] ?>> ลบ </div>
+                                        <script>
+                                        function alertdelete(){
+                                            Swal.fire({
+                                            title: 'Are you sure?',
+                                            text: "คุณต้องการลบคูปอง <?php echo $row['id'] ?> ใช้หรือไม่",
+                                            icon: 'warning',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#3085d6',
+                                            cancelButtonColor: '#d33',
+                                            confirmButtonText: 'Yes, delete it!'
+                                            }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                window.location = '/Couponweb/php/deletecouponprocess.php?id=<?php echo $row['id'] ?>';
+                                                                    }
+                                            })
+                                        }
+                                        </script>
                                             </div>
                                         </td>
                                     </tr>
@@ -385,7 +405,7 @@ require_once('php/connect.php');
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="index.php">Logout</a>
+                    <a class="btn btn-primary" href="logout.php">Logout</a>
                 </div>
             </div>
         </div>
