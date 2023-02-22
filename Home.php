@@ -1,5 +1,5 @@
 <?php
-session_start();
+Session_start();
 if(isset($_SESSION['fristname']))
 ?>
 <!DOCTYPE html>
