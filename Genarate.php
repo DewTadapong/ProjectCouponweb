@@ -310,24 +310,8 @@ if ($_SESSION['fristname']=""){
                                                         data-bs-target="#my-modal<?php echo $row['id'] ?>" 
                                                         style="width: 105px;"> รายละเอียด </button>
                                                 <a href="GenarateUpdate.php?id=<?php echo $row['id'] ?>" class="btn btn-warning"> แก้ไข </a>
-                                                <div class="btn btn-danger" onclick="alertdelete()" ?id=<?php echo $row['id'] ?>> ลบ </div>
-                                        <script>
-                                        function alertdelete(){
-                                            Swal.fire({
-                                            title: 'Are you sure?',
-                                            text: "คุณต้องการลบคูปอง <?php echo $row['id'] ?> ใช้หรือไม่",
-                                            icon: 'warning',
-                                            showCancelButton: true,
-                                            confirmButtonColor: '#3085d6',
-                                            cancelButtonColor: '#d33',
-                                            confirmButtonText: 'Yes, delete it!'
-                                            }).then((result) => {
-                                            if (result.isConfirmed) {
-                                                window.location = '/Couponweb/php/deletecouponprocess.php?id=<?php echo $row['id'] ?>';
-                                                                    }
-                                            })
-                                        }
-                                        </script>
+                                                <a href="/Couponweb/php/deletecouponprocess.php?id=<?php echo $row['id'] ?>" class="btn btn-danger"> ลบ </a>
+ 
                                             </div>
                                         </td>
                                     </tr>

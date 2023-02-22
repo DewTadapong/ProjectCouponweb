@@ -271,7 +271,7 @@ require_once('php/connect.php');
                             <div class="row justify-content-center">
                                 <div class="col-md-10">
                                     <h1 class="text-center"> กรอกข้อมูลให้ครบถ้วนเพื่อสร้างคูปอง </h1><br>
-                                    <form class="row gy-4" action="php/genaratecouponprocess.php" method="POST">
+                                    <form class="row gy-4" action="php/genaratecouponprocess.php"  method="POST">
                                         <div class="col-md-12">
                                             <label for="name" class="form-label">ชื่อคูปอง</label>
                                             <input type="text" class="form-control" id="name" name="name" placeholder="ชื่อคูปอง" required>
@@ -293,8 +293,9 @@ require_once('php/connect.php');
                                         </div>
                                         <div class="col-12">
                                             <br>
-                                            <button type="submit" name="submit" class="btn btn-primary d-block mx-auto">บันทึกการเปลี่ยนแปลง
+                                            <button type="submit" name="submit" class="btn btn-primary d-block mx-auto"  >บันทึกการเปลี่ยนแปลง
                                             </button>
+                            
                                         </div>
                                     </form>
                                     <a href="/Couponweb/Genarate.php">ย้อนกลับ</a>
