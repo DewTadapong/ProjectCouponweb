@@ -11,7 +11,7 @@
 Swal.fire({
   position: 'top-end',  
   icon: 'error',
-  title: 'ไม่สามารถสร้างคูปองได้',
+  title: 'ไม่สามารถแก้ไขข้อมูลคูปองได้',
   showConfirmButton: false,
   timer: 1000
 })

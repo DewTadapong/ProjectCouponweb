@@ -9,11 +9,9 @@ include 'connect.php';
                 updated_at = '".date("Y-m-d H:i:s")."'
                 WHERE id = '".mysqli_real_escape_string($connect, $_POST['id'])."' ";
         if (mysqli_query($connect, $sql)) {
-            echo '<script> alert("แก้ไขข้อมูลเสร็จเรียบร้อย")</script>';
-            header('Refresh:0; url= /Couponweb/Genarate.php');
+             header('Refresh:0; url= /Couponweb/php/editsucess.php');
         } else {
-            echo '<script> alert("แก้ไขข้อมูลไม่สำเร็จ")</script>';
-            header('Refresh:0; url= /Couponweb/Genarate.php');
+             header('Refresh:0; url= /Couponweb/php/editunsucess.php');
         }
     }
     mysqli_close($connect);

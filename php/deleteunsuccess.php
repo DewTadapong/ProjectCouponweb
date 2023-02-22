@@ -13,11 +13,11 @@ Swal.fire({
   icon: 'error',
   title: 'ลบคูปองสำเร็จไม่สำเร็จ',
   showConfirmButton: false,
-  timer: 1500
+  timer: 1000
 })
 </script>
 <?php
-header('Refresh: 1.5; url= /Couponweb/Genarate.php');
+header('Refresh: 1 ; url= /Couponweb/Genarate.php');
 ?>
 <script src="sweetalert2.all.min.js"></script>
 </body>

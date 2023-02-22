@@ -10,14 +10,14 @@
 <script>
 Swal.fire({
   position: 'top-end',  
-  icon: 'error',
-  title: 'ไม่สามารถสร้างคูปองได้',
+  icon: 'success',
+  title: 'แก้ไขข้อมูลคูปองสำเร็จ',
   showConfirmButton: false,
   timer: 1000
 })
 </script>
 <?php
-header('Refresh: 1 ; url= /Couponweb/Genarate.php');
+header('Refresh: 1; url= /Couponweb/Genarate.php');
 ?>
 <script src="sweetalert2.all.min.js"></script>
 </body>
