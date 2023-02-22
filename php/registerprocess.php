@@ -18,12 +18,12 @@ include 'connect.php';
            if($result){
                 echo '<script>alert("Register Success Please Login!")</script>'; 
                 echo '<script type="text/javascript">
-                window.location = "/Couponweb/index.html"
+                window.location = "/Couponweb/index.php"
                 </script>';      
            }else{
                 echo '<script>alert("!!!Error Add Member!!!")</script>'; 
                 echo '<script type="text/javascript">
-                window.location = "/Couponweb/register.html"
+                window.location = "/Couponweb/register.php"
                 </script>';  
       }
         mysqli_close($connect);
