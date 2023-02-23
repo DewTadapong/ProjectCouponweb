@@ -338,13 +338,31 @@ if(isset($_SESSION['fristname']))
                                                             <label for="detail" class="form-label">รายละเอียดคูปอง</label>
                                                             <textarea type="text" class="form-control" id="detail" name="detail" rows="5" placeholder="ลดราคา kiku ทุกสาขา 5% เมื่อมียอดสั่งซื้อมากกว่า 2000 บาท" required></textarea>
                                                         </div>
+                                                <div class="container">
+                                                    <div class="row">    
                                                         <div class="col-md-6">
                                                             <br>
                                                             <label for="amount" class="form-label">จำนวน</label>
                                                             <input type="number" class="form-control" id="amount" name="amount" min="0" max="100" placeholder="จำนวน" required>
                                                         </div>
+                                                        <!-- /.input picture-->
                                                         <div class="col-md-6">
                                                             <br>
+                                                            <div class="form-group">
+                                                                <div class="input-group col-xs-12">
+                                                                    <label for="exampleInputFile">ไฟล์แนบรูปพื้นหลังคูปอง</label>
+                                                                    <div class="input-group col-xs-4">
+                                                                <input type="file" name="it_care_file_result">
+                                                                <p class="help-block">แนบเป็นไฟล ์ JPG/PNG</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                        
+                                                        <div class="col-md-6">
                                                             <label for="price" class="form-label">วันหมดอายุ</label>
                                                     <!--<input type="number" class="form-control" id="price" name="price" min="0" max="999999" placeholder="วันหมดอายุ" required>-->
                                                         </div>
@@ -352,8 +370,9 @@ if(isset($_SESSION['fristname']))
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <button type="submit" name="submit" class="btn btn-primary d-block mx-auto"  >บันทึกการเปลี่ยนแปลง</button>
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                                    <div class="text-center">
+                                                    <button type="submit" name="submit" class="btn btn-primary d-block mx-auto"  >บันทึกการเปลี่ยนแปลง</button></div>
                                                 </div>                               
                                             </div>
                                         </div>
