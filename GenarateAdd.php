@@ -292,14 +292,14 @@ require_once('php/connect.php');
                                         </div>
                                         <div class="col-md-6">
                                             <br>
-                                            <label for="price" class="form-label">วันหมดอายุ</label>
-                                       <!--<input type="number" class="form-control" id="price" name="price" min="0" max="999999" placeholder="วันหมดอายุ" required>-->
+                                            <label for="exp" class="form-label">วันหมดอายุ</label>
+                                        <input type="datetime-local" class="form-control" name="exp" placeholder="วันหมดอายุ" required>
                                         </div>
                                         <div class="col-12">
                                             <br>
                                             <button type="submit" name="submit" class="btn btn-primary d-block mx-auto"  >บันทึกการเปลี่ยนแปลง
                                             </button>
-                            
+            
                                         </div>
                                     </form>
                                     <a href="/Couponweb/Genarate.php">ย้อนกลับ</a>

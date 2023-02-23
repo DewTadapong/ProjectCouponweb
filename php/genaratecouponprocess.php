@@ -1,11 +1,10 @@
 <?php 
 include 'connect.php';
 if (isset($_POST['submit'])) {
-        $sql = "INSERT INTO `products` (`name`, `detail`, `price`, `amount`, `created_at`, `updated_at`) 
+        $sql = "INSERT INTO `products` (`name`, `detail`, `amount`, `created_at`, `updated_at`) 
             VALUES (
                     '".htmlspecialchars($_POST['name'], ENT_QUOTES, 'UTF-8')."', 
                     '".htmlspecialchars($_POST['detail'], ENT_QUOTES, 'UTF-8')."', 
-                    '".$_POST['price']."', 
                     '".$_POST['amount']."', 
                     '".date("Y-m-d H:i:s")."', 
                     '".date("Y-m-d H:i:s")."')";

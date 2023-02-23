@@ -368,7 +368,6 @@ if(isset($_SESSION['fristname']))
                                                         </div>
                                                        <br>
                                                 </div>
-
                                                 <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
                                                     <div class="text-center">
