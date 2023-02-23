@@ -304,7 +304,7 @@ if(isset($_SESSION['fristname']))
                                         <td> <?php echo $row['name'] ?> </td>
                                         <td style="column-width:250px;white-space: normal; "><div id="hidden-text"><?php echo $row['detail'] ?></div></td>
                                         <td> <?php echo $row['amount'] ?></td>
-                                        <td> </td>
+                                        <td> <?php echo $row['exp'] ?></td>
                                         <td> </td>
                                         <td>
                                             <div class="btn-group">
@@ -347,7 +347,14 @@ if(isset($_SESSION['fristname']))
                                                         </div>
                                                         <!-- /.input picture-->
                                                         <div class="col-md-6">
-                                                            <br>
+                                                        <br>
+                                                            <label for="">วันเเละเวลาหมดอายุคูปอง</label>
+                                                            <input type="datetime-local" name="exp" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>                                       
+                                                        <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <div class="input-group col-xs-12">
                                                                     <label for="exampleInputFile">ไฟล์แนบรูปพื้นหลังคูปอง</label>
@@ -357,17 +364,8 @@ if(isset($_SESSION['fristname']))
                                                                     </div>
                                                                 </div>
                                                             </div>
-
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                        
-                                                        <div class="col-md-6">
-                                                            <label for="price" class="form-label">วันหมดอายุ</label>
-                                                    <!--<input type="number" class="form-control" id="price" name="price" min="0" max="999999" placeholder="วันหมดอายุ" required>-->
-                                                        </div>
-                                                       <br>
-                                                </div>
+                                                 </div>
                                                 <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
                                                     <div class="text-center">
@@ -390,7 +388,7 @@ if(isset($_SESSION['fristname']))
                                                     <p>ชื่อคูปอง: <?php echo $row['name'] ?></p>
                                                     <p>รายละเอียด: <?php echo $row['detail'] ?></p>
                                                     <p>จำนวนคูปอง: <?php echo number_format($row['amount'], 0) ?> รายการ</p>
-                                                    <p>วันหมดอายุ:</p>
+                                                    <p>วันหมดอายุ: <?php echo dateThai($row['exp']) ?></p>
                                                     <p>บาร์โค้ด:</p>
                                                      <hr>
                                                     <p>วันที่สร้าง: <?php echo dateThai($row['created_at']) ?></p>
