@@ -1,10 +1,11 @@
 <?php
-require_once('php/connect.php');
 session_start();
-if(isset($_SESSION['fristname']))
-if ($_SESSION['fristname']=""){
-    header('Refresh:0; url= /Couponweb/index.php');
+if (!isset($_SESSION['username'], $_SESSION['password'])){
+    echo "<meta http-equiv='refresh' content='0; url=index.php'>" ;
+    exit;
 }
+require_once('php/connect.php');
+if(isset($_SESSION['fristname']))
     $sql = "SELECT * FROM products";
     $result = mysqli_query($connect, $sql);
 ?>
@@ -255,7 +256,7 @@ if ($_SESSION['fristname']=""){
                                 <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Settings
                             </a> 
-                            <a class="dropdown-item" href="index.php" onclick="return confirm('Do you want to sign out?')">                                
+                            <a class="dropdown-item" href="php/logout.php" onclick="return confirm('Do you want to sign out?')">                                
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Logout
                             </a> 
