@@ -305,7 +305,7 @@ if(isset($_SESSION['fristname']))
                                         <td> <?php echo $row['name'] ?> </td>
                                         <td style="column-width:250px;white-space: normal; "><div id="hidden-text"><?php echo $row['detail'] ?></div></td>
                                         <td> <?php echo $row['amount'] ?></td>
-                                        <td> <?php echo $row['exp'] ?></td>
+                                        <td> <?php echo dateThai($row['exp']) ?></td>
                                         <td> <img alt="barcode" src="php/barcode.php?codetype=Code128&size=15&text=<?php echo $row['barcode']?>&
                                                     print=true" /></td>
                                         <td>
