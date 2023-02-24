@@ -392,7 +392,13 @@ if(isset($_SESSION['fristname']))
                                                     <p>รายละเอียด: <?php echo $row['detail'] ?></p>
                                                     <p>จำนวนคูปอง: <?php echo number_format($row['amount'], 0) ?> รายการ</p>
                                                     <p>วันเวลาหมดอายุ: <?php echo dateThai($row['exp']) ?></p>
-                                                    <p>ในอีก: <?php echo ($row['day']) ?> วัน</p>
+                                                    <p>อีกประมาณ: <?php 
+                                                    if ($row['day'] <= 3){
+                                                        echo '<i style="color:red;">'.$row['day'].'</i>';
+                                                    }else{
+                                                    echo $row['day']; 
+                                                    }
+                                                    ?> วัน</p>
                                                     <hr>
                                                     <p>วันที่สร้าง: <?php echo dateThai($row['created_at']) ?></p>
                                                     <p>วันที่แก้ไข: <?php echo dateThai($row['updated_at']) ?></p>
