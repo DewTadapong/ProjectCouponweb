@@ -1,12 +1,13 @@
 <?php 
 include 'connect.php';
 if (isset($_POST['submit'])) {
+     $random = substr(md5(mt_rand()), 0, 7);
      $exp = $_POST['exp'];
      $datestart = date("Y-m-d H:i:s");                    
      $calculate =strtotime("$exp")-strtotime("$datestart");
      $summary=floor($calculate / 86400); // 86400 มาจาก 24*360 (1วัน = 24 ชม.)
 
-     $sql = "INSERT INTO `products` (`name`, `detail`, `amount`, `created_at`, `updated_at`, `exp`, `day`) 
+     $sql = "INSERT INTO `products` (`name`, `detail`, `amount`, `created_at`, `updated_at`, `exp`, `day`, `barcode`) 
           VALUES (
                     '".htmlspecialchars($_POST['name'], ENT_QUOTES, 'UTF-8')."', 
                     '".htmlspecialchars($_POST['detail'], ENT_QUOTES, 'UTF-8')."', 
@@ -14,7 +15,8 @@ if (isset($_POST['submit'])) {
                     '".date("Y-m-d H:i:s")."', 
                     '".date("Y-m-d H:i:s")."',
                     '".$_POST['exp']."',
-                    '".$summary."')";
+                    '".$summary."',
+                    '".$random."')";
 
         if (mysqli_query($connect, $sql)) {
              header('Refresh:0; url= /Couponweb/php/addsucess.php');
@@ -24,3 +26,5 @@ if (isset($_POST['submit'])) {
     }
     mysqli_close($connect);
 ?>
+
+

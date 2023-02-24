@@ -322,7 +322,7 @@ if(isset($_SESSION['fristname']))
                                     </tr>
                                   
                                     <!-- Modal ADD-->
-                                    <form class="row gy-4" action="test.php"  method="POST">
+                                    <form class="row gy-4" action="php/genaratecouponprocess.php"  method="POST">
                                     <div class="modal fade" id="add-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
