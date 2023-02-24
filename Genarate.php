@@ -5,6 +5,7 @@ if (!isset($_SESSION['username'], $_SESSION['password'])){
     exit;
 }
 require_once('php/connect.php');
+include 'php/barcode128.php';
 if(isset($_SESSION['fristname']))
     $sql = "SELECT * FROM products";
     $result = mysqli_query($connect, $sql);
@@ -305,7 +306,8 @@ if(isset($_SESSION['fristname']))
                                         <td style="column-width:250px;white-space: normal; "><div id="hidden-text"><?php echo $row['detail'] ?></div></td>
                                         <td> <?php echo $row['amount'] ?></td>
                                         <td> <?php echo $row['exp'] ?></td>
-                                        <td> </td>
+                                        <td> <img alt="barcode" src="barcode.php?codetype=Code128&size=15&text=<?php echo $row['barcode']?>&
+                                                    print=true" /></td>
                                         <td>
                                             <div class="btn-group">
                                                 <button class="btn btn-primary" 
@@ -320,7 +322,7 @@ if(isset($_SESSION['fristname']))
                                     </tr>
                                   
                                     <!-- Modal ADD-->
-                                    <form class="row gy-4" action="php/genaratecouponprocess.php"  method="POST">
+                                    <form class="row gy-4" action="test.php"  method="POST">
                                     <div class="modal fade" id="add-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -381,16 +383,17 @@ if(isset($_SESSION['fristname']))
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">รายละเอียดคูปอง</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    <h4 class="modal-title" id="exampleModalLabel">รายละเอียดคูปอง</h4>
+                                                    <img alt="barcode" class="rounded float-start" src="barcode.php?codetype=Code128&size=15&text=<?php echo $row['barcode']?>&
+                                                    print=true" />
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>ชื่อคูปอง: <?php echo $row['name'] ?></p>
                                                     <p>รายละเอียด: <?php echo $row['detail'] ?></p>
                                                     <p>จำนวนคูปอง: <?php echo number_format($row['amount'], 0) ?> รายการ</p>
-                                                    <p>วันหมดอายุ: <?php echo dateThai($row['exp']) ?></p>
-                                                    <p>บาร์โค้ด:</p>
-                                                     <hr>
+                                                    <p>วันเวลาหมดอายุ: <?php echo dateThai($row['exp']) ?></p>
+                                                    <p>ในอีก: <?php echo ($row['day']) ?> วัน</p>
+                                                    <hr>
                                                     <p>วันที่สร้าง: <?php echo dateThai($row['created_at']) ?></p>
                                                     <p>วันที่แก้ไข: <?php echo dateThai($row['updated_at']) ?></p>
                                                 </div>
