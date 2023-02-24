@@ -306,7 +306,7 @@ if(isset($_SESSION['fristname']))
                                         <td style="column-width:250px;white-space: normal; "><div id="hidden-text"><?php echo $row['detail'] ?></div></td>
                                         <td> <?php echo $row['amount'] ?></td>
                                         <td> <?php echo $row['exp'] ?></td>
-                                        <td> <img alt="barcode" src="barcode.php?codetype=Code128&size=15&text=<?php echo $row['barcode']?>&
+                                        <td> <img alt="barcode" src="php/barcode.php?codetype=Code128&size=15&text=<?php echo $row['barcode']?>&
                                                     print=true" /></td>
                                         <td>
                                             <div class="btn-group">
@@ -384,7 +384,7 @@ if(isset($_SESSION['fristname']))
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h4 class="modal-title" id="exampleModalLabel">รายละเอียดคูปอง</h4>
-                                                    <img alt="barcode" class="rounded float-start" src="barcode.php?codetype=Code128&size=15&text=<?php echo $row['barcode']?>&
+                                                    <img alt="barcode" class="rounded float-start" src="php/barcode.php?codetype=Code128&size=15&text=<?php echo $row['barcode']?>&
                                                     print=true" />
                                                 </div>
                                                 <div class="modal-body">
