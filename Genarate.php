@@ -310,7 +310,8 @@ if(isset($_SESSION['fristname']))
                                                     print=true" /></td>
                                         <td>
                                             <div class="btn-group">
-                                                <button class="btn btn-primary" 
+                                                <button name="info"
+                                                class="btn btn-primary" 
                                                         data-bs-toggle="modal" 
                                                         data-bs-target="#my-modal<?php echo $row['id'] ?>" 
                                                         style="width: 105px;"> รายละเอียด </button>
@@ -392,13 +393,24 @@ if(isset($_SESSION['fristname']))
                                                     <p>รายละเอียด: <?php echo $row['detail'] ?></p>
                                                     <p>จำนวนคูปอง: <?php echo number_format($row['amount'], 0) ?> รายการ</p>
                                                     <p>วันเวลาหมดอายุ: <?php echo dateThai($row['exp']) ?></p>
-                                                    <p>อีกประมาณ: <?php 
-                                                    if ($row['day'] <= 3){
-                                                        echo '<i style="color:red;">'.$row['day'].'</i>';
-                                                    }else{
-                                                    echo $row['day']; 
+                                                    <p>อีกประมาณ: <?php  
+
+                                                      $datestart2 = date("Y-m-d H:i:s");
+                                                      $exp2 = $row['exp'];                    
+                                                      $calculate2 =strtotime("$exp2")-strtotime("$datestart2");
+                                                      $summary2=floor($calculate2); // 86400 วินาที / 60 / 60 (1วัน = 24 ชม.)
+                                                      $summaryhr=floor($calculate2 / 60 / 60);
+                                                      $summarymi=floor($calculate2 / 60 / 60 / 60);
+                                                      $summaryday=floor($calculate2 / 86400);
+                                                     if($summary2 >= 86400){
+                                                     echo $summaryday;   echo  "  วัน";
                                                     }
-                                                    ?> วัน</p>
+                                                    else{
+                                                        echo '<i style="color:red;">'.
+                                                     $summaryhr.'</i>';
+                                                        echo  "  ชั่วโมง"; 
+                                                    }                                                
+                                                    ?></p>
                                                     <hr>
                                                     <p>วันที่สร้าง: <?php echo dateThai($row['created_at']) ?></p>
                                                     <p>วันที่แก้ไข: <?php echo dateThai($row['updated_at']) ?></p>
@@ -485,6 +497,7 @@ if(isset($_SESSION['fristname']))
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+ 
     <?php mysqli_close($connect) ?>
 </body>
 

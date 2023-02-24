@@ -5,7 +5,7 @@ if (isset($_POST['submit'])) {
      $exp = $_POST['exp'];
      $datestart = date("Y-m-d H:i:s");                    
      $calculate =strtotime("$exp")-strtotime("$datestart");
-     $summary=floor($calculate / 86400); // 86400 มาจาก 24*360 (1วัน = 24 ชม.)
+     $summary=floor($calculate / 86400); // 86400 วินาที / 60 / 60 (1วัน = 24 ชม.)
 
      $sql = "INSERT INTO `products` (`name`, `detail`, `amount`, `created_at`, `updated_at`, `exp`, `day`, `barcode`) 
           VALUES (
