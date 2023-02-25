@@ -321,7 +321,7 @@ if(isset($_SESSION['fristname']))
                                             </div>
                                         </td>
                                     </tr>
-                                  
+                                    
                                     <!-- Modal ADD-->
                                     <form class="row gy-4" action="php/genaratecouponprocess.php"  method="POST">
                                     <div class="modal fade" id="add-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -380,7 +380,7 @@ if(isset($_SESSION['fristname']))
                                     </form>
                            
                                     <!-- Modal Read-->
-                                    <div class="modal fade" id="my-modal<?php echo $row['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="my-modal<?php echo $row['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"  >
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -389,27 +389,51 @@ if(isset($_SESSION['fristname']))
                                                     print=true" />
                                                 </div>
                                                 <div class="modal-body">
+                                                    <?php echo $id=$row['id'] ?>
+                                                    
                                                     <p>ชื่อคูปอง: <?php echo $row['name'] ?></p>
                                                     <p>รายละเอียด: <?php echo $row['detail'] ?></p>
                                                     <p>จำนวนคูปอง: <?php echo number_format($row['amount'], 0) ?> รายการ</p>
                                                     <p>วันเวลาหมดอายุ: <?php echo dateThai($row['exp']) ?></p>
-                                                    <p>อีกประมาณ: <?php  
-
+                                                    <p>อีกประมาณ: <?php
+                                                    include 'php/connect2.php';  
                                                       $datestart2 = date("Y-m-d H:i:s");
                                                       $exp2 = $row['exp'];                    
                                                       $calculate2 =strtotime("$exp2")-strtotime("$datestart2");
                                                       $summary2=floor($calculate2); // 86400 วินาที / 60 / 60 (1วัน = 24 ชม.)
                                                       $summaryhr=floor($calculate2 / 60 / 60);
-                                                      $summarymi=floor($calculate2 / 60 / 60 / 60);
+                                                      $summarymi=floor($calculate2 / 60 );
                                                       $summaryday=floor($calculate2 / 86400);
+
                                                      if($summary2 >= 86400){
                                                      echo $summaryday;   echo  "  วัน";
-                                                    }
-                                                    else{
+                                                        $sql = "UPDATE products SET day='$summaryday' WHERE id=$id";
+                                                        if (mysqli_query($connect, $sql)) {
+                                                           // echo 'update success';
+                                                        } else {
+                                                           // echo 'update errror';                                                            
+                                                        }
+                                                     }else{
                                                         echo '<i style="color:red;">'.
-                                                     $summaryhr.'</i>';
-                                                        echo  "  ชั่วโมง"; 
-                                                    }                                                
+                                                        $summaryhr.'</i>';
+                                                        echo  "  ชั่วโมง";
+                                                        $sql = "UPDATE products SET day='$summaryhr' WHERE id=$id";
+                                                        if (mysqli_query($connect, $sql)) {
+                                                           // echo 'update success';
+                                                        } else {
+                                                         //   echo 'update errror';                                                            
+                                                        }
+                                                      }if($summary2 < 3600){
+                                                        echo '<i style="color:red;">'.
+                                                        $summarymi.'</i>';
+                                                        echo  "  นาที";
+                                                        $sql = "UPDATE products SET day='$summarymi' WHERE id=$id";
+                                                        if (mysqli_query($connect, $sql)) {
+                                                           // echo 'update success';
+                                                        } else {
+                                                         //   echo 'update errror';                                                            
+                                                        }
+                                                      }                                                
                                                     ?></p>
                                                     <hr>
                                                     <p>วันที่สร้าง: <?php echo dateThai($row['created_at']) ?></p>
