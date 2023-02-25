@@ -17,6 +17,7 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <!-- logo headtab wev -->
@@ -48,7 +49,8 @@
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                name="password" placeholder="Password" required>
+                                                name="password" id="id_password" placeholder="Password" required>
+                                               <div class="togglepass"><i class="far fa-eye" id="togglePassword" onclick="hidepassword()"></i></div>
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -105,7 +107,13 @@
         background-color: Snow;
         color: white;
         text-align: center;
-        }        
+        }
+       .togglepass{
+        position: absolute;
+        right: 65px;
+        top: 257px;
+        cursor: pointer;
+       }
         </style>
 
        <!-- <style>
@@ -120,6 +128,20 @@
          <div class="fixed-image">
           <img src="img/footer.PNG" alt="Image" class="img-thumbnail">
         </div>   -->
+    <!-- function hide show password -->
+    <script>
+    function hidepassword(){
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#id_password');
+    togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+    });}
+    </script>
+
     <!--  Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
