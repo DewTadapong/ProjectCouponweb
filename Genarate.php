@@ -390,7 +390,6 @@ if(isset($_SESSION['fristname']))
                                                 </div>
                                                 <div class="modal-body">
                                                     <?php echo $id=$row['id'] ?>
-                                                    
                                                     <p>ชื่อคูปอง: <?php echo $row['name'] ?></p>
                                                     <p>รายละเอียด: <?php echo $row['detail'] ?></p>
                                                     <p>จำนวนคูปอง: <?php echo number_format($row['amount'], 0) ?> รายการ</p>
@@ -435,7 +434,6 @@ if(isset($_SESSION['fristname']))
                                                          //   echo 'update errror';                                                            
                                                         }
                                                       }
-                                                    }else{
                                                       if($summarymi <= 0){
                                                         $sql = "UPDATE products SET day='หมดอายุ' WHERE id=$id";
                                                         if (mysqli_query($connect, $sql)){
@@ -444,7 +442,10 @@ if(isset($_SESSION['fristname']))
                                                           //   echo 'update errror';                                                            
                                                          }
                                                          echo 'หมดอายุ';
-                                                    }  }                                              
+                                                    }
+                                                    }else{
+                                                        echo $row['day'];
+                                                        }                                              
                                                     ?></p>
                                                     <hr>
                                                     <p>วันที่สร้าง: <?php echo dateThai($row['created_at']) ?></p>
