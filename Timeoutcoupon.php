@@ -313,93 +313,50 @@ if(isset($_SESSION['fristname']))
                                                 class="btn btn-primary" 
                                                         data-bs-toggle="modal" 
                                                         data-bs-target="#my-modal<?php echo $row['id'] ?>" 
-                                                        style="width: 105px;"> รายละเอียด </button>
-                                                        <a href="#" class="btn btn-warning"> นำกลับไปใช้อีกครั้ง </a>
+                                                        style="width: 105px;"> ใช้อีกครั้ง </button>
+                                              
                                                  <a href="/Couponweb/php/deletecouponprocess.php?id=<?php echo $row['id'] ?>" class="btn btn-danger"> ลบ </a>
  
                                             </div>
                                         </td>
                                     </tr>
-                                    
-                                    
+                                     
+
+
                                     <!-- Modal Read-->
+                                    <form class="row gy-4" action="php/updateuseagain.php"  method="POST">
                                     <div class="modal fade" id="my-modal<?php echo $row['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"  >
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title" id="exampleModalLabel">รายละเอียดคูปอง</h4>
+                                                    <h4 class="modal-title" id="exampleModalLabel">การนำกลับมาใช้</h4>
                                                     <img alt="barcode" class="rounded float-start" src="php/barcode.php?codetype=Code128&size=15&text=<?php echo $row['barcode']?>&
                                                     print=true" />
                                                 </div>
-                                                <div class="modal-body">
+                                            <div class="modal-body">
                                                     <?php $id=$row['id'] ?>
                                                     <p>ชื่อคูปอง: <?php echo $row['name'] ?></p>
                                                     <p>รายละเอียด: <?php echo $row['detail'] ?></p>
                                                     <p>จำนวนคูปอง: <?php echo number_format($row['amount'], 0) ?> รายการ</p>
                                                     <p>วันเวลาหมดอายุ: <?php echo dateThai($row['exp']) ?></p>
-                                                    <p>อีกประมาณ: <?php
-                                                    include 'php/connect2.php';  
-                                                      $datestart2 = date("Y-m-d H:i:s");
-                                                      $exp2 = $row['exp'];                    
-                                                      $calculate2 =strtotime("$exp2")-strtotime("$datestart2");
-                                                      $summary2=floor($calculate2); // 86400 วินาที / 60 / 60 (1วัน = 24 ชม.)
-                                                      $summaryhr=floor($calculate2 / 60 / 60);
-                                                      $summarymi=floor($calculate2 / 60 );
-                                                      $summaryday=floor($calculate2 / 86400);
-                                                     
-                                                if($row['day']!='หมดอายุ'){      
-                                                     if($summary2 >= 86400){
-                                                     echo $summaryday;   echo  "  วัน";
-                                                        $sql = "UPDATE products SET day='$summaryday' WHERE id=$id";
-                                                        if (mysqli_query($connect, $sql)) {
-                                                           // echo 'update success';
-                                                        } else {
-                                                           // echo 'update errror';                                                            
-                                                        }
-                                                     }else{
-                                                        echo '<i style="color:red;">'.
-                                                        $summaryhr.'</i>';
-                                                        echo  "  ชั่วโมง";
-                                                        $sql = "UPDATE products SET day='$summaryhr' WHERE id=$id";
-                                                        if (mysqli_query($connect, $sql)) {
-                                                           // echo 'update success';
-                                                        } else {
-                                                         //   echo 'update errror';                                                            
-                                                        }
-                                                      }if($summary2 < 3600){
-                                                        echo '<i style="color:red;">'.
-                                                        $summarymi.'</i>';
-                                                        echo  "  นาที";
-                                                        $sql = "UPDATE products SET day='$summarymi' WHERE id=$id";
-                                                        if (mysqli_query($connect, $sql)) {
-                                                           // echo 'update success';
-                                                        } else {
-                                                         //   echo 'update errror';                                                            
-                                                        }
-                                                      }
-                                                      if($summarymi <= 0){
-                                                        $sql = "UPDATE products SET day='หมดอายุ' WHERE id=$id";
-                                                        if (mysqli_query($connect, $sql)){
-                                                            // echo 'update success';
-                                                         } else {
-                                                          //   echo 'update errror';                                                            
-                                                         }
-                                                         echo 'หมดอายุ';
-                                                    }
-                                                    }else{
-                                                        echo $row['day'];
-                                                        }                                              
-                                                    ?></p>
-                                                    <hr>
-                                                    <p>วันที่สร้าง: <?php echo dateThai($row['created_at']) ?></p>
-                                                    <p>วันที่แก้ไข: <?php echo dateThai($row['updated_at']) ?></p>
-                                                </div>
+                                                <div class="container-right" >
+                                                    <div class="row">      
+                                                        <p>&nbsp;&nbsp;&nbsp;เลือกวันหมดอายุใหม่: </p>
+                                                        <div class="col-md-6"> 
+                                                            <input type="datetime-local" name="exp" class="form-control" value="<?php echo $row['exp'] ?>" style="color:red;">
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>     
+                                            </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" name="submit" class="btn btn-primary">ยืนยันนำไปใช้</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    </form>
                                 <?php endwhile; ?>
                                 </tbody>
                             </table>    
