@@ -7,7 +7,7 @@ if (!isset($_SESSION['username'], $_SESSION['password'])){
 require_once('php/connect.php');
 include 'php/barcode128.php';
 if(isset($_SESSION['fristname']))
-    $sql = "SELECT * FROM products";
+    $sql = "SELECT * FROM products WHERE day!='หมดอายุ'";
     $result = mysqli_query($connect, $sql);
 ?>
 <!DOCTYPE html>
@@ -289,7 +289,7 @@ if(isset($_SESSION['fristname']))
                             <table class="table table-bordered">
                                 <thead>
                                 <tr class="text-center text-light bg-dark">
-                                    <th>ลำดับ</th>
+                               <!-- <th>ลำดับ</th> -->
                                     <th>ชื่อคูปอง</th>
                                     <th>รายละเอียด</th>
                                     <th>จำนวน</th>
@@ -301,7 +301,7 @@ if(isset($_SESSION['fristname']))
                                 <tbody>
                                 <?php while ($row = mysqli_fetch_assoc($result)):?>
                                     <tr class="text-center">
-                                        <td> <?php echo $row['id'] ?> </td>
+                                        <?php $row['id'] ?>
                                         <td> <?php echo $row['name'] ?> </td>
                                         <td style="column-width:250px;white-space: normal; "><div id="hidden-text"><?php echo $row['detail'] ?></div></td>
                                         <td> <?php echo $row['amount'] ?></td>

@@ -4,11 +4,14 @@ if (!isset($_SESSION['username'], $_SESSION['password'])){
     echo "<meta http-equiv='refresh' content='0; url=index.php'>" ;
     exit;
 }
+require_once('php/connect.php');
+include 'php/barcode128.php';
 if(isset($_SESSION['fristname']))
+    $sql = "SELECT * FROM products WHERE day='หมดอายุ'";
+    $result = mysqli_query($connect, $sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
     <meta charset="utf-8">
@@ -24,16 +27,17 @@ if(isset($_SESSION['fristname']))
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
+    <!-- logo headtab wev -->
+    <link rel="shortcut icon" type="image/x-icon" href="img/logoheadweb.ico">
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <!-- sweetalert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.css">
-    <!-- logo headtab wev -->
-    <link rel="shortcut icon" type="image/x-icon" href="img/logoheadweb.ico">
-</head>
+    <!-- Bootstrap5 แบบ bundle คือการนำ Popper มารวมไว้ในไฟล์เดียว -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
+</head>
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -269,25 +273,153 @@ if(isset($_SESSION['fristname']))
                   
 
             <!-- Begin Page Content -->
-            <div class="container-fluid">
-            <!-- 404 Error Text -->
-            <div class="text-center">
-                <div class="error mx-auto" data-text="404">404</div>
-                <p class="lead text-gray-800 mb-5">Page Not Found</p>
-                <p class="text-gray-500 mb-0">หน้ายังบ่ทำจ้าาลองสมัครสมาชิกล็อกอินดูUserloginมุมขวาบนว่าตรงป่าวก่อนนะลองเพิ่มแก้ไขข้อมูลดูน้าา</p>
-                <a href="Home.php">&larr; Back to Dashboard</a>
+                        
+<!-- Page Heading -->
+    <div class="container-fluid">
+            <div class="shadow rounded p-4 bg-body h-100">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="d-sm-flex align-items-center justify-content-between mb-2">
+                            <h1 class="pb">คูปองที่หมดอายุแล้ว</h1>                                
+                        </div>
+                            <span class="text-right" >หมดอายุทั้งหมด <?php echo mysqli_num_rows($result) ?> รายการ </span>  
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="table-responsive" >
+                            <?php if (mysqli_num_rows($result) > 0): ?>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr class="text-center text-light bg-dark">
+                                     <th>ชื่อคูปอง</th>
+                                    <th>รายละเอียด</th>
+                                    <th>จำนวน</th>
+                                    <th>วันหมดอายุ</th>
+                                    <th>BarCode</th>
+                                    <th>จัดการ</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php while ($row = mysqli_fetch_assoc($result)):?>
+                                    <tr class="text-center">
+                                         <td> <?php echo $row['name'] ?> </td>
+                                        <td style="column-width:250px;white-space: normal; "><div id="hidden-text"><?php echo $row['detail'] ?></div></td>
+                                        <td> <?php echo $row['amount'] ?></td>
+                                        <td> <?php echo dateThai($row['exp']) ?></td>
+                                        <td> <img alt="barcode" src="php/barcode.php?codetype=Code128&size=15&text=<?php echo $row['barcode']?>&
+                                                    print=true" /></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button name="info"
+                                                class="btn btn-primary" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#my-modal<?php echo $row['id'] ?>" 
+                                                        style="width: 105px;"> รายละเอียด </button>
+                                                        <a href="#" class="btn btn-warning"> นำกลับไปใช้อีกครั้ง </a>
+                                                 <a href="/Couponweb/php/deletecouponprocess.php?id=<?php echo $row['id'] ?>" class="btn btn-danger"> ลบ </a>
+ 
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    
+                                    <!-- Modal Read-->
+                                    <div class="modal fade" id="my-modal<?php echo $row['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"  >
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="exampleModalLabel">รายละเอียดคูปอง</h4>
+                                                    <img alt="barcode" class="rounded float-start" src="php/barcode.php?codetype=Code128&size=15&text=<?php echo $row['barcode']?>&
+                                                    print=true" />
+                                                </div>
+                                                <div class="modal-body">
+                                                    <?php $id=$row['id'] ?>
+                                                    <p>ชื่อคูปอง: <?php echo $row['name'] ?></p>
+                                                    <p>รายละเอียด: <?php echo $row['detail'] ?></p>
+                                                    <p>จำนวนคูปอง: <?php echo number_format($row['amount'], 0) ?> รายการ</p>
+                                                    <p>วันเวลาหมดอายุ: <?php echo dateThai($row['exp']) ?></p>
+                                                    <p>อีกประมาณ: <?php
+                                                    include 'php/connect2.php';  
+                                                      $datestart2 = date("Y-m-d H:i:s");
+                                                      $exp2 = $row['exp'];                    
+                                                      $calculate2 =strtotime("$exp2")-strtotime("$datestart2");
+                                                      $summary2=floor($calculate2); // 86400 วินาที / 60 / 60 (1วัน = 24 ชม.)
+                                                      $summaryhr=floor($calculate2 / 60 / 60);
+                                                      $summarymi=floor($calculate2 / 60 );
+                                                      $summaryday=floor($calculate2 / 86400);
+                                                     
+                                                if($row['day']!='หมดอายุ'){      
+                                                     if($summary2 >= 86400){
+                                                     echo $summaryday;   echo  "  วัน";
+                                                        $sql = "UPDATE products SET day='$summaryday' WHERE id=$id";
+                                                        if (mysqli_query($connect, $sql)) {
+                                                           // echo 'update success';
+                                                        } else {
+                                                           // echo 'update errror';                                                            
+                                                        }
+                                                     }else{
+                                                        echo '<i style="color:red;">'.
+                                                        $summaryhr.'</i>';
+                                                        echo  "  ชั่วโมง";
+                                                        $sql = "UPDATE products SET day='$summaryhr' WHERE id=$id";
+                                                        if (mysqli_query($connect, $sql)) {
+                                                           // echo 'update success';
+                                                        } else {
+                                                         //   echo 'update errror';                                                            
+                                                        }
+                                                      }if($summary2 < 3600){
+                                                        echo '<i style="color:red;">'.
+                                                        $summarymi.'</i>';
+                                                        echo  "  นาที";
+                                                        $sql = "UPDATE products SET day='$summarymi' WHERE id=$id";
+                                                        if (mysqli_query($connect, $sql)) {
+                                                           // echo 'update success';
+                                                        } else {
+                                                         //   echo 'update errror';                                                            
+                                                        }
+                                                      }
+                                                      if($summarymi <= 0){
+                                                        $sql = "UPDATE products SET day='หมดอายุ' WHERE id=$id";
+                                                        if (mysqli_query($connect, $sql)){
+                                                            // echo 'update success';
+                                                         } else {
+                                                          //   echo 'update errror';                                                            
+                                                         }
+                                                         echo 'หมดอายุ';
+                                                    }
+                                                    }else{
+                                                        echo $row['day'];
+                                                        }                                              
+                                                    ?></p>
+                                                    <hr>
+                                                    <p>วันที่สร้าง: <?php echo dateThai($row['created_at']) ?></p>
+                                                    <p>วันที่แก้ไข: <?php echo dateThai($row['updated_at']) ?></p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endwhile; ?>
+                                </tbody>
+                            </table>    
+                            <?php 
+                                else: 
+                                    echo "<p class='mt-5'>ไม่มีข้อมูลในฐานข้อมูล</p>"; 
+                                endif; 
+                            ?>
+                        </div>
+                    </div>
+                </div>
             </div>
-            </div>
-            <!-- /.container-fluid -->
-            </div>
-            <!-- End of Main Content -->
-
-
+    </div>
+  
+ 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Dew Tadapong Sutthikitrungtoj Website</span>
+                        <span>Copyright &copy; ♥️Dew Tadapong Sutthikitrungtoj Website♥️</span>
                     </div>
                 </div>
             </footer>
@@ -318,12 +450,23 @@ if(isset($_SESSION['fristname']))
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="index.php">Logout</a>
+                    <a class="btn btn-primary"  >Logout</a>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- กันข้อความล้นขอบตางรางกับโมเดิล-->
+    <style>
+        #hidden-text{
+            width:100%;
+            width:inherit !important; /* hack firefox , chrome ,safari*/
+            overflow:hidden
+        }
+        .modal-body{
+            word-break: break-all;
+        }
+    </style>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -333,7 +476,7 @@ if(isset($_SESSION['fristname']))
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-
+ 
+    <?php mysqli_close($connect) ?>
 </body>
-
 </html>
