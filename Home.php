@@ -139,9 +139,7 @@ if(isset($_SESSION['fristname']))
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
-      
-
+ 
         </ul>
         <!-- End of Sidebar -->
 
@@ -253,11 +251,11 @@ if(isset($_SESSION['fristname']))
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                             aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="test.html">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Profile
                             </a>
-                            <a class="dropdown-item" href="#" >
+                            <a class="dropdown-item" href="#">
                                 <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Settings
                             </a> 
@@ -519,6 +517,19 @@ if(isset($_SESSION['fristname']))
 
             </div>
             <!-- End of Main Content -->
+                                    <!-- Modal ADD-->
+                                         <div class="modal fade" id="id-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มคูปอง</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                        
+                                            </div>
+                                        </div>
+                                    </div>
+ 
 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
@@ -555,7 +566,7 @@ if(isset($_SESSION['fristname']))
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="index.php">Logout</a>
+                <a class="btn btn-primary"  >Logout</a>
             </div>
         </div>
     </div>

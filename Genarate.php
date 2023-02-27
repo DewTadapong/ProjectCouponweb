@@ -38,6 +38,10 @@ if(isset($_SESSION['fristname']))
     <!-- Bootstrap5 แบบ bundle คือการนำ Popper มารวมไว้ในไฟล์เดียว -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!--css profile-->
+    <link rel="stylesheet" href="style.css" />
+
+
 </head>
 <body id="page-top">
  
@@ -248,10 +252,14 @@ if(isset($_SESSION['fristname']))
                             
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                            aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
+                            aria-labelledby="userDropdown" name="dropid">
+                            <a class="dropdown-item" 
+                                                        class="btn btn-primary" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#id-modal" 
+                                                         >
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Profile
+                               Profile 
                             </a>
                             <a class="dropdown-item" href="#" >
                                 <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -262,6 +270,7 @@ if(isset($_SESSION['fristname']))
                                 Logout
                             </a> 
                             </div>
+                                 
                          </li>
 
                     </ul>
@@ -322,6 +331,16 @@ if(isset($_SESSION['fristname']))
                                         </td>
                                     </tr>
                                     
+                                    <!-- Modal Profile-->
+                                    <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-content">    
+                                        <div class="modal-body-id">
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+ 
                                     <!-- Modal ADD-->
                                     <form class="row gy-4" action="php/genaratecouponprocess.php"  method="POST">
                                     <div class="modal fade" id="add-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -389,7 +408,7 @@ if(isset($_SESSION['fristname']))
                                                     print=true" />
                                                 </div>
                                                 <div class="modal-body">
-                                                    <?php echo $id=$row['id'] ?>
+                                                    <?php $id=$row['id'] ?>
                                                     <p>ชื่อคูปอง: <?php echo $row['name'] ?></p>
                                                     <p>รายละเอียด: <?php echo $row['detail'] ?></p>
                                                     <p>จำนวนคูปอง: <?php echo number_format($row['amount'], 0) ?> รายการ</p>
@@ -492,27 +511,8 @@ if(isset($_SESSION['fristname']))
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" >Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    </a> 
+   
 
     <!-- กันข้อความล้นขอบตางรางกับโมเดิล-->
     <style>
