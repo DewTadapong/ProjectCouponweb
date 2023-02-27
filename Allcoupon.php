@@ -32,6 +32,15 @@ if(isset($_SESSION['fristname']))
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.css">
     <!-- logo headtab wev -->
     <link rel="shortcut icon" type="image/x-icon" href="img/logoheadweb.ico">
+    <script> //session หมด ล้อกเอ้าใน 30 วิ  1000 = 1 วิ
+                                        var keyboard_time_out = setTimeout('close_window()', 1800000);
+                                        $(window).keypress(function(){
+                                        clearTimeout(keboard_time_out);
+                                        keyboard_time_out = setTimeout('close_window()', 1800000);
+                                        })
+                                        function close_window(){
+                                        location.href="php/logout.php";
+                                        } </script>
 </head>
 
 <body id="page-top">

@@ -33,36 +33,17 @@ if(isset($_SESSION['fristname']))
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.css">
     <!-- logo headtab wev -->
     <link rel="shortcut icon" type="image/x-icon" href="img/logoheadweb.ico">
+    <script> //session หมด ล้อกเอ้าใน 30 วิ  1000 = 1 วิ
+                                        var keyboard_time_out = setTimeout('close_window()', 1800000);
+                                        $(window).keypress(function(){
+                                        clearTimeout(keboard_time_out);
+                                        keyboard_time_out = setTimeout('close_window()', 1800000);
+                                        })
+                                        function close_window(){
+                                        location.href="php/logout.php";
+                                        } </script>
 </head>
-<body id="page-top">
-
-
-                                    <script>
-                                    let timerInterval
-                                    Swal.fire({
-                                    title: 'ลองดู Userlogin มุมขวาบนชื่อตรงป่าวก่อนนะ ไปเมนู AddCoupon ลองเพิ่มแก้ไขข้อมูลดูน้าา',
-                                    html: 'เดี่ยวปิดเองนะอีกใน <b></b> วินาที<br>จะปิดเองกดที่ว่างๆ ได้เลยนะ',
-                                    timer: 6000,
-                                    timerProgressBar: true,
-                                    didOpen: () => {
-                                        Swal.showLoading()
-                                        const b = Swal.getHtmlContainer().querySelector('b')
-                                        timerInterval = setInterval(() => {
-                                        b.textContent = Swal.getTimerLeft()
-                                        }, 100)
-                                    },
-                                    willClose: () => {
-                                        clearInterval(timerInterval)
-                                    }
-                                    }).then((result) => {
-                                    /* Read more about handling dismissals below */
-                                    if (result.dismiss === Swal.DismissReason.timer) {
-                                        console.log('I was closed by the timer')
-                                    }
-                                    })
-                                    </script>
-
-
+<body id="page-top">                                    
     <!-- Page Wrapper -->
     <div id="wrapper">
 
