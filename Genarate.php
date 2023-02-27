@@ -281,7 +281,7 @@ if(isset($_SESSION['fristname']))
                                                         data-bs-target="#add-modal" 
                                                         style="width: 105px;"> เพิ่มคูปอง </button>
                          </div>
-                            <span class="text-right" >จำนวนรายการทั้งหมด <?php echo mysqli_num_rows($result) ?> รายการ </span>  
+                            <span class="text-right" >จำนวนรายการคงเหลือ <?php echo mysqli_num_rows($result) ?> รายการ </span>  
                     </div>
                     <div class="col-lg-12">
                         <div class="table-responsive" >
@@ -396,12 +396,13 @@ if(isset($_SESSION['fristname']))
                                                     <p>วันเวลาหมดอายุ: <?php echo dateThai($row['exp']) ?></p>
                                                     <p>อีกประมาณ: <?php
                                                     include 'php/connect2.php';  
-                                                      $datestart2 = date("Y-m-d H:i:s");
+                                                      $time = date("Y-m-d H:i:s");  
+                                                      $datestart2 = date('Y-m-d H:i:s', strtotime('+0 minutes', strtotime($time)));
                                                       $exp2 = $row['exp'];                    
                                                       $calculate2 =strtotime("$exp2")-strtotime("$datestart2");
                                                       $summary2=floor($calculate2); // 86400 วินาที / 60 / 60 (1วัน = 24 ชม.)
                                                       $summaryhr=floor($calculate2 / 60 / 60);
-                                                      $summarymi=floor($calculate2 / 60 );
+                                                      $summarymi=floor($calculate2 / 60 + 1);
                                                       $summaryday=floor($calculate2 / 86400);
                                                      
                                                 if($row['day']!='หมดอายุ'){      
