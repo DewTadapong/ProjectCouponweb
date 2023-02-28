@@ -143,10 +143,7 @@ if(isset($_SESSION['fristname']))
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
-            <!-- Main Content -->
-            <div id="content">
-
+ 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -487,16 +484,13 @@ if(isset($_SESSION['fristname']))
   
  
                         <!-- Footer -->
-                        <footer class=" container my-auto">
+            <footer class=" container my-auto">
                      <div class="copyright text-center my-auto">
                         <span>Copyright &copy; Dew Tadapong Sutthikitrungtoj Website</span>
                     </div>
             </footer>
             <!-- End of Footer -->
-
-        </div>
-        <!-- End of Content Wrapper -->
-
+ 
     </div>
     <!-- End of Page Wrapper -->
 

@@ -155,10 +155,7 @@ if(isset($_SESSION['fristname']))
   
           <!-- Content Wrapper -->
           <div id="content-wrapper" class="d-flex flex-column">
-  
-            <!-- Main Content -->
-            <div id="content">
-  
+   
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -335,17 +332,14 @@ if(isset($_SESSION['fristname']))
                                         </td>
                                     </tr>
                                      
- <!-- Modal Profile-->
- <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <!-- Modal Profile-->
+                                <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-sm">
-                                         <div class="modal-body-id">
+                                            <div class="modal-body-id">
+                                            </div>
                                         </div>
-                                     </div>
-                                    </div>
-      
-    <!-- กันข้อความล้นขอบตางรางกับโมเดิล-->
-
-
+                                </div>
+       
                                     <!-- Modal Read-->
                                     <form class="row gy-4" action="php/updateuseagain.php"  method="POST">
                                     <div class="modal fade" id="my-modal<?php echo $row['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"  >
@@ -403,8 +397,7 @@ if(isset($_SESSION['fristname']))
             </footer>
             <!-- End of Footer -->
 
-        </div>
-        <!-- End of Content Wrapper -->
+     
 
     </div>
     <!-- End of Page Wrapper -->
