@@ -37,11 +37,7 @@ if(isset($_SESSION['fristname']))
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.css">
     <!-- Bootstrap5 แบบ bundle คือการนำ Popper มารวมไว้ในไฟล์เดียว -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!--css profile-->
-    <link rel="stylesheet" href="style.css" />
-
-
+ 
 </head>
 <body id="page-top">
  
@@ -334,11 +330,9 @@ if(isset($_SESSION['fristname']))
                                     <!-- Modal Profile-->
                                     <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-sm">
-                                        <div class="modal-content">    
-                                        <div class="modal-body-id">
+                                         <div class="modal-body-id">
                                         </div>
-                                        </div>
-                                    </div>
+                                     </div>
                                     </div>
  
                                     <!-- Modal ADD-->
@@ -492,13 +486,11 @@ if(isset($_SESSION['fristname']))
     </div>
   
  
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; ♥️Dew Tadapong Sutthikitrungtoj Website♥️</span>
+                        <!-- Footer -->
+                        <footer class=" container my-auto">
+                     <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Dew Tadapong Sutthikitrungtoj Website</span>
                     </div>
-                </div>
             </footer>
             <!-- End of Footer -->
 
@@ -524,6 +516,15 @@ if(isset($_SESSION['fristname']))
         .modal-body{
             word-break: break-all;
         }
+        .modal-body-id{
+        background-image: url('img/picdew.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 400px;
+        }
+        .dropdown-item{
+        cursor: pointer;
+        }  
     </style>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
