@@ -37,7 +37,8 @@ if(isset($_SESSION['fristname']))
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.css">
     <!-- Bootstrap5 แบบ bundle คือการนำ Popper มารวมไว้ในไฟล์เดียว -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
- 
+    <!-- css card-->
+    <link rel="stylesheet" href="stylecard.css" />
 </head>
 <body id="page-top">
  
@@ -270,164 +271,58 @@ if(isset($_SESSION['fristname']))
 
                 </nav>
                 <!-- End of Topbar -->
-             
-<!-- Page Heading -->
-    <div class="container-fluid">
-            <div class="shadow rounded p-4 bg-body h-100">
-                <div class="row justify-content-center">
-                    <div class="col-lg-12">
-                        <div class="d-sm-flex align-items-center justify-content-between mb-2">
-                        <h1 class="pb">ปริ้นคูปอง</h1>                            
-                         </div>
-                            <span class="text-right" >จำนวนรายการคงเหลือ <?php echo mysqli_num_rows($result) ?> รายการ </span>  
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="table-responsive" >
-                            <?php if (mysqli_num_rows($result) > 0): ?>
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr class="text-center text-light bg-dark">
-                               <!-- <th>ลำดับ</th> -->
-                                    <th>ชื่อคูปอง</th>
-                                    <th>รายละเอียด</th>
-                                    <th>จำนวน</th>
-                                    <th>วันหมดอายุ</th>
-                                    <th>BarCode</th>
-                                    <th>จัดการ</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php while ($row = mysqli_fetch_assoc($result)):?>
-                                    <tr class="text-center">
-                                        <?php $row['id'] ?>
-                                        <td> <?php echo $row['name'] ?> </td>
-                                        <td style="column-width:250px;white-space: normal; "><div id="hidden-text"><?php echo $row['detail'] ?></div></td>
-                                        <td> <?php echo $row['amount'] ?></td>
-                                        <td> <?php echo dateThai($row['exp']) ?></td>
-                                        <td> <img alt="barcode" src="php/barcode.php?codetype=Code128&size=15&text=<?php echo $row['barcode']?>&
-                                                    print=true" /></td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <button name="info"
-                                                class="btn btn-primary" 
-                                                        data-bs-toggle="modal" 
-                                                        data-bs-target="#my-modal<?php echo $row['id'] ?>" 
-                                                        style="width: 105px;"> รายละเอียด </button>
-                                                  <a href="#?id=<?php echo $row['id'] ?>" class="btn btn-success"> ปริ้นคูปอง </a>
- 
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                    <!-- Modal Profile-->
-                                    <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-sm">
-                                         <div class="modal-body-id">
-                                        </div>
-                                     </div>
-                                    </div>
-  
-                                    <!-- Modal Read-->
-                                    <div class="modal fade" id="my-modal<?php echo $row['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"  >
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title" id="exampleModalLabel">รายละเอียดคูปอง</h4>
-                                                    <img alt="barcode" class="rounded float-start" src="php/barcode.php?codetype=Code128&size=15&text=<?php echo $row['barcode']?>&
-                                                    print=true" />
-                                                </div>
-                                                <div class="modal-body">
-                                                    <?php $id=$row['id'] ?>
-                                                    <p>ชื่อคูปอง: <?php echo $row['name'] ?></p>
-                                                    <p>รายละเอียด: <?php echo $row['detail'] ?></p>
-                                                    <p>จำนวนคูปอง: <?php echo number_format($row['amount'], 0) ?> รายการ</p>
-                                                    <p>วันเวลาหมดอายุ: <?php echo dateThai($row['exp']) ?></p>
-                                                    <p>อีกประมาณ: <?php
-                                                    include 'php/connect2.php';  
-                                                      $time = date("Y-m-d H:i:s");  
-                                                      $datestart2 = date('Y-m-d H:i:s', strtotime('+0 minutes', strtotime($time)));
-                                                      $exp2 = $row['exp'];                    
-                                                      $calculate2 =strtotime("$exp2")-strtotime("$datestart2");
-                                                      $summary2=floor($calculate2); // 86400 วินาที / 60 / 60 (1วัน = 24 ชม.)
-                                                      $summaryhr=floor($calculate2 / 60 / 60);
-                                                      $summarymi=floor($calculate2 / 60 + 1);
-                                                      $summaryday=floor($calculate2 / 86400);
-                                                     
-                                                if($row['day']!='หมดอายุ'){      
-                                                     if($summary2 >= 86400){
-                                                     echo $summaryday;   echo  "  วัน";
-                                                        $sql = "UPDATE products SET day='$summaryday' WHERE id=$id";
-                                                        if (mysqli_query($connect, $sql)) {
-                                                           // echo 'update success';
-                                                        } else {
-                                                           // echo 'update errror';                                                            
-                                                        }
-                                                     }else{
-                                                        echo '<i style="color:red;">'.
-                                                        $summaryhr.'</i>';
-                                                        echo  "  ชั่วโมง";
-                                                        $sql = "UPDATE products SET day='$summaryhr' WHERE id=$id";
-                                                        if (mysqli_query($connect, $sql)) {
-                                                           // echo 'update success';
-                                                        } else {
-                                                         //   echo 'update errror';                                                            
-                                                        }
-                                                      }if($summary2 < 3600){
-                                                        echo '<i style="color:red;">'.
-                                                        $summarymi.'</i>';
-                                                        echo  "  นาที";
-                                                        $sql = "UPDATE products SET day='$summarymi' WHERE id=$id";
-                                                        if (mysqli_query($connect, $sql)) {
-                                                           // echo 'update success';
-                                                        } else {
-                                                         //   echo 'update errror';                                                            
-                                                        }
-                                                      }
-                                                      if($summarymi <= 0){
-                                                        $sql = "UPDATE products SET day='หมดอายุ' WHERE id=$id";
-                                                        if (mysqli_query($connect, $sql)){
-                                                            // echo 'update success';
-                                                         } else {
-                                                          //   echo 'update errror';                                                            
-                                                         }
-                                                         echo 'หมดอายุ';
-                                                    }
-                                                    }else{
-                                                        echo $row['day'];
-                                                        }                                              
-                                                    ?></p>
-                                                    <hr>
-                                                    <p>วันที่สร้าง: <?php echo dateThai($row['created_at']) ?></p>
-                                                    <p>วันที่แก้ไข: <?php echo dateThai($row['updated_at']) ?></p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php endwhile; ?>
-                                </tbody>
-                            </table>    
-                            <?php 
-                                else: 
-                                    echo "<p class='mt-5'>ไม่มีข้อมูลในฐานข้อมูล</p>"; 
-                                endif; 
-                            ?>
-                        </div>
-                    </div>
+                                     
+            <div class="container">
+            <div class="add-flashcard-con">
+                <button id="add-flashcard">Add Flashcard</button>
+            </div>
+
+            <!-- Display Card of Question And Answers Here -->
+            <div id="card-con">
+                <div class="card-list-container"></div>
+            </div>
+            </div>
+
+            <!-- Input form for users to fill question and answer -->
+            <div class="question-container hide" id="add-question-card">
+            <h2>Add Flashcard</h2>
+            <div class="wrapper">
+                <!-- Error message -->
+                <div class="error-con">
+                <span class="hide" id="error">Input fields cannot be empty!</span>
+                </div>
+                <!-- Close Button -->
+                <i class="fa-solid fa-xmark" id="close-btn"></i>
+            </div>
+
+            <label for="question">Question:</label>
+            <textarea
+                class="input"
+                id="question"
+                placeholder="Type the question here..."
+                rows="2"
+            ></textarea>
+            <label for="answer">Answer:</label>
+            <textarea
+                class="input"
+                id="answer"
+                rows="4"
+                placeholder="Type the answer here..."
+            ></textarea>
+            <button id="save-btn">Save</button>
+            </div>
+            <!-- Script addcard -->
+            <script src="scriptcard.js"></script>
+
+
+          <!-- Modal Profile-->
+        <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+           <div class="modal-dialog modal-sm">
+                <div class="modal-body-id">
                 </div>
             </div>
-    </div>
-   
-                        <!-- Footer -->
-            <footer class=" container my-auto">
-                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Dew Tadapong Sutthikitrungtoj Website</span>
-                    </div>
-            </footer>
-            <!-- End of Footer -->
- 
+        </div>
+       
     </div>
     <!-- End of Page Wrapper -->
 
