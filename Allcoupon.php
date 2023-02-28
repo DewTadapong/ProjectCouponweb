@@ -5,10 +5,14 @@ if (!isset($_SESSION['username'], $_SESSION['password'])){
     exit;
 }
 require_once('php/connect.php');
- if(isset($_SESSION['fristname']))
+include 'php/barcode128.php';
+if(isset($_SESSION['fristname']))
+    $sql = "SELECT * FROM products WHERE day!='หมดอายุ'";
+    $result = mysqli_query($connect, $sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="utf-8">
@@ -17,7 +21,7 @@ require_once('php/connect.php');
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>All - Coupon</title>
+    <title>Export - Coupon</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -33,20 +37,10 @@ require_once('php/connect.php');
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.css">
     <!-- Bootstrap5 แบบ bundle คือการนำ Popper มารวมไว้ในไฟล์เดียว -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script> //session หมด ล้อกเอ้าใน 30 วิ  1000 = 1 วิ
-                                        var keyboard_time_out = setTimeout('close_window()', 1800000);
-                                        $(window).keypress(function(){
-                                        clearTimeout(keboard_time_out);
-                                        keyboard_time_out = setTimeout('close_window()', 1800000);
-                                        })
-                                        function close_window(){
-                                        location.href="php/logout.php";
-                                        } </script>
-                                          <!--css profile-->
-   
+ 
 </head>
 <body id="page-top">
-
+ 
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -96,8 +90,8 @@ require_once('php/connect.php');
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                        <!--  <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item " href="Genarate.php">GenarateCoupon</a>
-                        <a class="collapse-item active" href="Allcoupon.php">AllCoupon</a>
+                        <a class="collapse-item" href="Genarate.php">GenarateCoupon</a>
+                        <a class="collapse-item active" href="Allcoupon.php">ExportCoupon</a>
                     </div>
                 </div>
             </li>
@@ -144,119 +138,115 @@ require_once('php/connect.php');
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
- 
         </ul>
         <!-- End of Sidebar -->
-  
-          <!-- Content Wrapper -->
-          <div id="content-wrapper" class="d-flex flex-column">
-  
-            <!-- Main Content -->
-            <div id="content">
-  
-            <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-            <!-- Sidebar Toggle (Topbar) -->
-            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                <i class="fa fa-bars"></i>
-            </button>
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+ 
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-            <!-- Topbar Search -->
-            <form
-                class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                        aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
-                            <i class="fas fa-search fa-sm"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
 
-            <!-- Topbar Navbar -->
-            <ul class="navbar-nav ml-auto">
-
-                <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                <li class="nav-item dropdown no-arrow d-sm-none">
-                    <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-search fa-fw"></i>
-                    </a>
-                    <!-- Dropdown - Messages -->
-                    <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                        aria-labelledby="searchDropdown">
-                        <form class="form-inline mr-auto w-100 navbar-search">
-                            <div class="input-group">
-                                <input type="text" class="form-control bg-light border-0 small"
-                                    placeholder="Search for..." aria-label="Search"
-                                    aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button">
-                                        <i class="fas fa-search fa-sm"></i>
-                                    </button>
-                                </div>
+                    <!-- Topbar Search -->
+                    <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
                             </div>
-                        </form>
-                    </div>
-                </li>
+                        </div>
+                    </form>
 
-                <!-- Nav Item - Alerts -->
-                <li class="nav-item dropdown no-arrow mx-1">
-                    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-bell fa-fw"></i>
-                        <!-- Counter - Alerts -->
-                        <span class="badge badge-danger badge-counter">3+</span>
-                    </a>
-                    <!-- Dropdown - Alerts -->
-                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                        aria-labelledby="alertsDropdown">
-                        <h6 class="dropdown-header">
-                            Alerts Center
-                        </h6>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <div class="mr-3">
-                                <div class="icon-circle bg-primary">
-                                    <i class="fas fa-file-alt text-white"></i>
-                                </div>
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                            <div>
-                                <div class="small text-gray-500">February 17, 2023</div>
-                                <span class="font-weight-bold">ทดสอบแจ้งเตื่อนเฉยๆอย่ารีบสิ</span>
+                        </li>
+
+                        <!-- Nav Item - Alerts -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- Counter - Alerts -->
+                                <span class="badge badge-danger badge-counter">3+</span>
+                            </a>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Alerts Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">February 17, 2023</div>
+                                        <span class="font-weight-bold">ทดสอบแจ้งเตื่อนเฉยๆอย่ารีบสิ</span>
+                                    </div>
+                                </a>           
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                             </div>
-                        </a>           
-                        <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                    </div>
-                </li>
+                        </li>
 
 
-                <div class="topbar-divider d-none d-sm-block"></div>
-                <!-- Nav Item - User Information -->
-                <li class="nav-item dropdown no-arrow">
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                        <?php
-                        echo $_SESSION["username"]
-                        ?>    
-                        </span>
-                        <i class="mr-2 d-none d-lg-inline text-gray-600 small">
-                        <?php
-                        echo $_SESSION["department"]
-                        ?>    
-                        </i>  
+                        <div class="topbar-divider d-none d-sm-block"></div>
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                <?php
+                                echo $_SESSION["username"]
+                                ?>    
+                                </span>
+                                <i class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                <?php
+                                echo $_SESSION["department"]
+                                ?>    
+                                </i>  
 
-                        <img class="img-profile rounded-circle"
-                            src="img/undraw_profile.svg">
-                    </a>
-                    
-                    <!-- Dropdown - User Information -->
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                    aria-labelledby="userDropdown">
-                    <a class="dropdown-item" 
+                                <img class="img-profile rounded-circle"
+                                    src="img/undraw_profile.svg">
+                            </a>
+                            
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                            aria-labelledby="userDropdown" name="dropid">
+                            <a class="dropdown-item" 
                                                         class="btn btn-primary" 
                                                         data-bs-toggle="modal" 
                                                         data-bs-target="#id-modal" 
@@ -264,65 +254,190 @@ require_once('php/connect.php');
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                Profile 
                             </a>
-                    <a class="dropdown-item" href="#" >
-                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Settings
-                    </a> 
-                    <a class="dropdown-item" href="php/logout.php" onclick="return confirm('Do you want to sign out?')">                                
-                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Logout
-                    </a> 
+                            <a class="dropdown-item" href="#" >
+                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Settings
+                            </a> 
+                            <a class="dropdown-item" href="php/logout.php" onclick="return confirm('Do you want to sign out?')">                                
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
+                            </a> 
+                            </div>
+                                 
+                         </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+             
+<!-- Page Heading -->
+    <div class="container-fluid">
+            <div class="shadow rounded p-4 bg-body h-100">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="d-sm-flex align-items-center justify-content-between mb-2">
+                        <h1 class="pb">ปริ้นคูปอง</h1>                            
+                         </div>
+                            <span class="text-right" >จำนวนรายการคงเหลือ <?php echo mysqli_num_rows($result) ?> รายการ </span>  
                     </div>
-                </li>
-
-            </ul>
-
-            </nav>
-            <!-- End of Topbar -->
-                  
-                   
-
-
-             <!-- Begin Page Content -->
-            <div class="container-fluid">
-                <!-- 404 Error Text -->
-                <div class="text-center">
-                <div class="error mx-auto" data-text="404">404</div>
-                <p class="lead text-gray-800 mb-5">Page Not Found</p>
-                <br>
-                 <a href="Home.php">&larr; Back to Dashboard</a>
-            </div>
-            </div>
-            <!-- /.container-fluid -->
-
-
+                    <div class="col-lg-12">
+                        <div class="table-responsive" >
+                            <?php if (mysqli_num_rows($result) > 0): ?>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr class="text-center text-light bg-dark">
+                               <!-- <th>ลำดับ</th> -->
+                                    <th>ชื่อคูปอง</th>
+                                    <th>รายละเอียด</th>
+                                    <th>จำนวน</th>
+                                    <th>วันหมดอายุ</th>
+                                    <th>BarCode</th>
+                                    <th>จัดการ</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php while ($row = mysqli_fetch_assoc($result)):?>
+                                    <tr class="text-center">
+                                        <?php $row['id'] ?>
+                                        <td> <?php echo $row['name'] ?> </td>
+                                        <td style="column-width:250px;white-space: normal; "><div id="hidden-text"><?php echo $row['detail'] ?></div></td>
+                                        <td> <?php echo $row['amount'] ?></td>
+                                        <td> <?php echo dateThai($row['exp']) ?></td>
+                                        <td> <img alt="barcode" src="php/barcode.php?codetype=Code128&size=15&text=<?php echo $row['barcode']?>&
+                                                    print=true" /></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button name="info"
+                                                class="btn btn-primary" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#my-modal<?php echo $row['id'] ?>" 
+                                                        style="width: 105px;"> รายละเอียด </button>
+                                                  <a href="#?id=<?php echo $row['id'] ?>" class="btn btn-success"> ปริ้นคูปอง </a>
+ 
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <!-- Modal Profile-->
+                                    <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-sm">
+                                         <div class="modal-body-id">
+                                        </div>
+                                     </div>
+                                    </div>
   
-            <!-- Footer -->
+                                    <!-- Modal Read-->
+                                    <div class="modal fade" id="my-modal<?php echo $row['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"  >
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="exampleModalLabel">รายละเอียดคูปอง</h4>
+                                                    <img alt="barcode" class="rounded float-start" src="php/barcode.php?codetype=Code128&size=15&text=<?php echo $row['barcode']?>&
+                                                    print=true" />
+                                                </div>
+                                                <div class="modal-body">
+                                                    <?php $id=$row['id'] ?>
+                                                    <p>ชื่อคูปอง: <?php echo $row['name'] ?></p>
+                                                    <p>รายละเอียด: <?php echo $row['detail'] ?></p>
+                                                    <p>จำนวนคูปอง: <?php echo number_format($row['amount'], 0) ?> รายการ</p>
+                                                    <p>วันเวลาหมดอายุ: <?php echo dateThai($row['exp']) ?></p>
+                                                    <p>อีกประมาณ: <?php
+                                                    include 'php/connect2.php';  
+                                                      $time = date("Y-m-d H:i:s");  
+                                                      $datestart2 = date('Y-m-d H:i:s', strtotime('+0 minutes', strtotime($time)));
+                                                      $exp2 = $row['exp'];                    
+                                                      $calculate2 =strtotime("$exp2")-strtotime("$datestart2");
+                                                      $summary2=floor($calculate2); // 86400 วินาที / 60 / 60 (1วัน = 24 ชม.)
+                                                      $summaryhr=floor($calculate2 / 60 / 60);
+                                                      $summarymi=floor($calculate2 / 60 + 1);
+                                                      $summaryday=floor($calculate2 / 86400);
+                                                     
+                                                if($row['day']!='หมดอายุ'){      
+                                                     if($summary2 >= 86400){
+                                                     echo $summaryday;   echo  "  วัน";
+                                                        $sql = "UPDATE products SET day='$summaryday' WHERE id=$id";
+                                                        if (mysqli_query($connect, $sql)) {
+                                                           // echo 'update success';
+                                                        } else {
+                                                           // echo 'update errror';                                                            
+                                                        }
+                                                     }else{
+                                                        echo '<i style="color:red;">'.
+                                                        $summaryhr.'</i>';
+                                                        echo  "  ชั่วโมง";
+                                                        $sql = "UPDATE products SET day='$summaryhr' WHERE id=$id";
+                                                        if (mysqli_query($connect, $sql)) {
+                                                           // echo 'update success';
+                                                        } else {
+                                                         //   echo 'update errror';                                                            
+                                                        }
+                                                      }if($summary2 < 3600){
+                                                        echo '<i style="color:red;">'.
+                                                        $summarymi.'</i>';
+                                                        echo  "  นาที";
+                                                        $sql = "UPDATE products SET day='$summarymi' WHERE id=$id";
+                                                        if (mysqli_query($connect, $sql)) {
+                                                           // echo 'update success';
+                                                        } else {
+                                                         //   echo 'update errror';                                                            
+                                                        }
+                                                      }
+                                                      if($summarymi <= 0){
+                                                        $sql = "UPDATE products SET day='หมดอายุ' WHERE id=$id";
+                                                        if (mysqli_query($connect, $sql)){
+                                                            // echo 'update success';
+                                                         } else {
+                                                          //   echo 'update errror';                                                            
+                                                         }
+                                                         echo 'หมดอายุ';
+                                                    }
+                                                    }else{
+                                                        echo $row['day'];
+                                                        }                                              
+                                                    ?></p>
+                                                    <hr>
+                                                    <p>วันที่สร้าง: <?php echo dateThai($row['created_at']) ?></p>
+                                                    <p>วันที่แก้ไข: <?php echo dateThai($row['updated_at']) ?></p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endwhile; ?>
+                                </tbody>
+                            </table>    
+                            <?php 
+                                else: 
+                                    echo "<p class='mt-5'>ไม่มีข้อมูลในฐานข้อมูล</p>"; 
+                                endif; 
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+   
+                        <!-- Footer -->
             <footer class=" container my-auto">
                      <div class="copyright text-center my-auto">
                         <span>Copyright &copy; Dew Tadapong Sutthikitrungtoj Website</span>
                     </div>
             </footer>
             <!-- End of Footer -->
-
-        </div>
-        <!-- End of Content Wrapper -->
-
+ 
     </div>
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
-    </a>
+    </a> 
+   
 
-         <!-- Modal Profile-->
-        <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-body-id">
-                </div>
-            </div>
-        </div>
+    <!-- กันข้อความล้นขอบตางรางกับโมเดิล-->
     <style>
         #hidden-text{
             width:100%;
@@ -354,4 +469,5 @@ require_once('php/connect.php');
  
     <?php mysqli_close($connect) ?>
 </body>
+
 </html>
