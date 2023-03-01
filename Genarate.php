@@ -91,7 +91,7 @@ if(isset($_SESSION['fristname']))
                     <div class="bg-white py-2 collapse-inner rounded">
                        <!--  <h6 class="collapse-header">Custom Components:</h6> -->
                         <a class="collapse-item active" href="Genarate.php">GenarateCoupon</a>
-                        <a class="collapse-item" href="Allcoupon.php">AllCoupon</a>
+                        <a class="collapse-item" href="Allcoupon.php">Preview</a>
                     </div>
                 </div>
             </li>
@@ -481,8 +481,7 @@ if(isset($_SESSION['fristname']))
                 </div>
             </div>
     </div>
-  
- 
+   
                         <!-- Footer -->
             <footer class=" container my-auto">
                      <div class="copyright text-center my-auto">

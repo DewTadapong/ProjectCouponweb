@@ -281,7 +281,7 @@ require_once('php/connect.php');
                    
   
             <!-- Footer -->
-            <footer class=" container my-auto">
+            <footer class="container my-auto">
                      <div class="copyright text-center my-auto">
                         <span>Copyright &copy; Dew Tadapong Sutthikitrungtoj Website</span>
                     </div>
@@ -323,7 +323,8 @@ require_once('php/connect.php');
         }
         .dropdown-item{
         cursor: pointer;
-        }  
+        }
+ 
     </style>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>

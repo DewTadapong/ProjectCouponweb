@@ -21,7 +21,7 @@ if(isset($_SESSION['fristname']))
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Export - Coupon</title>
+    <title>Preview - Coupon</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -37,9 +37,7 @@ if(isset($_SESSION['fristname']))
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.css">
     <!-- Bootstrap5 แบบ bundle คือการนำ Popper มารวมไว้ในไฟล์เดียว -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- css card-->
-    <link rel="stylesheet" href="stylecard.css" />
-</head>
+ </head>
 <body id="page-top">
  
     <!-- Page Wrapper -->
@@ -91,8 +89,8 @@ if(isset($_SESSION['fristname']))
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                        <!--  <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="Genarate.php">GenarateCoupon</a>
-                        <a class="collapse-item active" href="Allcoupon.php">ExportCoupon</a>
+                        <a class="collapse-item " href="Genarate.php">GenarateCoupon</a>
+                        <a class="collapse-item active" href="Allcoupon.php">Preview</a>
                     </div>
                 </div>
             </li>
@@ -169,6 +167,12 @@ if(isset($_SESSION['fristname']))
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+
+<!-------------------------------------------->
+                    <div class="add-flashcard-con">
+                <button id="add-flashcard">Add Flashcard</button>
+            </div>
+<!-------------------------------------------->
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
@@ -271,58 +275,42 @@ if(isset($_SESSION['fristname']))
 
                 </nav>
                 <!-- End of Topbar -->
-                                     
-            <div class="container">
-            <div class="add-flashcard-con">
-                <button id="add-flashcard">Add Flashcard</button>
-            </div>
-
-            <!-- Display Card of Question And Answers Here -->
-            <div id="card-con">
-                <div class="card-list-container"></div>
-            </div>
-            </div>
-
-            <!-- Input form for users to fill question and answer -->
-            <div class="question-container hide" id="add-question-card">
-            <h2>Add Flashcard</h2>
-            <div class="wrapper">
-                <!-- Error message -->
-                <div class="error-con">
-                <span class="hide" id="error">Input fields cannot be empty!</span>
-                </div>
-                <!-- Close Button -->
-                <i class="fa-solid fa-xmark" id="close-btn"></i>
-            </div>
-
-            <label for="question">Question:</label>
-            <textarea
-                class="input"
-                id="question"
-                placeholder="Type the question here..."
-                rows="2"
-            ></textarea>
-            <label for="answer">Answer:</label>
-            <textarea
-                class="input"
-                id="answer"
-                rows="4"
-                placeholder="Type the answer here..."
-            ></textarea>
-            <button id="save-btn">Save</button>
-            </div>
-            <!-- Script addcard -->
-            <script src="scriptcard.js"></script>
+ <br>
+<?php if (mysqli_num_rows($result) > 0): ?>                           
+    <?php while ($row = mysqli_fetch_assoc($result)):?>
+        <div class="d-flex justify-content-center">
+          <div id="card-con">
+            <div class="card-list-container">
+                <div class="card">
+                    <?php $row['id'] ?><br><br><br><br> 
+                    <h4 class="border-black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                    <?php echo $row['name'] ?></h4>
+                    <div class="col-8 col-md-6" id="hidden-text"><div class="border-black-sm"> <h7><?php echo $row['detail'] ?>&nbsp; </h7></div></div>
+                    <img class="codepic" alt="barcode" src="php/barcode.php?codetype=Code128&size=27&text=<?php echo $row['barcode']?>&
+                                                    print=true" />   
+                </div><br>
+            </div>    
+        </div>     
+    </div>    
+    <?php endwhile; ?>                                
+<?php else: echo "<p class='mt-5'>ไม่มีข้อมูลในฐานข้อมูล</p>"; 
+endif; 
+?>
 
 
-          <!-- Modal Profile-->
+                                    
+        <!-- Modal Profile-->
         <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-           <div class="modal-dialog modal-sm">
+            <div class="modal-dialog modal-sm">
                 <div class="modal-body-id">
                 </div>
             </div>
         </div>
-       
+   
+ 
     </div>
     <!-- End of Page Wrapper -->
 
@@ -350,6 +338,54 @@ if(isset($_SESSION['fristname']))
         }
         .dropdown-item{
         cursor: pointer;
+        }
+        .card{
+        width: 380px;
+        height: 230px;  
+        background-image: url('img/coupon1.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        }
+        .codepic {             
+        position: absolute;
+        bottom: 5px;
+        right: 9;
+        width: 150px;
+        height: 55px;     
+        }
+        .h4name{
+        font-weight: bold;
+        }
+         .border-black{
+        color: grey;
+        /*border white with light shadow*/
+        text-shadow:
+        2px 0 0 #000,
+        -2px 0 0 #000,
+        0 2px 0 #000,
+        0 -2px 0 #000,
+        1px 1px 0 #000,
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 5px #000;
+        }
+        .border-black-sm{
+        color: grey;
+        /*border white with light shadow*/
+        text-shadow:
+        0.5px 0 0 #000,
+        -2px 0 0 #000,
+        0 1px 0 #000,
+        0 -1px 0 #000,
+        0.5px 0.5px 0 #000,
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 5px #000;
+        }
+        .h7{
+            font-size: 3.5rem;
         }  
     </style>
     <!-- Bootstrap core JavaScript-->
