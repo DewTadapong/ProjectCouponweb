@@ -290,12 +290,12 @@ $row = mysqli_fetch_assoc($result);
                                     <form class="row gy-4" action="php/updatecouponprocess.php" method="POST">
                                         <div class="col-md-12">
                                             <label for="name" class="form-label">ชื่อคูปอง</label>
-                                            <input type="text" class="form-control" id="name" name="name" placeholder="ชื่อคูปอง" value="<?php echo $row['name'] ?>"required>
+                                            <input type="text" class="form-control" id="name" name="name" maxlength="38" placeholder="ชื่อคูปอง" value="<?php echo $row['name'] ?>"required>
                                         </div>
                                         <div class="col-md-12">
                                             <br>
                                             <label for="detail" class="form-label">รายละเอียดคูปอง</label>
-                                            <textarea type="text" class="form-control" id="detail" name="detail" rows="5" 
+                                            <textarea type="text" class="form-control" id="detail" name="detail" rows="5"  maxlength="110"
                                             placeholder="ลดราคา kiku ทุกสาขา 5% เมื่อมียอดสั่งซื้อมากกว่า 2000 บาท" required>
                                             <?php echo $row['detail'] ?></textarea>
                                         </div>

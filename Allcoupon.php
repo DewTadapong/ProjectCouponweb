@@ -167,13 +167,7 @@ if(isset($_SESSION['fristname']))
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-<!-------------------------------------------->
-                    <div class="add-flashcard-con">
-                <button id="add-flashcard">Add Flashcard</button>
-            </div>
-<!-------------------------------------------->
-
+  
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
                             <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
@@ -282,15 +276,15 @@ if(isset($_SESSION['fristname']))
           <div id="card-con">
             <div class="card-list-container">
                 <div class="card">
-                    <?php $row['id'] ?><br><br><br><br> 
-                    <h4 class="border-black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                    <?php echo $row['name'] ?></h4>
-                    <div class="col-8 col-md-6" id="hidden-text"><div class="border-black-sm"> <h7><?php echo $row['detail'] ?>&nbsp; </h7></div></div>
+                    <?php $row['id'] ?><br><br><br><br>
+                    <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;    
+                    <div class="col-8 col-md-6" id="hidden-text">
+                    <div class="border-black-sm"><h7><?php echo $row['detail'] ?></h7></div></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="col-7 col-md-5" id="hidden-text-name"><h4 class="border-black"> 
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><?php echo $row['name'] ?></h4></div>
                     <img class="codepic" alt="barcode" src="php/barcode.php?codetype=Code128&size=27&text=<?php echo $row['barcode']?>&
                                                     print=true" />   
+                                                </div>
                 </div><br>
             </div>    
         </div>     
@@ -324,6 +318,7 @@ endif;
     <style>
         #hidden-text{
             width:100%;
+            top: 75px;
             width:inherit !important; /* hack firefox , chrome ,safari*/
             overflow:hidden
         }
@@ -340,18 +335,18 @@ endif;
         cursor: pointer;
         }
         .card{
-        width: 380px;
-        height: 230px;  
+        width: 490px;
+        height: 300px;  
         background-image: url('img/coupon1.png');
         background-repeat: no-repeat;
         background-size: cover;
         }
         .codepic {             
         position: absolute;
-        bottom: 5px;
+        bottom: 10px;
         right: 9;
         width: 150px;
-        height: 55px;     
+        height: 70px;     
         }
         .h4name{
         font-weight: bold;

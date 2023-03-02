@@ -199,7 +199,7 @@ if(isset($_SESSION['fristname']))
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
+                                <span class="badge badge-danger badge-counter">1+</span>
                             </a>
                             <!-- Dropdown - Alerts -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -213,9 +213,10 @@ if(isset($_SESSION['fristname']))
                                             <i class="fas fa-file-alt text-white"></i>
                                         </div>
                                     </div>
+                                    
                                     <div>
-                                        <div class="small text-gray-500">February 17, 2023</div>
-                                        <span class="font-weight-bold">ทดสอบแจ้งเตื่อนเฉยๆอย่ารีบสิ</span>
+                                        <div class="small text-gray-500"><?php echo date("Y-m-d H:i:s")?></div>
+                                        <span class="font-weight-bold">วันนี้มีคูปองหมดอายุ</span>
                                     </div>
                                 </a>           
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
@@ -304,7 +305,7 @@ if(isset($_SESSION['fristname']))
                                 <?php while ($row = mysqli_fetch_assoc($result)):?>
                                     <tr class="text-center">
                                         <?php $row['id'] ?>
-                                        <td> <?php echo $row['name'] ?> </td>
+                                        <td style="column-width:100px;white-space: normal; "> <?php echo $row['name'] ?> </td>
                                         <td style="column-width:250px;white-space: normal; "><div id="hidden-text"><?php echo $row['detail'] ?></div></td>
                                         <td> <?php echo $row['amount'] ?></td>
                                         <td> <?php echo dateThai($row['exp']) ?></td>
@@ -344,12 +345,12 @@ if(isset($_SESSION['fristname']))
                                                 <div class="modal-body">
                                                         <div class="col-md-12">
                                                             <label for="name" class="form-label">ชื่อคูปอง</label>
-                                                            <input type="text" class="form-control" id="name" name="name" placeholder="ชื่อคูปอง" required>
+                                                            <input type="text" class="form-control" id="name" name="name" maxlength="38" placeholder="ชื่อคูปอง" required>
                                                         </div>
                                                         <div class="col-md-12">
                                                             <br>
                                                             <label for="detail" class="form-label">รายละเอียดคูปอง</label>
-                                                            <textarea type="text" class="form-control" id="detail" name="detail" rows="5" placeholder="ลดราคา kiku ทุกสาขา 5% เมื่อมียอดสั่งซื้อมากกว่า 2000 บาท" required></textarea>
+                                                            <textarea type="text" class="form-control" id="detail" name="detail" rows="5" maxlength="110" placeholder="ลดราคา kiku ทุกสาขา 5% เมื่อมียอดสั่งซื้อมากกว่า 2000 บาท" required></textarea>
                                                         </div>
                                                 <div class="container">
                                                     <div class="row">    
@@ -458,7 +459,7 @@ if(isset($_SESSION['fristname']))
                                                         echo $row['day'];
                                                         }                                              
                                                     ?></p>
-                                                    <hr>
+                                                    <hr> 
                                                     <p>วันที่สร้าง: <?php echo dateThai($row['created_at']) ?></p>
                                                     <p>วันที่แก้ไข: <?php echo dateThai($row['updated_at']) ?></p>
                                                 </div>
