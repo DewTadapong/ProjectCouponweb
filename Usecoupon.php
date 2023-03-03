@@ -320,7 +320,7 @@ if (isset($_SESSION['fristname']))
                                     </table> 
                                     <div class="row">
                                         <div class="col-10 col-sm-8">
-                                            <h5 class="text-start"  style="display: inline;">ราคารวมทั้งหมด</h5>
+                                            <h5 class="text-start"  style="display: inline;">ราคาทั้งหมด</h5>
                                             <h3  style="display: inline;color:crimson;font-weight: bold;">&nbsp;&nbsp;
                                              &nbsp;</h3>
                                             <h5 style="display: inline;">บาท</h5>

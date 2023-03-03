@@ -345,7 +345,7 @@ if(isset($_SESSION['fristname']))
                                                 <div class="modal-body">
                                                         <div class="col-md-12">
                                                             <label for="name" class="form-label">ชื่อคูปอง</label>
-                                                            <input type="text" class="form-control" id="name" name="name" maxlength="38" placeholder="ชื่อคูปอง" required>
+                                                            <input type="text" class="form-control" id="name" name="name" maxlength="38" placeholder="ลดราคา 5%" required>
                                                         </div>
                                                         <div class="col-md-12">
                                                             <br>
@@ -367,7 +367,18 @@ if(isset($_SESSION['fristname']))
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <br>                                       
+                                                <br>     
+                                                    <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+                                                        <div class="col-md-5">
+                                                            <label for="exampleInputFile">เปอร์เซ็นที่ลด</label>
+                                                                <input type="number" class="form-control" id="discount" name="discount" min="1" max="99" placeholder="5" required>
+                                                        </div>&nbsp;&nbsp;&nbsp; 
+                                                        <div class="col-md-5">
+                                                            <label for="exampleInputFile">ยอดขั้นต่ำในการใช้</label>
+                                                                <input type="number" class="form-control" id="position" name="position" min="1000" placeholder="5000" required>
+                                                        </div>                 
+                                                    </div>
+                                                          
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <div class="input-group col-xs-12">
@@ -379,6 +390,7 @@ if(isset($_SESSION['fristname']))
                                                                 </div>
                                                             </div>
                                                         </div>
+ 
                                                  </div>
                                                 <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>

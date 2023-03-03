@@ -19,9 +19,7 @@ $total = $record['count'];
 
 $sqlcoupon = "SELECT * FROM products WHERE barcode ='$couponcode' AND day!='หมดอายุ'";
 $resultcouponcode = mysqli_query($connect, $sqlcoupon);
-
-$sqlcoupon2 = "SELECT * FROM products ";
-$resultcouponcode2 = mysqli_query($connect, $sqlcoupon2);
+ 
 ?>
 <!DOCTYPE html>
 <html lang="en">    
@@ -328,10 +326,10 @@ $resultcouponcode2 = mysqli_query($connect, $sqlcoupon2);
                                         <?php while ($row = mysqli_fetch_assoc($resultcouponcode)):?>
                                             <?php $row['id']?>
                                         <h5 class="text-start" id="namecoupon"  style="display: inline;color:crimson;font-weight: bold;">                                      
-                                        <?php 
-                                         
+                                        <?php      
                                             echo $row['name'];
-                                        
+                                            $numdiscount = $row['discount'];
+                                            $position = $row['position']; // ตัวเลขลดเมื่อมากกว่ากี่บาท
                                         ?>
                                         </h5>
                                         <?php endwhile?>
@@ -363,12 +361,11 @@ $resultcouponcode2 = mysqli_query($connect, $sqlcoupon2);
                                             <?php endwhile; ?>
                                             </tbody>
                                     </table><br>
-                                    <?php 
-                                  
-                                    ?>
-                                      <div class="row">
+                                     
+
+                                    <div class="row">
                                         <div class="col-10 col-sm-8">
-                                             <h5 class="text-start"  style="display: inline;">ราคารวมทั้งหมด</h5>
+                                             <h5 class="text-start"  style="display: inline;">ราคาทั้งหมด</h5>
                                             <h3  style="display: inline;color:crimson;font-weight: bold;">&nbsp;&nbsp;
                                             <?php echo $total;?>
                                             &nbsp;</h3>
@@ -376,15 +373,22 @@ $resultcouponcode2 = mysqli_query($connect, $sqlcoupon2);
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <h5 class="text-start" style="display: inline;">ได้รับส่วนลด</h5>
                                             <h3 style="display: inline;color:yellowgreen;font-weight: bold;">&nbsp;&nbsp;
-                                            
+                                            <?php 
+                                            if($total < $position){
+                                                echo '<h5 style="display: inline;color:red;font-weight: bold;">ไม่ได้รับส่วนลด<h5>';
+                                            }else{
+                                                echo $discountprice = $total * $numdiscount / 100;
+                                            } 
+                                            ?>
                                             &nbsp;
                                             </h3><h5 style="display: inline;">บาท</h5>
                                             <br><br>
                                             <h5 class="text-start" style="display: inline;">ราคาที่ต้องจ่ายหลังหักส่วนลด&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             &nbsp;&nbsp;
                                             <h1 style="display: inline;color:darkgreen;font-weight: bold;">
-                                           
-                                           
+                                            <?php 
+                                                echo $totalresult = $total - $discountprice;
+                                            ?>
                                             </h1>
                                              <h5 style="display: inline;">บาท</h5>
                                         </div>
@@ -392,7 +396,6 @@ $resultcouponcode2 = mysqli_query($connect, $sqlcoupon2);
                                             <div type="submit" name="submit" class="btn btn-success btn-lg fa-pull-right">ชำระเงิน</div>
                                         </div>     
                                     </div>
- 
                                     
 
                                 </div>  
