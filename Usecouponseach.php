@@ -6,9 +6,25 @@ if (!isset($_SESSION['username'], $_SESSION['password'])) {
 }
 require_once('php/connect.php');
 if (isset($_SESSION['fristname']))
+$itemnumber=$_POST['itemnumber'];
+$couponcode=$_POST['couponcode'];
+
+$sqlhistory = "SELECT * FROM historysell WHERE itemnumber ='$itemnumber'";
+$resulthistory = mysqli_query($connect, $sqlhistory);
+ 
+$sqlprice = "SELECT SUM(pricetwo) AS count FROM historysell WHERE itemnumber ='$itemnumber'";
+$duration = $connect->query($sqlprice);
+$record = $duration->fetch_array();
+$total = $record['count'];
+
+$sqlcoupon = "SELECT * FROM products WHERE barcode ='$couponcode' AND day!='หมดอายุ'";
+$resultcouponcode = mysqli_query($connect, $sqlcoupon);
+
+$sqlcoupon2 = "SELECT * FROM products ";
+$resultcouponcode2 = mysqli_query($connect, $sqlcoupon2);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en">    
 
 <head>
 
@@ -48,7 +64,8 @@ if (isset($_SESSION['fristname']))
     <script>
         function myFunction() {
          $seach = document.getElementById("itemnumber").value;   
-         }                                                 
+         alert($seach);                                                 
+        }                                                 
     </script>
 
 </head>
@@ -165,8 +182,7 @@ if (isset($_SESSION['fristname']))
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-
-                  
+ 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
@@ -286,10 +302,11 @@ if (isset($_SESSION['fristname']))
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                     
                                     <h5 style="display: inline;"> <?php echo dateThai(date("Y-m-d H:i:s")) ?> </h5>
                                     <form action="Usecouponseach.php" method="POST">
                                         <div class="row justify-content-end">                    
+                                        
                                             <div class="col-1.5 col-sm-1.5"><br>
                                             <h5 id="demo">เลขที่รายการ</h5> 
                                             </div>
@@ -303,45 +320,81 @@ if (isset($_SESSION['fristname']))
                                             </div>
                                             <div class="col-5 col-sm-3"><br>                                 
                                                 <input type="text" class="form-control" name="couponcode" id="couponcode" maxlength="10" placeholder="ชื่อคูปอง" value="" required>
-                                            </div>                                             
+                                            </div>
                                             <button class="btn btn-primary" type="submit"><i class="fas fa-search fa-sm"></i></button>
+
                                         </div><br>
-                                        <p class="text-start" id="namecoupon">คูปองนี้</p> 
+                                        <p class="text-start" style="display: inline;">คูปองนี้</p>&nbsp;&nbsp;&nbsp;
+                                        <?php while ($row = mysqli_fetch_assoc($resultcouponcode)):?>
+                                            <?php $row['id']?>
+                                        <h5 class="text-start" id="namecoupon"  style="display: inline;color:crimson;font-weight: bold;">                                      
+                                        <?php 
+                                         
+                                            echo $row['name'];
+                                        
+                                        ?>
+                                        </h5>
+                                        <?php endwhile?>
                                     </form>
-                                    <p class="text-start" >เลขที่รายการ</p>
+                                    <br>
+                                   
                                     <table class="table table-bordered">
+                                        <thead>
                                         <tr class="text-center text-dark bg-light">
                                             <th><h5>รายการ</h5></th>
                                             <th><h5>ราคาต่อหน่วย</h5></th>
                                             <th><h5>จำนวน</h5></th>
                                             <th><h5>ราคารวม</h5></th>
                                         </tr>
-                                             
-                                    </table> 
-                                    <div class="row">
+                                        </thead>
+                                            <tbody>
+                                            <p class="text-start" style="display: inline;">เลขที่รายการ</p>    
+                                            <h5 id="codefood" style="display: inline;">&nbsp;&nbsp;
+                                            <?php echo $_POST['itemnumber'];?></h5>
+                                            <?php while ($row = mysqli_fetch_assoc($resulthistory)):?>
+                                            <tr class="text-center"> 
+                                             <?php $row['id']?>
+                                            <td style="column-width:300px;white-space: normal; "> <?php echo $row['name']?> </td>
+                                            <td style="column-width:80px;white-space: normal; "> <?php echo $row['priceone']?> </td>
+                                            <td style="column-width:80px;white-space: normal; "> <?php echo $row['amount']?> </td>
+                                            <td style="column-width:80px;white-space: normal; "> <?php echo $row['pricetwo']?> </td>
+                                            
+                                            </tr>
+                                            <?php endwhile; ?>
+                                            </tbody>
+                                    </table><br>
+                                    <?php 
+                                  
+                                    ?>
+                                      <div class="row">
                                         <div class="col-10 col-sm-8">
-                                            <h5 class="text-start"  style="display: inline;">ราคารวมทั้งหมด</h5>
+                                             <h5 class="text-start"  style="display: inline;">ราคารวมทั้งหมด</h5>
                                             <h3  style="display: inline;color:crimson;font-weight: bold;">&nbsp;&nbsp;
-                                             &nbsp;</h3>
+                                            <?php echo $total;?>
+                                            &nbsp;</h3>
                                             <h5 style="display: inline;">บาท</h5>
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <h5 class="text-start" style="display: inline;">ได้รับส่วนลด</h5>
                                             <h3 style="display: inline;color:yellowgreen;font-weight: bold;">&nbsp;&nbsp;
-                                             &nbsp;
+                                            
+                                            &nbsp;
                                             </h3><h5 style="display: inline;">บาท</h5>
                                             <br><br>
                                             <h5 class="text-start" style="display: inline;">ราคาที่ต้องจ่ายหลังหักส่วนลด&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             &nbsp;&nbsp;
                                             <h1 style="display: inline;color:darkgreen;font-weight: bold;">
-                                             
+                                           
+                                           
                                             </h1>
-                                            <h5 style="display: inline;">บาท</h5>
+                                             <h5 style="display: inline;">บาท</h5>
                                         </div>
                                         <div class="col-6 col-sm-4">
                                             <div type="submit" name="submit" class="btn btn-success btn-lg fa-pull-right">ชำระเงิน</div>
                                         </div>     
                                     </div>
-                                     
+ 
+                                    
+
                                 </div>  
                             </div>
                         </div>

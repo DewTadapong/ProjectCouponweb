@@ -306,8 +306,8 @@ $row = mysqli_fetch_assoc($result);
                                         </div>
                                         <div class="col-md-6">
                                             <br>
-                                            <label for="price" class="form-label">วันหมดอายุ</label>
-                                          <!--<input type="number" class="form-control" id="price" name="price" min="0" max="999999" placeholder="วันหมดอายุ" value="<?php echo $row['price'] ?>"required>-->
+                                            <!--<label for="price" class="form-label">วันหมดอายุ</label>
+                                          <input type="number" class="form-control" id="price" name="price" min="0" max="999999" placeholder="วันหมดอายุ" value="<?php echo $row['price'] ?>"required>-->
                                         </div>
                                         <input type="hidden" name="id" value="<?php echo $_GET['id'] ?>" >
                                         <div class="col-12">

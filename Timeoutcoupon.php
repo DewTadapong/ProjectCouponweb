@@ -9,6 +9,7 @@ include 'php/barcode128.php';
 if(isset($_SESSION['fristname']))
     $sql = "SELECT * FROM products WHERE day='หมดอายุ'";
     $result = mysqli_query($connect, $sql);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -323,10 +324,10 @@ if(isset($_SESSION['fristname']))
                                                 <button name="info"
                                                 class="btn btn-primary" 
                                                         data-bs-toggle="modal" 
-                                                        data-bs-target="#my-modal<?php echo $row['id'] ?>" 
+                                                        data-bs-target="#useagain-modal<?php echo $row['id'] ?>" 
                                                         style="width: 105px;"> ใช้อีกครั้ง </button>
                                               
-                                                 <a href="/Couponweb/php/deletecouponprocess.php?id=<?php echo $row['id'] ?>" class="btn btn-danger"> ลบ </a>
+                                                 <a href="/Couponweb/php/deletecouponprocessout.php?id=<?php echo $row['id'] ?>" class="btn btn-danger"> ลบ </a>
  
                                             </div>
                                         </td>
@@ -335,14 +336,14 @@ if(isset($_SESSION['fristname']))
                                 <!-- Modal Profile-->
                                 <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-sm">
-                                            <div class="modal-body-id">
-                                            </div>
+                                        <div class="modal-body-id">
                                         </div>
+                                    </div>
                                 </div>
        
                                     <!-- Modal Read-->
-                                    <form class="row gy-4" action="php/updateuseagain.php"  method="POST">
-                                    <div class="modal fade" id="my-modal<?php echo $row['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"  >
+                                    <form class="row gy-4" action="php/updateuseagain.php?id=<?php echo $row['id']?>"  method="POST">
+                                    <div class="modal fade" id="useagain-modal<?php echo $row['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"  >
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -351,7 +352,7 @@ if(isset($_SESSION['fristname']))
                                                     print=true" />
                                                 </div>
                                             <div class="modal-body">
-                                                    <?php $id=$row['id'] ?>
+                                                    <?php $id=$row['id'];?>
                                                     <p>ชื่อคูปอง: <?php echo $row['name'] ?></p>
                                                     <p>รายละเอียด: <?php echo $row['detail'] ?></p>
                                                     <p>จำนวนคูปอง: <?php echo number_format($row['amount'], 0) ?> รายการ</p>
