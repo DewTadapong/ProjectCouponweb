@@ -319,7 +319,7 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon);
                                             <div class="col-5 col-sm-3"><br>                                 
                                                 <input type="text" class="form-control" name="couponcode" id="couponcode" maxlength="10" placeholder="ชื่อคูปอง" value="" required>
                                             </div>
-                                            <button class="btn btn-primary" type="submit"><i class="fas fa-search fa-sm"></i></button>
+                                            <button class="btn btn-primary" type="submit" onclick="action()"><i class="fas fa-search fa-sm" onclick="action()"></i></button>
 
                                         </div><br>
                                         <p class="text-start" style="display: inline;">คูปองนี้</p>&nbsp;&nbsp;&nbsp;
@@ -362,29 +362,32 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon);
                                             </tbody>
                                     </table><br>
                                      
-
+                                    <form action="php/submitdiscount.php" method="POST">
                                     <div class="row">
                                         <div class="col-10 col-sm-8">
                                              <h5 class="text-start"  style="display: inline;">ราคาทั้งหมด</h5>
                                             <h3  style="display: inline;color:crimson;font-weight: bold;">&nbsp;&nbsp;
                                             <?php echo $total;?>
-                                            &nbsp;</h3>
+                                                </h3>
                                             <h5 style="display: inline;">บาท</h5>
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <h5 class="text-start" style="display: inline;">ได้รับส่วนลด</h5>
                                             <h3 style="display: inline;color:yellowgreen;font-weight: bold;">&nbsp;&nbsp;
                                             <?php 
                                             if($total < $position){
+                                                $discountprice = 0;
                                                 echo '<h5 style="display: inline;color:red;font-weight: bold;">ไม่ได้รับส่วนลด<h5>';
+                                                echo '<input name="statusdiscount" value="0" style="visibility: hidden;"></input>';
                                             }else{
                                                 echo $discountprice = $total * $numdiscount / 100;
+                                                echo '&nbsp;&nbsp;<h5 style="display: inline;">บาท</h5>';
+                                                echo '<input name="statusdiscount" value="1" style="visibility: hidden;"></input>';
                                             } 
                                             ?>
-                                            &nbsp;
-                                            </h3><h5 style="display: inline;">บาท</h5>
-                                            <br><br>
-                                            <h5 class="text-start" style="display: inline;">ราคาที่ต้องจ่ายหลังหักส่วนลด&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            &nbsp;&nbsp;
+                                            
+                                            </h3>
+                                            <br>
+                                            <h5 class="text-start" style="display: inline;">ราคาที่ต้องจ่ายหลังหักส่วนลด&nbsp;&nbsp;&nbsp;&nbsp;  
                                             <h1 style="display: inline;color:darkgreen;font-weight: bold;">
                                             <?php 
                                                 echo $totalresult = $total - $discountprice;
@@ -392,11 +395,58 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon);
                                             </h1>
                                              <h5 style="display: inline;">บาท</h5>
                                         </div>
+                                        
                                         <div class="col-6 col-sm-4">
-                                            <div type="submit" name="submit" class="btn btn-success btn-lg fa-pull-right">ชำระเงิน</div>
-                                        </div>     
+                                            <?php
+                                            if($discountprice>=1){
+                                            echo '<div class="btn btn-success"
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#sell-modal" 
+                                                        style="width: 200px; height: 60px;"><h1>ชำระเงิน</h1></div>';
+                                            }else{
+                                                echo "<script>";
+                                                echo "Swal.fire({
+                                                        position: 'center',
+                                                        icon: 'error',
+                                                        title: '!-Coupon Falls-!',
+                                                        text: '!ไม่สามารถใช้คูปองได้เนื่องจากยอดสั่งซื้อไม่ถึง!',
+                                                        showComfirmButton: false,
+                                                        timer: 3000
+                                                }).then((result) => {
+                                                        if(result){
+                                                                window.location = '/Couponweb/Usecoupon.php';
+                                                        }
+                                                })";
+                                                echo "</script>";          
+                                            }
+                                            ?>
+                                        </div>   
                                     </div>
-                                    
+                                        <!-- Modal กดชำระเงิน-->
+                                        <div class="modal fade" id="sell-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">         
+                                                <div class="modal-content">
+                                                    <?php
+                                                    
+                                                        echo '<div class="modal-header">';
+                                                        echo '<h4 class="modal-title" id="exampleModalLabel">การชำระเงิน</h4>';
+                                                        echo '</div>';
+                                                        echo '<div class="modal-body">';
+                                                            echo '<div class="col-md-12">';
+                                                                echo '<h3 class="form-label" style="display: inline;color:darkgreen;font-weight: thin;">รับเงิน</h3>';
+                                                                echo '<input type="number" class="form-control" name="inputmoney" placeholder="'.$totalresult.'" value="'.$totalresult.'" min="'.$totalresult.'" required>';
+                                                            echo '</div>';
+                                                        echo '</div>';
+                                                        echo '<div class="modal-footer">';
+                                                        echo '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>';
+                                                        echo '<button type="submit" name="submit" class="btn btn-success">ชำระเงิน</button>';
+                                                        echo '</div>';
+                                                   
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form> 
 
                                 </div>  
                             </div>
@@ -411,13 +461,15 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon);
 
     </div>
     <!-- End of Page Wrapper -->
- <!-- Modal Profile-->
- <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-sm">
-                                         <div class="modal-body-id">
-                                        </div>
-                                     </div>
-                                    </div>
+    
+    <!-- Modal Profile-->
+    <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-body-id">
+            </div>
+        </div>
+    </div>
+
     <style>
     .container {
     max-width: 100%;

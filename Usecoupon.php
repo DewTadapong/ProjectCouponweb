@@ -318,29 +318,7 @@ if (isset($_SESSION['fristname']))
                                         </tr>
                                              
                                     </table> 
-                                    <div class="row">
-                                        <div class="col-10 col-sm-8">
-                                            <h5 class="text-start"  style="display: inline;">ราคาทั้งหมด</h5>
-                                            <h3  style="display: inline;color:crimson;font-weight: bold;">&nbsp;&nbsp;
-                                             &nbsp;</h3>
-                                            <h5 style="display: inline;">บาท</h5>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <h5 class="text-start" style="display: inline;">ได้รับส่วนลด</h5>
-                                            <h3 style="display: inline;color:yellowgreen;font-weight: bold;">&nbsp;&nbsp;
-                                             &nbsp;
-                                            </h3><h5 style="display: inline;">บาท</h5>
-                                            <br><br>
-                                            <h5 class="text-start" style="display: inline;">ราคาที่ต้องจ่ายหลังหักส่วนลด&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            &nbsp;&nbsp;
-                                            <h1 style="display: inline;color:darkgreen;font-weight: bold;">
-                                             
-                                            </h1>
-                                            <h5 style="display: inline;">บาท</h5>
-                                        </div>
-                                        <div class="col-6 col-sm-4">
-                                            <div type="submit" name="submit" class="btn btn-success btn-lg fa-pull-right">ชำระเงิน</div>
-                                        </div>     
-                                    </div>
+ 
                                      
                                 </div>  
                             </div>

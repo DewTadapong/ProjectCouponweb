@@ -275,7 +275,7 @@ if(isset($_SESSION['fristname']))
         <div class="d-flex justify-content-center">
           <div id="card-con">
             <div class="card-list-container">
-                <div class="card">
+                <div class="card" style="background-image: url('img/coupon1.png')">
                     <?php $row['id'] ?><br><br><br><br>
                     <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;    
                     <div class="col-8 col-md-6" id="hidden-text">
@@ -337,7 +337,6 @@ endif;
         .card{
         width: 490px;
         height: 300px;  
-        background-image: url('img/coupon1.png');
         background-repeat: no-repeat;
         background-size: cover;
         }
