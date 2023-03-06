@@ -332,9 +332,9 @@ if(isset($_SESSION['fristname']))
                                         </div>
                                      </div>
                                     </div>
- 
+                                    
                                     <!-- Modal ADD-->
-                                    <form class="row gy-4" action="php/genaratecouponprocess.php"  method="POST">
+                                    <form class="row gy-4" action="php/genaratecouponprocess.php"  method="POST" enctype="multipart/form-data">
                                     <div class="modal fade" id="add-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -359,8 +359,7 @@ if(isset($_SESSION['fristname']))
                                                             <label for="amount" class="form-label">จำนวน</label>
                                                             <input type="number" class="form-control" id="amount" name="amount" min="0" max="100" placeholder="จำนวน" required>
                                                         </div>
-                                                        <!-- /.input picture-->
-                                                        <div class="col-md-6">
+                                                         <div class="col-md-6">
                                                         <br>
                                                             <label for="">วันเเละเวลาหมดอายุคูปอง</label>
                                                             <input type="datetime-local" name="exp" class="form-control">
@@ -377,20 +376,13 @@ if(isset($_SESSION['fristname']))
                                                             <label for="exampleInputFile">ยอดขั้นต่ำในการใช้</label>
                                                                 <input type="number" class="form-control" id="position" name="position" min="1000" placeholder="5000" required>
                                                         </div>                 
-                                                    </div>
-                                                          
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <div class="input-group col-xs-12">
-                                                                    <label for="exampleInputFile">ไฟล์แนบรูปพื้นหลังคูปอง</label>
-                                                                    <div class="input-group col-xs-4">
-                                                                <input type="file" name="it_care_file_result">
-                                                                <p class="help-block">แนบเป็นไฟล ์ JPG/PNG</p>
-                                                                    </div>
-                                                                </div>
+                                                    </div>              
+                                                        <div class="col-md-10">&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <div class="input-group col-xs-4">&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                <input type="file" name="file">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
+                                                                <p class="help-block">ไฟล์รูปพื้นหลังคูปองเป็นไฟล ์ JPG/PNG</p>
                                                             </div>
-                                                        </div>
- 
+                                                         </div>
                                                  </div>
                                                 <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>

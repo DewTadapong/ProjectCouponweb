@@ -287,28 +287,53 @@ $row = mysqli_fetch_assoc($result);
                             <div class="row justify-content-center">
                                 <div class="col-md-10">
                                     <h1 class="text-center"> กรอกข้อมูลให้ครบถ้วนเพื่อทำการแก้ไข </h1><br>
-                                    <form class="row gy-4" action="php/updatecouponprocess.php" method="POST">
+                                    <form class="row gy-4" action="php/updatecouponprocess.php" method="POST" enctype="multipart/form-data">
                                         <div class="col-md-12">
                                             <label for="name" class="form-label">ชื่อคูปอง</label>
-                                            <input type="text" class="form-control" id="name" name="name" maxlength="38" placeholder="ชื่อคูปอง" value="<?php echo $row['name'] ?>"required>
+                                            <input type="text" class="form-control" id="name" name="name" maxlength="38" value="<?php echo $row['name'] ?>"required>
                                         </div>
                                         <div class="col-md-12">
                                             <br>
                                             <label for="detail" class="form-label">รายละเอียดคูปอง</label>
-                                            <textarea type="text" class="form-control" id="detail" name="detail" rows="5"  maxlength="110"
-                                            placeholder="ลดราคา kiku ทุกสาขา 5% เมื่อมียอดสั่งซื้อมากกว่า 2000 บาท" required>
+                                            <textarea type="text" class="form-control" id="detail" name="detail" rows="5"  maxlength="110"required>
                                             <?php echo $row['detail'] ?></textarea>
                                         </div>
-                                        <div class="col-md-6">
-                                            <br>
-                                            <label for="amount" class="form-label">จำนวน</label>
-                                            <input type="number" class="form-control" id="amount" name="amount" min="0" max="100" placeholder="จำนวน" value="<?php echo $row['amount'] ?>"required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <br>
-                                            <!--<label for="price" class="form-label">วันหมดอายุ</label>
-                                          <input type="number" class="form-control" id="price" name="price" min="0" max="999999" placeholder="วันหมดอายุ" value="<?php echo $row['price'] ?>"required>-->
-                                        </div>
+                                        <div class="container">
+                                                    <div class="row">    
+                                                        <div class="col-md-6">
+                                                            <br>
+                                                            <label for="amount" class="form-label">จำนวน</label>
+                                                            <input type="number" class="form-control" id="amount" name="amount" min="0" max="100" value="<?php echo $row['amount'] ?>" required>
+                                                        </div>
+                                                         <div class="col-md-6">
+                                                        <br>
+                                                            <label for="">วันเเละเวลาหมดอายุคูปอง</label>
+                                                            <input type="datetime-local" name="exp" class="form-control" value="<?php echo $row['exp'] ?>">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>     
+                                                    <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+                                                        <div class="col-md-5"><br>
+                                                            <label for="exampleInputFile">เปอร์เซ็นที่ลด</label>
+                                                                <input type="number" class="form-control" id="discount" name="discount" min="1" max="99" value="<?php echo $row['discount'] ?>"required>
+                                                        </div>&nbsp;&nbsp;&nbsp; 
+                                                        <div class="col-md-5"><br>
+                                                            <label for="exampleInputFile">ยอดขั้นต่ำในการใช้</label>
+                                                                <input type="number" class="form-control" id="position" name="position" min="1000" value="<?php echo $row['position'] ?>" required>
+                                                        </div>                 
+                                                    </div>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                                        <div class="col-md-5"><br>
+                                                            <div class="form-group">
+                                                                <div class="input-group col-xs-12">
+                                                                    <label for="exampleInputFile">ไฟล์แนบรูปพื้นหลังคูปอง</label>
+                                                                    <div class="input-group col-xs-4">
+                                                                <input type="file" name="file" value="<?php echo $row['image'] ?>">
+                                                                     </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                         <input type="hidden" name="id" value="<?php echo $_GET['id'] ?>" >
                                         <div class="col-12">
                                             <br>
@@ -322,13 +347,7 @@ $row = mysqli_fetch_assoc($result);
                     </div>
                 </div>
  
-                       <!-- Footer -->
-                       <footer class=" container my-auto">
-                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Dew Tadapong Sutthikitrungtoj Website</span>
-                    </div>
-            </footer>
-            <!-- End of Footer -->
+ 
 
         </div>
         <!-- End of Content Wrapper -->

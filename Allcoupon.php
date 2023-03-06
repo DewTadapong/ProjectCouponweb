@@ -275,9 +275,9 @@ if(isset($_SESSION['fristname']))
         <div class="d-flex justify-content-center">
           <div id="card-con">
             <div class="card-list-container">
-                <div class="card" style="background-image: url('img/coupon1.png')">
+                <div class="card" style="background-image: url('php/<?php echo $row['image']?>')">
                     <?php $row['id'] ?><br><br><br><br>
-                    <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;    
+                     <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;    
                     <div class="col-8 col-md-6" id="hidden-text">
                     <div class="border-black-sm"><h7><?php echo $row['detail'] ?></h7></div></div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <div class="col-7 col-md-5" id="hidden-text-name"><h4 class="border-black"> 
