@@ -1,7 +1,9 @@
 <?php
 include 'connect.php';
 if (isset($_POST['submit'])) {
-$statusdiscount = $_POST['statusdiscount'];
-echo $statusdiscount;
+$inputmoney = $_POST['inputmoney']; // รับเงิน
+$pricesellall = $_POST['pricesellall'];  // ราคาขาย
+$change = $inputmoney - $pricesellall;
+echo $change;
 }
 ?>

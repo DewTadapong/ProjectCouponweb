@@ -377,12 +377,10 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon);
                                             if($total < $position){
                                                 $discountprice = 0;
                                                 echo '<h5 style="display: inline;color:red;font-weight: bold;">ไม่ได้รับส่วนลด<h5>';
-                                                echo '<input name="statusdiscount" value="0" style="visibility: hidden;"></input>';
-                                            }else{
+                                             }else{
                                                 echo $discountprice = $total * $numdiscount / 100;
                                                 echo '&nbsp;&nbsp;<h5 style="display: inline;">บาท</h5>';
-                                                echo '<input name="statusdiscount" value="1" style="visibility: hidden;"></input>';
-                                            } 
+                                             } 
                                             ?>
                                             
                                             </h3>
@@ -391,9 +389,11 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon);
                                             <h1 style="display: inline;color:darkgreen;font-weight: bold;">
                                             <?php 
                                                 echo $totalresult = $total - $discountprice;
+                                                echo '&nbsp;&nbsp'; 
+                                                echo '<h5 style="display: inline;">บาท</h5>';
+                                                echo '<input name="pricesellall" value="'.$totalresult.'" style="visibility: hidden;"></input>';
                                             ?>
                                             </h1>
-                                             <h5 style="display: inline;">บาท</h5>
                                         </div>
                                         
                                         <div class="col-6 col-sm-4">
