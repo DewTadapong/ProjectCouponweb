@@ -302,6 +302,7 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon);
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                      
                                     <h5 style="display: inline;"> <?php echo dateThai(date("Y-m-d H:i:s")) ?> </h5>
+                                
                                     <form action="Usecouponseach.php" method="POST">
                                         <div class="row justify-content-end">                    
                                         
@@ -324,7 +325,9 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon);
                                         </div><br>
                                         <p class="text-start" style="display: inline;">คูปองนี้</p>&nbsp;&nbsp;&nbsp;
                                         <?php while ($row = mysqli_fetch_assoc($resultcouponcode)):?>
-                                            <?php $row['id']?>
+                                            
+                                            <?php $row['id'];?>
+
                                         <h5 class="text-start" id="namecoupon"  style="display: inline;color:crimson;font-weight: bold;">                                      
                                         <?php      
                                             echo $row['name'];
@@ -361,8 +364,16 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon);
                                             <?php endwhile; ?>
                                             </tbody>
                                     </table><br>
-                                     
-                                    <form action="php/submitdiscount.php" method="POST">
+                                    
+                                    <?php    $sqlcoupon2 = "SELECT * FROM products WHERE barcode ='$couponcode'";
+                                    $resultcouponcode2 = mysqli_query($connect, $sqlcoupon2);
+                                    while ($row = mysqli_fetch_assoc($resultcouponcode2)):
+                                    ?>
+
+                                    <form action="php/submitdiscount.php?id=<?php echo $row['id']?>" method="POST">
+ 
+                                     <?php endwhile?>
+
                                     <div class="row">
                                         <div class="col-10 col-sm-8">
                                              <h5 class="text-start"  style="display: inline;">ราคาทั้งหมด</h5>
@@ -391,12 +402,12 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon);
                                                 echo $totalresult = $total - $discountprice;
                                                 echo '&nbsp;&nbsp'; 
                                                 echo '<h5 style="display: inline;">บาท</h5>';
+                                                // ส่งค่าแบบ post ไปอีกหน้าโดยใช้ อินพุดกำหนดค่าไว้เเลล้วซ่อนมัน 
                                                 echo '<input name="pricesellall" value="'.$totalresult.'" style="visibility: hidden;"></input>';
                                             ?>
                                             </h1>
                                         </div>
-                                        
-                                        <div class="col-6 col-sm-4">
+                                         <div class="col-6 col-sm-4">
                                             <?php
                                             if($discountprice>=1){
                                             echo '<div class="btn btn-success"
@@ -422,6 +433,7 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon);
                                             ?>
                                         </div>   
                                     </div>
+                                    
                                         <!-- Modal กดชำระเงิน-->
                                         <div class="modal fade" id="sell-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">         
