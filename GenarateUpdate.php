@@ -329,7 +329,7 @@ $row = mysqli_fetch_assoc($result);
                                                                 <div class="input-group col-xs-12">
                                                                     <label for="exampleInputFile">ไฟล์แนบรูปพื้นหลังคูปอง</label>
                                                                     <div class="input-group col-xs-4">
-                                                                <input type="file" name="file" value="<?php echo $row['image'] ?>">
+                                                                <input type="file" name="file">
                                                                      </div>
                                                                 </div>
                                                             </div>

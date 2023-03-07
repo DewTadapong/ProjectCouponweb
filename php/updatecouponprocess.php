@@ -2,9 +2,10 @@
      $dir = "upload/";
      $fileimage = $dir .basename($_FILES['file']['name']);
      if(move_uploaded_file($_FILES['file']['tmp_name'],$fileimage)){
-          echo "ไฟล์ภาพ" .basename($_FILES['file']['name']). "อัพโหลดเสร็จสิ้น";
+         // echo "ไฟล์ภาพ" .basename($_FILES['file']['name']). "อัพโหลดเสร็จสิ้น";
      }else{
-          echo "Error";
+         // echo "Error";
+         $fileimage = "upload/coupon1.png";
      }
 include 'connect.php';
     if (isset($_POST['submit'])) {

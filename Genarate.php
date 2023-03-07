@@ -487,13 +487,6 @@ if(isset($_SESSION['fristname']))
             </div>
     </div>
    
-                        <!-- Footer -->
-            <footer class=" container my-auto">
-                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Dew Tadapong Sutthikitrungtoj Website</span>
-                    </div>
-            </footer>
-            <!-- End of Footer -->
  
     </div>
     <!-- End of Page Wrapper -->
