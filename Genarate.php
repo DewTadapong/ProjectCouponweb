@@ -314,12 +314,12 @@ if(isset($_SESSION['fristname']))
                                         <td>
                                             <div class="btn-group">
                                                 <button name="info"
-                                                class="btn btn-primary" 
+                                                class="btn-primary fa fa-search fa-sm" 
                                                         data-bs-toggle="modal" 
                                                         data-bs-target="#my-modal<?php echo $row['id'] ?>" 
-                                                        style="width: 105px;"> รายละเอียด </button>
-                                                        <a href="GenarateUpdate.php?id=<?php echo $row['id'] ?>" class="btn btn-warning"> แก้ไข </a>
-                                                 <a href="/Couponweb/php/deletecouponprocess.php?id=<?php echo $row['id'] ?>" class="btn btn-danger"> ลบ </a>
+                                                        style="width: 45px;"></button>
+                                                        <a href="GenarateUpdate.php?id=<?php echo $row['id'] ?>" class="btn-warning fas fa-fw fa-wrench" style="width: 45px;padding: 15px 0px;"></a>
+                                                 <a href="/Couponweb/php/deletecouponprocess.php?id=<?php echo $row['id'] ?>" class="btn-danger fa fa-trash" style="width: 45px;padding: 15px 0px;"></a>
  
                                             </div>
                                         </td>
