@@ -6,6 +6,8 @@ if (!isset($_SESSION['username'], $_SESSION['password'])){
 }
 require_once('php/connect.php');
  if(isset($_SESSION['fristname']))
+ $sql = "SELECT * FROM productsuse";
+ $result = mysqli_query($connect, $sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -280,21 +282,106 @@ require_once('php/connect.php');
             </nav>
             <!-- End of Topbar -->
                   
-                      
-            
-      
-  
-            <!-- Footer -->
-            <footer class=" container my-auto">
-                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Dew Tadapong Sutthikitrungtoj Website</span>
+                 
+            <div class="container-fluid">
+            <div class="shadow rounded p-4 bg-body h-100">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="d-sm-flex align-items-center justify-content-between mb-2">
+                            <h1 class="pb">ประวัติการใช้งานคูปอง</h1>                                
+                        </div>
+                            <span class="text-right" >รายการที่คูปองที่ถูกใช้งาน <?php echo mysqli_num_rows($result) ?> รายการ </span>  
                     </div>
-            </footer>
-            <!-- End of Footer -->
+                    <div class="col-lg-12">
+                        <div class="table-responsive" >
+                            <?php if (mysqli_num_rows($result) > 0): ?>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr class="text-center text-light bg-dark">
+                                    <th>วันที่ใช้</th>
+                                    <th style="column-width:80px;white-space: normal;">เลขบิล</th>
+                                    <th>คูปอง</th>
+                                    <th>พนักงาน</th>
+                                    <th>บาร์โค้ด</th>
+                                    <th>จัดการ</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php while ($row = mysqli_fetch_assoc($result)):?>
+                                    <tr class="text-center">
+                                        <td> <?php echo dateThai($row['use_at']) ?> </td>
+                                        <td style="column-width:80px;white-space: normal;"> <?php echo $row['itemnumber_use'] ?> </td>     
+                                        <td> <?php echo $row['coupon'] ?></td>
+                                        <td> <?php echo $row['employee'] ?> </td>
+                                        <td style="column-width:100px;white-space: normal;"> <img alt="barcode" src="php/barcode.php?codetype=Code128&size=15&text=<?php echo $row['barcode']?>&
+                                                    print=true" /></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button name="info"
+                                                class="btn btn-primary" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#info-modal<?php echo $row['id'] ?>" 
+                                                        style="width: 105px;"> รายละเอียด </button>
+                                            </div>
+                                         
+                                            <div class="btn-group">
+                                                <button name="print"
+                                                class="btn btn-warning" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#print-modal<?php echo $row['id'] ?>" 
+                                                        style="width: 75px;"> ปริ้น </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                     
+                                <!-- Modal Profile-->
+                                <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-body-id">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modal Read-->
+                                <form class="row gy-4" action="php/updateuseagain.php?id=<?php echo $row['id']?>"  method="POST">
+                                    <div class="modal fade" id="info-modal<?php echo $row['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"  >
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="exampleModalLabel">การนำกลับมาใช้</h4>
+                                                    <img alt="barcode" class="rounded float-start" src="php/barcode.php?codetype=Code128&size=15&text=<?php echo $row['barcode']?>&
+                                                    print=true" />
+                                                </div>
+                                            <div class="modal-body">
+                                                    <?php $id=$row['id'];?>
+                                                    <p>ชื่อคูปอง: <?php echo $row['coupon'] ?></p>
+                                                      
+                                            </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                
+                                <?php endwhile; ?>
+                                </tbody>
+                            </table>    
+                            <?php 
+                                else: 
+                                    echo "<p class='mt-5'>ไม่มีข้อมูลในฐานข้อมูล</p>"; 
+                                endif; 
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
 
         </div>
         <!-- End of Content Wrapper -->
-
     </div>
     <!-- End of Page Wrapper -->
 
@@ -303,13 +390,7 @@ require_once('php/connect.php');
         <i class="fas fa-angle-up"></i>
     </a>
 
-         <!-- Modal Profile-->
-        <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-body-id">
-                </div>
-            </div>
-        </div>
+      
     <style>
         #hidden-text{
             width:100%;

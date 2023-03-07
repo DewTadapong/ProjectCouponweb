@@ -302,8 +302,10 @@ $row = mysqli_fetch_assoc($result);
                                                     <div class="row">    
                                                         <div class="col-md-6">
                                                             <br>
-                                                            <label for="amount" class="form-label">จำนวน</label>
-                                                            <input type="number" class="form-control" id="amount" name="amount" min="0" max="100" value="<?php echo $row['amount'] ?>" required>
+                                                            <label for="amount" class="form-label">เพิ่มจำนวนคูปองจากเดิม</label>
+                                                            <input type="number" class="form-control" id="amount" name="amount" min="0" max="100">
+                                                            <input type="number" class="form-control" name="amountvariable" value="<?php echo $row['amount'] ?>" style="visibility: hidden;">
+                                                            <input type="number" class="form-control" name="amountnowvariable" value="<?php echo $row['amountnow'] ?>" style="visibility: hidden;">
                                                         </div>
                                                          <div class="col-md-6">
                                                         <br>
@@ -312,19 +314,18 @@ $row = mysqli_fetch_assoc($result);
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <br>     
-                                                    <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
-                                                        <div class="col-md-5"><br>
+                                                     <div class="row">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+                                                        <div class="col-md-5"> 
                                                             <label for="exampleInputFile">เปอร์เซ็นที่ลด</label>
                                                                 <input type="number" class="form-control" id="discount" name="discount" min="1" max="99" value="<?php echo $row['discount'] ?>"required>
                                                         </div>&nbsp;&nbsp;&nbsp; 
-                                                        <div class="col-md-5"><br>
+                                                        <div class="col-md-5"> 
                                                             <label for="exampleInputFile">ยอดขั้นต่ำในการใช้</label>
                                                                 <input type="number" class="form-control" id="position" name="position" min="1000" value="<?php echo $row['position'] ?>" required>
                                                         </div>                 
                                                     </div>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                                                        <div class="col-md-5"><br>
+                                                        <div class="col-md-5"> 
                                                             <div class="form-group">
                                                                 <div class="input-group col-xs-12">
                                                                     <label for="exampleInputFile">ไฟล์แนบรูปพื้นหลังคูปอง</label>

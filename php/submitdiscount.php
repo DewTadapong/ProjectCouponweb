@@ -1,31 +1,57 @@
 <?php
 include 'connect.php';
+session_start();
 if (isset($_POST['submit'])) {
-    $inputmoney = $_POST['inputmoney']; // รับเงิน
-    $pricesellall = $_POST['pricesellall'];  // ราคาขาย
-    $change = $inputmoney - $pricesellall;
+    $_SESSION["fristname"];
+    $_SESSION['itemnumberuse1'];  // เลขที่รายการ เก็บเเบบ session
+    $getmoney = $_POST['inputmoney']; // รับเงิน
+    $pricesellall = $_POST['pricesellall'];  // ราคาขาย หักส่วนลด
+    $total = $_POST['total'];  // ราคาขายปกติ ไม่มีส่วนลด
+    $change = $getmoney - $pricesellall;
     $change; //เงินทอน
     $id = $_GET['id'];
+    $status = "yes";
 
     $sqlcoupon = "SELECT * FROM products WHERE id='$id'";
     $resultcouponcode = mysqli_query($connect, $sqlcoupon);
 
     while ($row = mysqli_fetch_assoc($resultcouponcode)):
                                             
-       $amountnow = $row['amountnow'];
+       $amountnow = $row['amountnow']; // คูปองคงเหลือ
+       $name = $row['name'];
+       $barcode = $row['barcode'];
+
        "<br>";
 
     endwhile;
 }    
-    echo -$amountnow; 
-    $sql = "UPDATE products SET 
+    $sqlupdate = "UPDATE products SET 
     amountnow = '".--$amountnow."'
     WHERE id = '".$id."' ";
-    if (mysqli_query($connect, $sql)) {
-          header('Refresh:0; url= /Couponweb/php/editsucess.php');
-   } else {
-        header('Refresh:0; url= /Couponweb/php/editunsucess.php');
-   }
+    mysqli_query($connect, $sqlupdate);
 
+    $sqlupdatebill = "UPDATE historysell SET 
+    status = '".$status."' 
+    WHERE itemnumber = ".$_SESSION['itemnumberuse1']."";
+    mysqli_query($connect, $sqlupdatebill);
+ 
+    $sqlinserthistory = "INSERT INTO `productsuse` (`coupon`, `use_at`, `barcode`,`itemnumber_use`, `pricesellall`, `discountbath`, `receivemoney`, `getmoney`, `employee`) 
+    VALUES (
+              '".htmlspecialchars($name, ENT_QUOTES, 'UTF-8')."', 
+              '".date("Y-m-d H:i:s")."', 
+              '".$barcode."',
+              '".$_SESSION['itemnumberuse1']."',
+              '".$total."',
+              '".$pricesellall."',
+              '".$change."',
+              '".$getmoney."',
+              '".$_SESSION["fristname"]."')";  
+
+  if (mysqli_query($connect, $sqlinserthistory)){
+         header('Refresh:0; url= /Couponweb/php/editsucess.php');
+  }
+  else{
+    header('Refresh:0; url= /Couponweb/php/editunsucess.php');
+  }
 mysqli_close($connect);
 ?>

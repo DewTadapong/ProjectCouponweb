@@ -10,15 +10,15 @@ $itemnumber=$_POST['itemnumber'];
 $couponcode=$_POST['couponcode'];
 
 $sqlhistory = "SELECT * FROM historysell WHERE itemnumber ='$itemnumber'";
-$resulthistory = mysqli_query($connect, $sqlhistory);
+$resulthistory = mysqli_query($connect, $sqlhistory); // หาเลขที่รายการ
  
 $sqlprice = "SELECT SUM(pricetwo) AS count FROM historysell WHERE itemnumber ='$itemnumber'";
 $duration = $connect->query($sqlprice);
 $record = $duration->fetch_array();
-$total = $record['count'];
+$total = $record['count']; // ราคา ขาย ทั้งหมด ไม่ คิดส่วนลด
 
-$sqlcoupon = "SELECT * FROM products WHERE barcode ='$couponcode' AND day!='หมดอายุ'";
-$resultcouponcode = mysqli_query($connect, $sqlcoupon);
+$sqlcoupon = "SELECT * FROM products WHERE barcode ='$couponcode'";
+$resultcouponcode = mysqli_query($connect, $sqlcoupon); // หาคูปอง
  
 ?>
 <!DOCTYPE html>
@@ -288,7 +288,7 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon);
             
                 <!-- ใช้งานคูปอง -->
                 <div class="flex-container">
-                    <div class="container">
+                    <div class="containerd">
                         <div class="shadow rounded p-4 bg-body h-100">
                             <div class="row justify-content-center">
                                 <div class="col-md-12">
@@ -323,10 +323,46 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon);
                                             <button class="btn btn-primary" type="submit" onclick="action()"><i class="fas fa-search fa-sm" onclick="action()"></i></button>
 
                                         </div><br>
+
+
                                         <p class="text-start" style="display: inline;">คูปองนี้</p>&nbsp;&nbsp;&nbsp;
                                         <?php while ($row = mysqli_fetch_assoc($resultcouponcode)):?>
                                             
-                                            <?php $row['id'];?>
+                                            <?php $row['id'];
+                                            $day_now = $row['day'];
+                                            $amount_now = $row['amountnow'];
+                                            if($day_now <= 0){
+                                                echo "<script>";
+                                                echo "Swal.fire({
+                                                        position: 'center',
+                                                        icon: 'error',
+                                                        title: '!-Coupon Falls-!',
+                                                        text: '!-คูปองหมดอายุแล้ว-!',
+                                                        showComfirmButton: false,
+                                                        timer: 3000
+                                                }).then((result) => {
+                                                        if(result){
+                                                                window.location = '/Couponweb/Usecoupon.php';
+                                                        }
+                                                })";
+                                                echo "</script>";      
+                                             }elseif($amount_now <= 0){
+                                                echo "<script>";
+                                                echo "Swal.fire({
+                                                        position: 'center',
+                                                        icon: 'error',
+                                                        title: '!-Coupon Falls-!',
+                                                        text: '!-คูปองหมดถูกใช้จนหมดแล้ว-!',
+                                                        showComfirmButton: false,
+                                                        timer: 3000
+                                                }).then((result) => {
+                                                        if(result){
+                                                                window.location = '/Couponweb/Usecoupon.php';
+                                                        }
+                                                })";
+                                                echo "</script>";   
+                                             }
+                                            ?>
 
                                         <h5 class="text-start" id="namecoupon"  style="display: inline;color:crimson;font-weight: bold;">                                      
                                         <?php      
@@ -354,7 +390,26 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon);
                                             <?php echo $_POST['itemnumber'];?></h5>
                                             <?php while ($row = mysqli_fetch_assoc($resulthistory)):?>
                                             <tr class="text-center"> 
-                                             <?php $row['id']?>
+                                             <?php $row['id'];
+                                             $_SESSION["itemnumberuse1"]=$row['itemnumber'];
+                                             $status = $row['status']; 
+                                             if($status == 'yes'){
+                                                echo "<script>";
+                                                echo "Swal.fire({
+                                                        position: 'center',
+                                                        icon: 'error',
+                                                        title: '!-Bill Falls-!',
+                                                        text: '!-เลขที่บิลรายการนี้มีการใช้งานคูปองแล้ว-!',
+                                                        showComfirmButton: false,
+                                                        timer: 3000
+                                                }).then((result) => {
+                                                        if(result){
+                                                                window.location = '/Couponweb/Usecoupon.php';
+                                                        }
+                                                })";
+                                                echo "</script>";      
+                                             }
+                                             ?>
                                             <td style="column-width:300px;white-space: normal; "> <?php echo $row['name']?> </td>
                                             <td style="column-width:80px;white-space: normal; "> <?php echo $row['priceone']?> </td>
                                             <td style="column-width:80px;white-space: normal; "> <?php echo $row['amount']?> </td>
@@ -391,7 +446,7 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon);
                                              }else{
                                                 echo $discountprice = $total * $numdiscount / 100;
                                                 echo '&nbsp;&nbsp;<h5 style="display: inline;">บาท</h5>';
-                                             } 
+                                              } 
                                             ?>
                                             
                                             </h3>
@@ -404,6 +459,7 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon);
                                                 echo '<h5 style="display: inline;">บาท</h5>';
                                                 // ส่งค่าแบบ post ไปอีกหน้าโดยใช้ อินพุดกำหนดค่าไว้เเลล้วซ่อนมัน 
                                                 echo '<input name="pricesellall" value="'.$totalresult.'" style="visibility: hidden;"></input>';
+                                                echo '<input name="total" value="'.$total.'" style="visibility: hidden;"></input>';                                                                                            
                                             ?>
                                             </h1>
                                         </div>
@@ -420,7 +476,7 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon);
                                                         position: 'center',
                                                         icon: 'error',
                                                         title: '!-Coupon Falls-!',
-                                                        text: '!ไม่สามารถใช้คูปองได้เนื่องจากยอดสั่งซื้อไม่ถึง!',
+                                                        text: '!-ยอดรายการสั่งซื้อไม่ถึงขึ้นต่ำ-!',
                                                         showComfirmButton: false,
                                                         timer: 3000
                                                 }).then((result) => {
@@ -446,7 +502,7 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon);
                                                         echo '<div class="modal-body">';
                                                             echo '<div class="col-md-12">';
                                                                 echo '<h3 class="form-label" style="display: inline;color:darkgreen;font-weight: thin;">รับเงิน</h3>';
-                                                                echo '<input type="number" class="form-control" name="inputmoney" placeholder="'.$totalresult.'" value="'.$totalresult.'" min="'.$totalresult.'" required>';
+                                                                echo '<input type="number" class="form-control" name="inputmoney" placeholder="'.$totalresult.'" value="'.$totalresult.'">';
                                                             echo '</div>';
                                                         echo '</div>';
                                                         echo '<div class="modal-footer">';

@@ -5,7 +5,6 @@ if (!isset($_SESSION['username'], $_SESSION['password'])){
     exit;
 }
 require_once('php/connect.php');
-include 'php/barcode128.php';
 if(isset($_SESSION['fristname']))
     $sql = "SELECT * FROM products WHERE day='หมดอายุ'";
     $result = mysqli_query($connect, $sql);
@@ -304,7 +303,7 @@ if(isset($_SESSION['fristname']))
                                 <tr class="text-center text-light bg-dark">
                                      <th>ชื่อคูปอง</th>
                                     <th>รายละเอียด</th>
-                                    <th>จำนวน</th>
+                                    <th>คงเหลือ</th>
                                     <th>วันหมดอายุ</th>
                                     <th>BarCode</th>
                                     <th>จัดการ</th>
@@ -315,7 +314,7 @@ if(isset($_SESSION['fristname']))
                                     <tr class="text-center">
                                          <td> <?php echo $row['name'] ?> </td>
                                         <td style="column-width:250px;white-space: normal; "><div id="hidden-text"><?php echo $row['detail'] ?></div></td>
-                                        <td> <?php echo $row['amount'] ?></td>
+                                        <td> <?php echo $row['amountnow'] ?></td>
                                         <td> <?php echo dateThai($row['exp']) ?></td>
                                         <td> <img alt="barcode" src="php/barcode.php?codetype=Code128&size=15&text=<?php echo $row['barcode']?>&
                                                     print=true" /></td>
@@ -355,7 +354,9 @@ if(isset($_SESSION['fristname']))
                                                     <?php $id=$row['id'];?>
                                                     <p>ชื่อคูปอง: <?php echo $row['name'] ?></p>
                                                     <p>รายละเอียด: <?php echo $row['detail'] ?></p>
-                                                    <p>จำนวนคูปอง: <?php echo number_format($row['amount'], 0) ?> รายการ</p>
+                                                    <p  style="display: inline;line-height: 30%;">คูปองทั้งหมด:&nbsp; <?php echo number_format($row['amount'], 0) ?> &nbsp;คูปอง</p>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <p  style="display: inline;line-height: 180%;">คงเหลือ:&nbsp; <h5 style="display: inline;color:yellowgreen;font-weight: thin;">
+                                                    <?php echo number_format($row['amountnow'], 0) ?></h5>&nbsp;&nbsp;คูปอง</p> 
                                                     <p>วันเวลาหมดอายุ: <?php echo dateThai($row['exp']) ?></p>
                                                 <div class="container-right" >
                                                     <div class="row">      

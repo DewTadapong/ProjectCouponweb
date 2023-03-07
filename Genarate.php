@@ -295,7 +295,7 @@ if(isset($_SESSION['fristname']))
                                <!-- <th>ลำดับ</th> -->
                                     <th>ชื่อคูปอง</th>
                                     <th>รายละเอียด</th>
-                                    <th>จำนวน</th>
+                                    <th>คงเหลือ</th>
                                     <th>วันหมดอายุ</th>
                                     <th>BarCode</th>
                                     <th>จัดการ</th>
@@ -307,21 +307,19 @@ if(isset($_SESSION['fristname']))
                                         <?php $row['id'] ?>
                                         <td style="column-width:100px;white-space: normal; "> <?php echo $row['name'] ?> </td>
                                         <td style="column-width:250px;white-space: normal; "><div id="hidden-text"><?php echo $row['detail'] ?></div></td>
-                                        <td> <?php echo $row['amount'] ?></td>
+                                        <td style="column-width:65px;white-space: normal; "> <?php if($row['amountnow']==0){echo 'หมด';}else{echo $row['amountnow'];}?></td>
                                         <td> <?php echo dateThai($row['exp']) ?></td>
                                         <td> <img alt="barcode" src="php/barcode.php?codetype=Code128&size=15&text=<?php echo $row['barcode']?>&
                                                     print=true" /></td>
                                         <td>
                                             <div class="btn-group">
-                                                <button name="info"
-                                                class="btn-primary fa fa-search fa-sm" 
+                                                <button name="info"class="btn-primary fa fa-search fa-sm" 
                                                         data-bs-toggle="modal" 
                                                         data-bs-target="#my-modal<?php echo $row['id'] ?>" 
-                                                        style="width: 45px;"></button>
+                                                        style="width: 45px;"></button>       
                                                         <a href="GenarateUpdate.php?id=<?php echo $row['id'] ?>" class="btn-warning fas fa-fw fa-wrench" style="width: 45px;padding: 15px 0px;"></a>
-                                                 <a href="/Couponweb/php/deletecouponprocess.php?id=<?php echo $row['id'] ?>" class="btn-danger fa fa-trash" style="width: 45px;padding: 15px 0px;"></a>
- 
-                                            </div>
+                                                 <a href="/Couponweb/php/deletecouponprocess.php?id=<?php echo $row['id'] ?>" class="btn-danger fa fa-trash" style="width: 45px;padding: 15px 0px;"></a>   
+                                            </div>      
                                         </td>
                                     </tr>
                                     
@@ -406,8 +404,10 @@ if(isset($_SESSION['fristname']))
                                                 <div class="modal-body">
                                                     <?php $id=$row['id'] ?>
                                                     <p>ชื่อคูปอง: <?php echo $row['name'] ?></p>
-                                                    <p>รายละเอียด: <?php echo $row['detail'] ?></p>
-                                                    <p>จำนวนคูปอง: <?php echo number_format($row['amount'], 0) ?> รายการ</p>
+                                                    <p>รายละเอียด: <?php echo $row['detail'] ?></p> 
+                                                    <p  style="display: inline;line-height: 30%;">คูปองทั้งหมด:&nbsp; <?php echo number_format($row['amount'], 0) ?> &nbsp;คูปอง</p>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <p  style="display: inline;line-height: 180%;">คงเหลือ:&nbsp; <h5 style="display: inline;color:yellowgreen;font-weight: thin;">
+                                                    <?php echo number_format($row['amountnow'], 0) ?></h5>&nbsp;&nbsp;คูปอง</p> 
                                                     <p>วันเวลาหมดอายุ: <?php echo dateThai($row['exp']) ?></p>
                                                     <p>อีกประมาณ: <?php
                                                     include 'php/connect2.php';  
