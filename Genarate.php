@@ -9,6 +9,9 @@ include 'php/barcode128.php';
 if(isset($_SESSION['fristname']))
     $sql = "SELECT * FROM products WHERE day!='หมดอายุ'";
     $result = mysqli_query($connect, $sql);
+
+    $time = date("Y-m-d", strtotime("+1 day")); // บวก1วัน
+ 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -205,9 +208,10 @@ if(isset($_SESSION['fristname']))
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
-                                    Alerts Center
+                                    Alerts 
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
+                                 
                                     <div class="mr-3">
                                         <div class="icon-circle bg-primary">
                                             <i class="fas fa-file-alt text-white"></i>
@@ -218,6 +222,7 @@ if(isset($_SESSION['fristname']))
                                         <div class="small text-gray-500"><?php echo date("Y-m-d H:i:s")?></div>
                                         <span class="font-weight-bold">วันนี้มีคูปองหมดอายุ</span>
                                     </div>
+
                                 </a>           
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                             </div>
@@ -278,7 +283,7 @@ if(isset($_SESSION['fristname']))
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
                         <div class="d-sm-flex align-items-center justify-content-between mb-2">
-                        <h1 class="pb">สร้างคูปอง</h1>
+                        <h1 class="pb">สร้างคูปอง</h1>  
                                                         <button class="btn btn-primary" 
                                                         data-bs-toggle="modal" 
                                                         data-bs-target="#add-modal" 

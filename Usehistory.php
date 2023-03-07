@@ -349,14 +349,17 @@ require_once('php/connect.php');
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title" id="exampleModalLabel">การนำกลับมาใช้</h4>
-                                                    <img alt="barcode" class="rounded float-start" src="php/barcode.php?codetype=Code128&size=15&text=<?php echo $row['barcode']?>&
-                                                    print=true" />
+                                                    <h4 class="modal-title" id="exampleModalLabel">ประวัติการใช้งานคูปอง</h4>
+                                                    <p style="display: inline;">พนักงาน&nbsp;<?php echo $row['employee'] ?></p>
+                                                    
                                                 </div>
                                             <div class="modal-body">
-                                                    <?php $id=$row['id'];?>
-                                                    <p>ชื่อคูปอง: <?php echo $row['coupon'] ?></p>
-                                                      
+                                                    <?php $id=$row['id'];?>&nbsp;&nbsp; 
+                                                    <p style="display: inline;">คูปอง&nbsp;<?php echo $row['coupon'] ?></p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+                                                    <p style="display: inline;">เลขที่บิล&nbsp;<?php echo $row['itemnumber_use'] ?></p>
+
                                             </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
