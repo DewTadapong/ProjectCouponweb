@@ -1,5 +1,6 @@
 <?php
 session_start();
+$userimage = $_SESSION['lastname'];
 if (!isset($_SESSION['username'], $_SESSION['password'])){
     echo "<meta http-equiv='refresh' content='0; url=index.php'>" ;
     exit;
@@ -8,7 +9,17 @@ require_once('php/connect.php');
 if(isset($_SESSION['fristname']))
     $sql = "SELECT * FROM products WHERE day='หมดอายุ'";
     $result = mysqli_query($connect, $sql);
+    // เเจ้งเตือน หมดอายุ ใน 24 ชม.
+    $sqlalert = "SELECT * FROM products WHERE hralert = 1 ";
+    $resultalert = mysqli_query($connect, $sqlalert);
+    $sqlnumalert = "SELECT SUM(hralert) AS count FROM products";
+    $durationnumalert = $connect->query($sqlnumalert);
+    $recordnumalert = $durationnumalert->fetch_array();
+    $totalnumalert = $recordnumalert['count'];
 
+    $sqlimguser = "SELECT * FROM user WHERE username = '".$_SESSION['username']."'";
+    $resultimguser = mysqli_query($connect, $sqlimguser);
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +65,7 @@ if(isset($_SESSION['fristname']))
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #343a40;">
 
             <!-- Logo sidebar -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Home.php">
@@ -142,13 +153,7 @@ if(isset($_SESSION['fristname']))
          
               <!-- Divider -->
               <hr class="sidebar-divider d-none d-md-block">
-     
-              <!-- Sidebar Toggler (Sidebar) -->
-              <div class="text-center d-none d-md-inline">
-                  <button class="rounded-circle border-0" id="sidebarToggle"></button>
-              </div>
-  
-        
+      
   
           </ul>
           <!-- End of Sidebar -->
@@ -157,83 +162,90 @@ if(isset($_SESSION['fristname']))
           <div id="content-wrapper" class="d-flex flex-column">
    
             <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top" style="height:3.5rem;">
 
             <!-- Sidebar Toggle (Topbar) -->
             <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                 <i class="fa fa-bars"></i>
             </button>
+            
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="border-0 fas fa-bars" id="sidebarToggle" style="background-color: white;color:gray;"></button>
+            </div>
+
+            &nbsp;&nbsp;&nbsp;
+            <ol class="breadcrumb float-rm-right" style="width:300px;">
+              <li class="breadcrumb-item"><a href="Home.php">Home</a></li>
+              <li class="breadcrumb-item active">Timeoutcoupon</li>
+            </ol>
+            <script>
+                function hidebtn() {
+                if(document.getElementById("seachtop").style.visibility == 'hidden'){
+                    document.getElementById("seachtop").style="visibility: visible;"}else{
+                        document.getElementById("seachtop").style="visibility: hidden;"
+                    }
+                }
+                
+             </script>
 
             <!-- Topbar Search -->
-            <form
-                class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+             <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="seachtop" style="visibility: hidden;">
                 <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for ..."
                         aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
-                            <i class="fas fa-search fa-sm"></i>
-                        </button>
-                    </div>
+                        
+                    </div>  
                 </div>
             </form>
-
+            &nbsp;&nbsp;&nbsp;    
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
+            <button class="btn btn-navbar" onclick="hidebtn()">
+                  <i class="fas fa-search"></i>
+            </button>
+ 
+                <!-- Topbar Navbar -->
+<ul class="navbar-nav ml-auto">
 
-                <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                <li class="nav-item dropdown no-arrow d-sm-none">
-                    <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-search fa-fw"></i>
-                    </a>
-                    <!-- Dropdown - Messages -->
-                    <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                        aria-labelledby="searchDropdown">
-                        <form class="form-inline mr-auto w-100 navbar-search">
-                            <div class="input-group">
-                                <input type="text" class="form-control bg-light border-0 small"
-                                    placeholder="Search for..." aria-label="Search"
-                                    aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button">
-                                        <i class="fas fa-search fa-sm"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </li>
+<!-- Nav Item - Alerts -->
+<li class="nav-item dropdown no-arrow mx-1">
+    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-bell fa-fw"></i>
+        <!-- ใกล้หมดอยุ่ใน 24 ชม -->
+        <?php if (mysqli_num_rows($resultalert) >= 1): ?>
 
-                <!-- Nav Item - Alerts -->
-                <li class="nav-item dropdown no-arrow mx-1">
-                    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-bell fa-fw"></i>
-                        <!-- Counter - Alerts -->
-                        <span class="badge badge-danger badge-counter">3+</span>
-                    </a>
-                    <!-- Dropdown - Alerts -->
-                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                        aria-labelledby="alertsDropdown">
-                        <h6 class="dropdown-header">
-                            Alerts Center
-                        </h6>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <div class="mr-3">
-                                <div class="icon-circle bg-primary">
-                                    <i class="fas fa-file-alt text-white"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="small text-gray-500">February 17, 2023</div>
-                                <span class="font-weight-bold">ทดสอบแจ้งเตื่อนเฉยๆอย่ารีบสิ</span>
-                            </div>
-                        </a>           
-                        <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                    </div>
-                </li>
+        <span class="badge badge-danger badge-counter"><?php echo $totalnumalert?>+</span>
+    </a>
+    <!-- Dropdown - Alerts -->
+    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+        aria-labelledby="alertsDropdown">
+        <h6 class="dropdown-header">
+            แจ้งเตื่อนคูปองหมดอายุภายใน 24 ชั่วโมง 
+        </h6>
+        <?php while ($row = mysqli_fetch_assoc($resultalert)):?>
+        <a class="dropdown-item d-flex align-items-center" href="#">
+            <div class="mr-3">
+                <div class="icon-circle">
+                    <img style="width: 2rem;"
+                        src="img/couponalert.png" alt="...">
+                </div>
+            </div>
+            <div>
+                <div class="small text-gray-1000"><?php echo date("Y-m-d H:i:s")?> หมดอายุในอีก <?php echo $row['day'];?> ชม.</div>
+                <span class="font-weight-thin"><?php echo $row['name'];?></span>
+            </div>
+         
+        </a>
+        <?php endwhile?>           
+        <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+    </div>
+</li>
+<?php else:?>
 
+<?php endif?>
 
                 <div class="topbar-divider d-none d-sm-block"></div>
                 <!-- Nav Item - User Information -->
@@ -242,7 +254,7 @@ if(isset($_SESSION['fristname']))
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                         <?php
-                        echo $_SESSION["username"]
+                        echo $_SESSION["username"] 
                         ?>    
                         </span>
                         <i class="mr-2 d-none d-lg-inline text-gray-600 small">
@@ -281,18 +293,34 @@ if(isset($_SESSION['fristname']))
 
             </nav>
             <!-- End of Topbar -->
-                  
-
-            <!-- Begin Page Content -->
-                        
+          
 <!-- Page Heading -->
     <div class="container-fluid">
             <div class="shadow rounded p-4 bg-body h-100">
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
-                        <div class="d-sm-flex align-items-center justify-content-between mb-2">
-                            <h1 class="pb">คูปองที่หมดอายุแล้ว</h1>                                
-                        </div>
+                        <div class="row">
+                            <div class="d-sm-flex align-items-center justify-content-between">
+                            &nbsp;&nbsp;&nbsp;<h1 class="pb">คูปองที่หมดอายุแล้ว</h1>                                
+                            </div>
+                            <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button class="btn btn-primary" type="button" onclick="hidebtn()"  >
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>-->
+                        </div>   <br>
                             <span class="text-right" >หมดอายุทั้งหมด <?php echo mysqli_num_rows($result) ?> รายการ </span>  
                     </div>
                     <div class="col-lg-12">
@@ -331,15 +359,18 @@ if(isset($_SESSION['fristname']))
                                             </div>
                                         </td>
                                     </tr>
-                                     
+                               
+
                                 <!-- Modal Profile-->
                                 <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <?php while ($row = mysqli_fetch_assoc($resultimguser)):?>
                                     <div class="modal-dialog modal-sm">
-                                        <div class="modal-body-id">
+                                        <div class="modal-body-id" style="background-image: url('img/<?php echo $row["imageuser"];?>')">
                                         </div>
                                     </div>
+                                    <?php endwhile?>
                                 </div>
-       
+
                                     <!-- Modal Read-->
                                     <form class="row gy-4" action="php/updateuseagain.php?id=<?php echo $row['id']?>"  method="POST">
                                     <div class="modal fade" id="useagain-modal<?php echo $row['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"  >
@@ -409,13 +440,16 @@ if(isset($_SESSION['fristname']))
             word-break: break-all;
         }
         .modal-body-id{
-        background-image: url('img/picdew.png');
         background-repeat: no-repeat;
         background-size: cover;
         height: 400px;
         }
         .dropdown-item{
         cursor: pointer;
+        }
+        .breadcrumb{
+            margin-bottom: 0px;
+            background-color: white;
         }  
     </style>
     <!-- Bootstrap core JavaScript-->

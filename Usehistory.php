@@ -8,6 +8,14 @@ require_once('php/connect.php');
  if(isset($_SESSION['fristname']))
  $sql = "SELECT * FROM productsuse";
  $result = mysqli_query($connect, $sql);
+
+  // เเจ้งเตือน หมดอายุ ใน 24 ชม.
+  $sqlalert = "SELECT * FROM products WHERE hralert = 1 ";
+  $resultalert = mysqli_query($connect, $sqlalert);
+  $sqlnumalert = "SELECT SUM(hralert) AS count FROM products";
+  $durationnumalert = $connect->query($sqlnumalert);
+  $recordnumalert = $durationnumalert->fetch_array();
+  $totalnumalert = $recordnumalert['count'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +61,7 @@ require_once('php/connect.php');
     <div id="wrapper">
 
             <!-- Sidebar -->
-            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #343a40;">
 
                 <!-- Logo sidebar -->
                 <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Home.php">
@@ -141,12 +149,7 @@ require_once('php/connect.php');
 
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">
-
-                <!-- Sidebar Toggler (Sidebar) -->
-                <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-                </div>
-
+ 
                 </ul>
                 <!-- End of Sidebar -->
   
@@ -156,85 +159,90 @@ require_once('php/connect.php');
             <!-- Main Content -->
             <div id="content">
   
-            <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+             <!-- Topbar -->
+             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top" style="height:3.5rem;">
 
-            <!-- Sidebar Toggle (Topbar) -->
-            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                <i class="fa fa-bars"></i>
-            </button>
+<!-- Sidebar Toggle (Topbar) -->
+<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+    <i class="fa fa-bars"></i>
+</button>
 
-            <!-- Topbar Search -->
-            <form
-                class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                        aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
-                            <i class="fas fa-search fa-sm"></i>
-                        </button>
-                    </div>
+<!-- Sidebar Toggler (Sidebar) -->
+<div class="text-center d-none d-md-inline">
+    <button class="border-0 fas fa-bars" id="sidebarToggle" style="background-color: white;color:gray;"></button>
+</div>
+
+&nbsp;&nbsp;&nbsp;
+<ol class="breadcrumb float-rm-right" style="width:300px;">
+  <li class="breadcrumb-item"><a href="Home.php">Home</a></li>
+  <li class="breadcrumb-item active">UseHistory</li>
+</ol>
+<script>
+    function hidebtn() {
+    if(document.getElementById("seachtop").style.visibility == 'hidden'){
+        document.getElementById("seachtop").style="visibility: visible;"}else{
+            document.getElementById("seachtop").style="visibility: hidden;"
+        }
+    }
+    
+ </script>
+
+<!-- Topbar Search -->
+ <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="seachtop" style="visibility: hidden;">
+    <div class="input-group">
+        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for ..."
+            aria-label="Search" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            
+        </div>  
+    </div>
+</form>
+&nbsp;&nbsp;&nbsp;    
+<!-- Topbar Navbar -->
+<ul class="navbar-nav ml-auto">
+<button class="btn btn-navbar" onclick="hidebtn()">
+      <i class="fas fa-search"></i>
+</button>
+ <!-- Topbar Navbar -->
+<ul class="navbar-nav ml-auto">
+
+<!-- Nav Item - Alerts -->
+<li class="nav-item dropdown no-arrow mx-1">
+    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-bell fa-fw"></i>
+        <!-- ใกล้หมดอยุ่ใน 24 ชม -->
+        <?php if (mysqli_num_rows($resultalert) >= 1): ?>
+
+        <span class="badge badge-danger badge-counter"><?php echo $totalnumalert?>+</span>
+    </a>
+    <!-- Dropdown - Alerts -->
+    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+        aria-labelledby="alertsDropdown">
+        <h6 class="dropdown-header">
+            แจ้งเตื่อนคูปองหมดอายุภายใน 24 ชั่วโมง 
+        </h6>
+        <?php while ($row = mysqli_fetch_assoc($resultalert)):?>
+        <a class="dropdown-item d-flex align-items-center" href="#">
+            <div class="mr-3">
+                <div class="icon-circle">
+                    <img style="width: 2rem;"
+                        src="img/couponalert.png" alt="...">
                 </div>
-            </form>
+            </div>
+            <div>
+                <div class="small text-gray-1000"><?php echo date("Y-m-d H:i:s")?> หมดอายุในอีก <?php echo $row['day'];?> ชม.</div>
+                <span class="font-weight-thin"><?php echo $row['name'];?></span>
+            </div>
+         
+        </a>
+        <?php endwhile?>           
+        <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+    </div>
+</li>
+<?php else:?>
 
-            <!-- Topbar Navbar -->
-            <ul class="navbar-nav ml-auto">
-
-                <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                <li class="nav-item dropdown no-arrow d-sm-none">
-                    <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-search fa-fw"></i>
-                    </a>
-                    <!-- Dropdown - Messages -->
-                    <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                        aria-labelledby="searchDropdown">
-                        <form class="form-inline mr-auto w-100 navbar-search">
-                            <div class="input-group">
-                                <input type="text" class="form-control bg-light border-0 small"
-                                    placeholder="Search for..." aria-label="Search"
-                                    aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button">
-                                        <i class="fas fa-search fa-sm"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </li>
-
-                <!-- Nav Item - Alerts -->
-                <li class="nav-item dropdown no-arrow mx-1">
-                    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-bell fa-fw"></i>
-                        <!-- Counter - Alerts -->
-                        <span class="badge badge-danger badge-counter">3+</span>
-                    </a>
-                    <!-- Dropdown - Alerts -->
-                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                        aria-labelledby="alertsDropdown">
-                        <h6 class="dropdown-header">
-                            Alerts Center
-                        </h6>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <div class="mr-3">
-                                <div class="icon-circle bg-primary">
-                                    <i class="fas fa-file-alt text-white"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="small text-gray-500">February 17, 2023</div>
-                                <span class="font-weight-bold">ทดสอบแจ้งเตื่อนเฉยๆอย่ารีบสิ</span>
-                            </div>
-                        </a>           
-                        <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                    </div>
-                </li>
-
-
+<?php endif?>
                 <div class="topbar-divider d-none d-sm-block"></div>
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
@@ -411,7 +419,11 @@ require_once('php/connect.php');
         }
         .dropdown-item{
         cursor: pointer;
-        }  
+        }
+        .breadcrumb{
+            margin-bottom: 0px;
+            background-color: white;
+        }    
     </style>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>

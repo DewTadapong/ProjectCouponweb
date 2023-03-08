@@ -73,7 +73,7 @@
                                     
  
                                     <div class="text-center">
-                                        <span>Copyright &copy; Dew Tadapong Sutthikitrungtoj </span> 
+                                        <span>Copyright &copy; Infomation System 2023</span> 
                                       </div>
                                 </div>
                             </div>

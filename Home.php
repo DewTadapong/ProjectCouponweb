@@ -6,6 +6,14 @@ if (!isset($_SESSION['username'], $_SESSION['password'])){
 }
 require_once('php/connect.php');
  if(isset($_SESSION['fristname']))
+
+ // เเจ้งเตือน หมดอายุ ใน 24 ชม.
+ $sqlalert = "SELECT * FROM products WHERE hralert = 1 ";
+ $resultalert = mysqli_query($connect, $sqlalert);
+ $sqlnumalert = "SELECT SUM(hralert) AS count FROM products";
+ $durationnumalert = $connect->query($sqlnumalert);
+ $recordnumalert = $durationnumalert->fetch_array();
+ $totalnumalert = $recordnumalert['count'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,9 +57,10 @@ require_once('php/connect.php');
 
     <!-- Page Wrapper -->
     <div id="wrapper">
+        
 
             <!-- Sidebar -->
-            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #343a40;">
 
             <!-- Logo sidebar -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Home.php">
@@ -137,12 +146,7 @@ require_once('php/connect.php');
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
+ 
             </ul>
             <!-- End of Sidebar -->
   
@@ -153,85 +157,91 @@ require_once('php/connect.php');
             <div id="content">
   
             <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top" style="height:3.5rem;">
 
             <!-- Sidebar Toggle (Topbar) -->
             <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                 <i class="fa fa-bars"></i>
             </button>
+            
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="border-0 fas fa-bars" id="sidebarToggle" style="background-color: white;color:gray;"></button>
+            </div>
+
+            &nbsp;&nbsp;&nbsp;
+            <ol class="breadcrumb float-rm-right" style="width:300px;">
+              <li class="breadcrumb-item"><a href="Home.php">Home</a></li>
+              <li class="breadcrumb-item active">DashBoard</li>
+             </ol>
+            <script>
+                function hidebtn() {
+                if(document.getElementById("seachtop").style.visibility == 'hidden'){
+                    document.getElementById("seachtop").style="visibility: visible;"}else{
+                        document.getElementById("seachtop").style="visibility: hidden;"
+                    }
+                }
+                
+             </script>
 
             <!-- Topbar Search -->
-            <form
-                class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+             <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="seachtop" style="visibility: hidden;">
                 <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for ..."
                         aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
-                            <i class="fas fa-search fa-sm"></i>
-                        </button>
-                    </div>
+                        
+                    </div>  
                 </div>
             </form>
-
+            &nbsp;&nbsp;&nbsp;    
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
+            <button class="btn btn-navbar" onclick="hidebtn()">
+                  <i class="fas fa-search"></i>
+            </button>
+             
+             <!-- Topbar Navbar -->
+             <ul class="navbar-nav ml-auto">
+               <!-- Nav Item - Alerts -->
+               <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- ใกล้หมดอยุ่ใน 24 ชม -->
+                                <?php if (mysqli_num_rows($resultalert) >= 1): ?>
 
-                <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                <li class="nav-item dropdown no-arrow d-sm-none">
-                    <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-search fa-fw"></i>
-                    </a>
-                    <!-- Dropdown - Messages -->
-                    <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                        aria-labelledby="searchDropdown">
-                        <form class="form-inline mr-auto w-100 navbar-search">
-                            <div class="input-group">
-                                <input type="text" class="form-control bg-light border-0 small"
-                                    placeholder="Search for..." aria-label="Search"
-                                    aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button">
-                                        <i class="fas fa-search fa-sm"></i>
-                                    </button>
-                                </div>
+                                <span class="badge badge-danger badge-counter"><?php echo $totalnumalert?>+</span>
+                            </a>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    แจ้งเตื่อนคูปองหมดอายุภายใน 24 ชั่วโมง 
+                                </h6>
+                                <?php while ($row = mysqli_fetch_assoc($resultalert)):?>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle">
+                                            <img style="width: 2rem;"
+                                                src="img/couponalert.png" alt="...">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-1000"><?php echo date("Y-m-d H:i:s")?> หมดอายุในอีก <?php echo $row['day'];?> ชม.</div>
+                                        <span class="font-weight-thin"><?php echo $row['name'];?></span>
+                                    </div>
+                                 
+                                </a>
+                                <?php endwhile?>           
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                             </div>
-                        </form>
-                    </div>
-                </li>
+                        </li>
+                        <?php else:?>
 
-                <!-- Nav Item - Alerts -->
-                <li class="nav-item dropdown no-arrow mx-1">
-                    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-bell fa-fw"></i>
-                        <!-- Counter - Alerts -->
-                        <span class="badge badge-danger badge-counter">3+</span>
-                    </a>
-                    <!-- Dropdown - Alerts -->
-                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                        aria-labelledby="alertsDropdown">
-                        <h6 class="dropdown-header">
-                            Alerts Center
-                        </h6>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <div class="mr-3">
-                                <div class="icon-circle bg-primary">
-                                    <i class="fas fa-file-alt text-white"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="small text-gray-500">February 17, 2023</div>
-                                <span class="font-weight-bold">ทดสอบแจ้งเตื่อนเฉยๆอย่ารีบสิ</span>
-                            </div>
-                        </a>           
-                        <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                    </div>
-                </li>
-
-
-                <div class="topbar-divider d-none d-sm-block"></div>
+                        <?php endif?>
+                
+                 <div class="topbar-divider d-none d-sm-block"></div>
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
@@ -277,12 +287,201 @@ require_once('php/connect.php');
 
             </nav>
             <!-- End of Topbar -->
-   
+
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-download fa-sm text-white-50"></i>   Export Excel</a>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">
+                                คูปองทั้งหมด
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">100</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-arrow-circle-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- End of Content Wrapper -->
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-lg font-weight-bold text-success text-uppercase mb-1">
+                                คูปองคงเหลือ</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">30</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-lg font-weight-bold text-info text-uppercase mb-1">
+                                ใช้คูปอง
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50</div>
+                                </div>
+                                <div class="col">
+                                    <div class="progress progress-sm mr-2">
+                                        <div class="progress-bar bg-info" role="progressbar"
+                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                            aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Requests Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-lg font-weight-bold text-warning text-uppercase mb-1">
+                                คูปองหมดอายุ</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Row -->
+
+    <div class="row">
+
+        <!-- Area Chart -->
+        <div class="col-xl-8 col-lg-7">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">UseCoupon-Garf</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                            aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">รายละเอียด</div>
+                            <a class="dropdown-item" href="#">Export Excel</a>  
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="myAreaChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pie Chart -->
+        <div class="col-xl-4 col-lg-5">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">UseCoupon-Cercle</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                            aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">รายละเอียด</div>
+                            <a class="dropdown-item" href="#">Export Excel</a>  
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="chart-pie pt-4 pb-2">
+                        <canvas id="myPieChart"></canvas>
+                    </div>
+                    <div class="mt-4 text-center small">
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-primary"></i> a
+                        </span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-success"></i> b
+                        </span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-info"></i> c
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    </div>
+    <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+    <div class="copyright text-center my-auto">
+        <span>Copyright &copy; Information System 2023</span>
+    </div>
+    </div>
+    </footer>
+    <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
 
     </div>
     <!-- End of Page Wrapper -->
+
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -314,7 +513,10 @@ require_once('php/connect.php');
         .dropdown-item{
         cursor: pointer;
         }
- 
+        .breadcrumb{
+            margin-bottom: 0px;
+            background-color: white;
+        }  
     </style>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>

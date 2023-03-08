@@ -10,6 +10,14 @@ if(!isset($_GET['id'])){
 $sql = "SELECT * FROM products WHERE id = '".mysqli_real_escape_string($connect, $_GET['id'])."' ";
 $result = mysqli_query($connect, $sql);
 $row = mysqli_fetch_assoc($result);
+
+ // เเจ้งเตือน หมดอายุ ใน 24 ชม.
+ $sqlalert = "SELECT * FROM products WHERE hralert = 1 ";
+ $resultalert = mysqli_query($connect, $sqlalert);
+ $sqlnumalert = "SELECT SUM(hralert) AS count FROM products";
+ $durationnumalert = $connect->query($sqlnumalert);
+ $recordnumalert = $durationnumalert->fetch_array();
+ $totalnumalert = $recordnumalert['count'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +63,7 @@ $row = mysqli_fetch_assoc($result);
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #343a40;">
 
              <!-- Logo sidebar -->
              <a class="sidebar-brand d-flex align-items-center justify-content-center" href="Home.php">
@@ -157,85 +165,55 @@ $row = mysqli_fetch_assoc($result);
             <!-- Main Content -->
             <div id="content">
 
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top" style="height:3.5rem;">
 
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
+            <!-- Sidebar Toggle (Topbar) -->
+            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                <i class="fa fa-bars"></i>
+            </button>
 
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="border-0 fas fa-bars" id="sidebarToggle" style="background-color: white;color:gray;"></button>
+            </div>
 
+            &nbsp;&nbsp;&nbsp;
+            <ol class="breadcrumb float-rm-right" style="width:300px;">
+            <li class="breadcrumb-item"><a href="Home.php">Home</a></li>
+            <li class="breadcrumb-item active">UpdateCoupon</li>
+            </ol>
+            <script>
+                function hidebtn() {
+                if(document.getElementById("seachtop").style.visibility == 'hidden'){
+                    document.getElementById("seachtop").style="visibility: visible;"}else{
+                        document.getElementById("seachtop").style="visibility: hidden;"
+                    }
+                }
+                
+            </script>
+
+            <!-- Topbar Search -->
+            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="seachtop" style="visibility: hidden;">
+                <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for ..."
+                        aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        
+                    </div>  
+                </div>
+            </form>
+            &nbsp;&nbsp;&nbsp;    
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
+            <button class="btn btn-navbar" onclick="hidebtn()">
+                <i class="fas fa-search"></i>
+            </button>
+ 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-
-                        <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">February 17, 2023</div>
-                                        <span class="font-weight-bold">ทดสอบแจ้งเตื่อนเฉยๆอย่ารีบสิ</span>
-                                    </div>
-                                </a>           
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
-                        </li>
-
-
+ 
+                       
                         <div class="topbar-divider d-none d-sm-block"></div>
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
@@ -361,6 +339,12 @@ $row = mysqli_fetch_assoc($result);
         <i class="fas fa-angle-up"></i>
     </a>
  
+    <style>
+        #breadcrumb{
+            margin-bottom: 0px;
+            background-color: white;
+        }  
+    </style>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
