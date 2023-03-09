@@ -48,10 +48,10 @@ if (isset($_POST['submit'])) {
               '".$_SESSION["fristname"]."')";  
 
   if (mysqli_query($connect, $sqlinserthistory)){
-         header('Refresh:0; url= /Couponweb/php/usesucess.php');
+      //   header('Refresh:0; url= /Couponweb/php/usesucess.php');
   }
   else{
-         header('Refresh:0; url= /Couponweb/php/useunsucess.php');
+       //  header('Refresh:0; url= /Couponweb/php/useunsucess.php');
   }
 mysqli_close($connect);
 ?>
