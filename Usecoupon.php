@@ -14,6 +14,7 @@ if (isset($_SESSION['fristname']))
  $durationnumalert = $connect->query($sqlnumalert);
  $recordnumalert = $durationnumalert->fetch_array();
  $totalnumalert = $recordnumalert['count'];
+ 
 ?>
 <!DOCTYPE html>
 <html lang="en">

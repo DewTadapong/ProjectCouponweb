@@ -9,14 +9,18 @@ if (isset($_SESSION['fristname']))
 $itemnumber=$_POST['itemnumber'];
 $couponcode=$_POST['couponcode'];
 
-$sqlhistory = "SELECT * FROM historysell WHERE itemnumber ='$itemnumber'";
+$sqlhistory = "SELECT * FROM invoice WHERE INVOICE_NO ='$itemnumber'";
 $resulthistory = mysqli_query($connect, $sqlhistory); // หาเลขที่รายการ
- 
-$sqlprice = "SELECT SUM(pricetwo) AS count FROM historysell WHERE itemnumber ='$itemnumber'";
-$duration = $connect->query($sqlprice);
-$record = $duration->fetch_array();
-$total = $record['count']; // ราคา ขาย ทั้งหมด ไม่ คิดส่วนลด
 
+$sqlsid = "SELECT SID FROM invoice WHERE INVOICE_NO ='$itemnumber'";
+$resultsid = mysqli_query($connect, $sqlsid); 
+while ($row = mysqli_fetch_assoc($resultsid)):
+$SID = $row['SID'];
+endwhile;
+
+$sqlmenu = "SELECT * FROM invoice_products WHERE SID ='$SID'";
+$resultmenu = mysqli_query($connect, $sqlmenu); // หาเลขที่รายการ
+ 
 $sqlcoupon = "SELECT * FROM products WHERE barcode ='$couponcode'";
 $resultcouponcode = mysqli_query($connect, $sqlcoupon); // หาคูปอง
 
@@ -414,9 +418,9 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon); // หาคูปอง
                                             <h5 id="codefood" style="display: inline;">&nbsp;&nbsp;
                                             <?php echo $_POST['itemnumber'];?></h5>
                                             <?php while ($row = mysqli_fetch_assoc($resulthistory)):?>
-                                            <tr class="text-center"> 
-                                             <?php $row['id'];
-                                             $_SESSION["itemnumberuse1"]=$row['itemnumber'];
+                                             <?php 
+                                             $total = $row['GRAND_TOTAL'];
+                                             $_SESSION["itemnumberuse1"]=$row['INVOICE_NO'];
                                              $status = $row['status']; 
                                              if($status == 'yes'){
                                                 echo "<script>";
@@ -435,11 +439,13 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon); // หาคูปอง
                                                 echo "</script>";      
                                              }
                                              ?>
-                                            <td style="column-width:300px;white-space: normal; "> <?php echo $row['name']?> </td>
-                                            <td style="column-width:80px;white-space: normal; "> <?php echo $row['priceone']?> </td>
-                                            <td style="column-width:80px;white-space: normal; "> <?php echo $row['amount']?> </td>
-                                            <td style="column-width:80px;white-space: normal; "> <?php echo $row['pricetwo']?> </td>
-                                            
+                                              <?php endwhile; ?>
+                                            <tr class="text-center"> 
+                                            <?php while ($row = mysqli_fetch_assoc($resultmenu)):?>
+                                            <td class="text-center"> <?php echo $row['PNAME']?> </td>
+                                            <td class="text-center"> <?php echo $row['PRICE']?> </td>
+                                            <td class="text-center"> <?php echo $row['QTY']?> </td>
+                                            <td class="text-center"> <?php echo $row['TOTAL']?> </td>
                                             </tr>
                                             <?php endwhile; ?>
                                             </tbody>
@@ -489,7 +495,8 @@ $resultcouponcode = mysqli_query($connect, $sqlcoupon); // หาคูปอง
                                             </h1>
                                         </div>
                                          <div class="col-6 col-sm-4">
-                                            <?php
+                                       
+                                         <?php
                                             if($discountprice>=1){
                                             echo '<div class="btn btn-success"
                                                         data-bs-toggle="modal" 

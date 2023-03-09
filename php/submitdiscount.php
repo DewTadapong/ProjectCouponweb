@@ -30,9 +30,9 @@ if (isset($_POST['submit'])) {
     WHERE id = '".$id."' ";
     mysqli_query($connect, $sqlupdate);
 
-    $sqlupdatebill = "UPDATE historysell SET 
+    $sqlupdatebill = "UPDATE invoice SET 
     status = '".$status."' 
-    WHERE itemnumber = ".$_SESSION['itemnumberuse1']."";
+    WHERE INVOICE_NO = ".$_SESSION['itemnumberuse1']."";
     mysqli_query($connect, $sqlupdatebill);
  
     $sqlinserthistory = "INSERT INTO `productsuse` (`coupon`, `use_at`, `barcode`,`itemnumber_use`, `pricesellall`, `discountbath`, `receivemoney`, `getmoney`, `employee`) 
@@ -48,10 +48,10 @@ if (isset($_POST['submit'])) {
               '".$_SESSION["fristname"]."')";  
 
   if (mysqli_query($connect, $sqlinserthistory)){
-      //   header('Refresh:0; url= /Couponweb/php/usesucess.php');
+         header('Refresh:0; url= /Couponweb/php/usesucess.php');
   }
   else{
-       //  header('Refresh:0; url= /Couponweb/php/useunsucess.php');
+         header('Refresh:0; url= /Couponweb/php/useunsucess.php');
   }
 mysqli_close($connect);
 ?>
