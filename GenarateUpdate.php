@@ -46,6 +46,7 @@ $row = mysqli_fetch_assoc($result);
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.css">
     <!-- Bootstrap5 แบบ bundle คือการนำ Popper มารวมไว้ในไฟล์เดียว -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script> //session หมด ล้อกเอ้าใน 30 วิ  1000 = 1 วิ
                                         var keyboard_time_out = setTimeout('close_window()', 1800000);
                                         $(window).keypress(function(){
@@ -340,7 +341,7 @@ $row = mysqli_fetch_assoc($result);
     </a>
  
     <style>
-        #breadcrumb{
+        .breadcrumb{
             margin-bottom: 0px;
             background-color: white;
         }  

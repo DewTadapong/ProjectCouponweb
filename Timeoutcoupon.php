@@ -56,7 +56,8 @@ if(isset($_SESSION['fristname']))
                                         function close_window(){
                                         location.href="php/logout.php";
                                         } </script>
-                                          <!--css profile-->
+     <link  rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap5.min.css">
+
    
 </head>
 <body id="page-top">
@@ -168,7 +169,7 @@ if(isset($_SESSION['fristname']))
             <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                 <i class="fa fa-bars"></i>
             </button>
-            
+ 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="border-0 fas fa-bars" id="sidebarToggle" style="background-color: white;color:gray;"></button>
@@ -293,40 +294,23 @@ if(isset($_SESSION['fristname']))
 
             </nav>
             <!-- End of Topbar -->
-          
+
+            <!-- Begin Page Content -->
+                        
 <!-- Page Heading -->
-    <div class="container-fluid">
+<div class="container-fluid">
             <div class="shadow rounded p-4 bg-body h-100">
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
-                        <div class="row">
-                            <div class="d-sm-flex align-items-center justify-content-between">
-                            &nbsp;&nbsp;&nbsp;<h1 class="pb">คูปองที่หมดอายุแล้ว</h1>                                
-                            </div>
-                            <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <button class="btn btn-primary" type="button" onclick="hidebtn()"  >
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>-->
-                        </div>   <br>
-                            <span class="text-right" >หมดอายุทั้งหมด <?php echo mysqli_num_rows($result) ?> รายการ </span>  
-                    </div>
+                        <div class="d-sm-flex align-items-center justify-content-between mb-2">
+                            <h1 class="pb">คูปองที่หมดอายุแล้ว</h1>                                
+                        </div> <br>
+                        <!--    <span class="text-right" >หมดอายุทั้งหมด <?php echo mysqli_num_rows($result) ?> รายการ </span>  -->
+                    </div> 
                     <div class="col-lg-12">
                         <div class="table-responsive" >
                             <?php if (mysqli_num_rows($result) > 0): ?>
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="tbldata">
                                 <thead>
                                 <tr class="text-center text-light bg-dark">
                                      <th>ชื่อคูปอง</th>
@@ -359,18 +343,15 @@ if(isset($_SESSION['fristname']))
                                             </div>
                                         </td>
                                     </tr>
-                               
-
+                                     
                                 <!-- Modal Profile-->
                                 <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <?php while ($row = mysqli_fetch_assoc($resultimguser)):?>
                                     <div class="modal-dialog modal-sm">
-                                        <div class="modal-body-id" style="background-image: url('img/<?php echo $row["imageuser"];?>')">
+                                        <div class="modal-body-id">
                                         </div>
                                     </div>
-                                    <?php endwhile?>
                                 </div>
-
+       
                                     <!-- Modal Read-->
                                     <form class="row gy-4" action="php/updateuseagain.php?id=<?php echo $row['id']?>"  method="POST">
                                     <div class="modal fade" id="useagain-modal<?php echo $row['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"  >
@@ -461,7 +442,15 @@ if(isset($_SESSION['fristname']))
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
- 
+    <!-- table จำกัดโรด next ย้อนกลับ-->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+        $('#tbldata').DataTable();
+    });
+    </script>
     <?php mysqli_close($connect) ?>
 </body>
 </html>

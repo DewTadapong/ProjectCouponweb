@@ -45,7 +45,17 @@ require_once('php/connect.php');
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.css">
     <!-- Bootstrap5 แบบ bundle คือการนำ Popper มารวมไว้ในไฟล์เดียว -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
- 
+    <!-- table -->
+     <link  rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap5.min.css">
+    <script> //session หมด ล้อกเอ้าใน 30 วิ  1000 = 1 วิ
+                                        var keyboard_time_out = setTimeout('close_window()', 1800000);
+                                        $(window).keypress(function(){
+                                        clearTimeout(keboard_time_out);
+                                        keyboard_time_out = setTimeout('close_window()', 1800000);
+                                        })
+                                        function close_window(){
+                                        location.href="php/logout.php";
+                                        } </script>
 </head>
 <body id="page-top">
  
@@ -155,7 +165,7 @@ require_once('php/connect.php');
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-
+ 
                     <!-- Sidebar Toggler (Sidebar) -->
                     <div class="text-center d-none d-md-inline">
                         <button class="border-0 fas fa-bars" id="sidebarToggle" style="background-color: white;color:gray;"></button>
@@ -206,6 +216,9 @@ require_once('php/connect.php');
                                 <?php if (mysqli_num_rows($resultalert) >= 1): ?>
 
                                 <span class="badge badge-danger badge-counter"><?php echo $totalnumalert?>+</span>
+                                <?php else:?>
+  
+                                <?php endif?>
                             </a>
                             <!-- Dropdown - Alerts -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -231,9 +244,7 @@ require_once('php/connect.php');
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                             </div>
                         </li>
-                        <?php else:?>
-
-                        <?php endif?>
+                      
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -295,13 +306,13 @@ require_once('php/connect.php');
                                                         data-bs-toggle="modal" 
                                                         data-bs-target="#add-modal" 
                                                         style="width: 105px;"> เพิ่มคูปอง </button>
-                         </div>
-                            <span class="text-right" >จำนวนรายการคงเหลือ <?php echo mysqli_num_rows($result) ?> รายการ </span>  
+                         </div><br>
+                          <!--  <span class="text-right" >จำนวนรายการคงเหลือ <?php echo mysqli_num_rows($result) ?> รายการ </span>  -->
                     </div>
                     <div class="col-lg-12">
                         <div class="table-responsive" >
                             <?php if (mysqli_num_rows($result) > 0): ?>
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="tbldata">
                                 <thead>
                                 <tr class="text-center text-light bg-dark">
                                <!-- <th>ลำดับ</th> -->
@@ -542,7 +553,16 @@ require_once('php/connect.php');
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
- 
+
+   <!-- table จำกัดโรด next ย้อนกลับ-->
+   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+        $('#tbldata').DataTable();
+    });
+    </script>
     <?php mysqli_close($connect) ?>
 </body>
 

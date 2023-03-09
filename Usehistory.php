@@ -43,6 +43,8 @@ require_once('php/connect.php');
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.css">
     <!-- Bootstrap5 แบบ bundle คือการนำ Popper มารวมไว้ในไฟล์เดียว -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+     <!-- table -->
+     <link  rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap5.min.css">
     <script> //session หมด ล้อกเอ้าใน 30 วิ  1000 = 1 วิ
                                         var keyboard_time_out = setTimeout('close_window()', 1800000);
                                         $(window).keypress(function(){
@@ -298,12 +300,12 @@ require_once('php/connect.php');
                         <div class="d-sm-flex align-items-center justify-content-between mb-2">
                             <h1 class="pb">ประวัติการใช้งานคูปอง</h1>                                
                         </div>
-                            <span class="text-right" >รายการที่คูปองที่ถูกใช้งาน <?php echo mysqli_num_rows($result) ?> รายการ </span>  
+                          <!--   <span class="text-right" >รายการที่คูปองที่ถูกใช้งาน <?php echo mysqli_num_rows($result) ?> รายการ </span>  -->
                     </div>
                     <div class="col-lg-12">
                         <div class="table-responsive" >
                             <?php if (mysqli_num_rows($result) > 0): ?>
-                            <table class="table table-bordered">
+                                <table class="table table-bordered" id="tbldata">
                                 <thead>
                                 <tr class="text-center text-light bg-dark">
                                     <th>วันที่ใช้</th>
@@ -434,7 +436,15 @@ require_once('php/connect.php');
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
- 
+    <!-- table จำกัดโรด next ย้อนกลับ-->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+        $('#tbldata').DataTable();
+    });
+    </script>
     <?php mysqli_close($connect) ?>
 </body>
 </html>
