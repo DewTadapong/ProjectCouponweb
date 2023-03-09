@@ -16,6 +16,10 @@ require_once('php/connect.php');
   $durationnumalert = $connect->query($sqlnumalert);
   $recordnumalert = $durationnumalert->fetch_array();
   $totalnumalert = $recordnumalert['count'];
+  //image user
+$sqlimguser = "SELECT * FROM user WHERE username = '".$_SESSION['username']."'";
+$resultimguser = mysqli_query($connect, $sqlimguser);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -133,6 +137,7 @@ require_once('php/connect.php');
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="Usecoupon.php">UseCoupon</a>
                         <a class="collapse-item active" href="Usehistory.php">UseHistory</a>
+                        <a class="collapse-item" href="Usetestbill.php">TestBill</a>
                     </div>
                 </div>
                 </li>
@@ -245,6 +250,7 @@ require_once('php/connect.php');
 <?php else:?>
 
 <?php endif?>
+ 
                 <div class="topbar-divider d-none d-sm-block"></div>
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
@@ -299,7 +305,7 @@ require_once('php/connect.php');
                     <div class="col-lg-12">
                         <div class="d-sm-flex align-items-center justify-content-between mb-2">
                             <h1 class="pb">ประวัติการใช้งานคูปอง</h1>                                
-                        </div>
+                        </div><br>
                           <!--   <span class="text-right" >รายการที่คูปองที่ถูกใช้งาน <?php echo mysqli_num_rows($result) ?> รายการ </span>  -->
                     </div>
                     <div class="col-lg-12">
@@ -344,15 +350,7 @@ require_once('php/connect.php');
                                             </div>
                                         </td>
                                     </tr>
-                                     
-                                <!-- Modal Profile-->
-                                <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-sm">
-                                        <div class="modal-body-id">
-                                        </div>
-                                    </div>
-                                </div>
-
+                                      
                                 <!-- Modal Read-->
                                 <form class="row gy-4" action="php/updateuseagain.php?id=<?php echo $row['id']?>"  method="POST">
                                     <div class="modal fade" id="info-modal<?php echo $row['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"  >
@@ -403,7 +401,15 @@ require_once('php/connect.php');
         <i class="fas fa-angle-up"></i>
     </a>
 
-      
+      <!-- Modal Profile-->
+      <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <?php while ($row = mysqli_fetch_assoc($resultimguser)):?>
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-body-id" style="background-image: url('img/<?php echo $row["imageuser"];?>')">
+                                        </div>
+                                    </div>
+                                    <?php endwhile?>
+                                </div>
     <style>
         #hidden-text{
             width:100%;
@@ -414,8 +420,7 @@ require_once('php/connect.php');
             word-break: break-all;
         }
         .modal-body-id{
-        background-image: url('img/picdew.png');
-        background-repeat: no-repeat;
+         background-repeat: no-repeat;
         background-size: cover;
         height: 400px;
         }

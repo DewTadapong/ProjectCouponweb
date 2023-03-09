@@ -24,6 +24,12 @@ if (isset($_POST['submit'])) {
        "<br>";
 
     endwhile;
+
+    $sqlsid = "SELECT * FROM invoice WHERE INVOICE_NO = ".$_SESSION['itemnumberuse1']."";
+    $resultsid = mysqli_query($connect, $sqlsid);
+    while ($row = mysqli_fetch_assoc($resultsid)):
+       $sid = $row['SID'];
+    endwhile;
 }    
     $sqlupdate = "UPDATE products SET 
     amountnow = '".--$amountnow."'
@@ -35,7 +41,7 @@ if (isset($_POST['submit'])) {
     WHERE INVOICE_NO = ".$_SESSION['itemnumberuse1']."";
     mysqli_query($connect, $sqlupdatebill);
  
-    $sqlinserthistory = "INSERT INTO `productsuse` (`coupon`, `use_at`, `barcode`,`itemnumber_use`, `pricesellall`, `discountbath`, `receivemoney`, `getmoney`, `employee`) 
+    $sqlinserthistory = "INSERT INTO `productsuse` (`coupon`, `use_at`, `barcode`,`itemnumber_use`, `pricesellall`, `discountbath`, `receivemoney`, `getmoney`, `employee`,`sid`) 
     VALUES (
               '".htmlspecialchars($name, ENT_QUOTES, 'UTF-8')."', 
               '".date("Y-m-d H:i:s")."', 
@@ -45,10 +51,11 @@ if (isset($_POST['submit'])) {
               '".$pricesellall."',
               '".$change."',
               '".$getmoney."',
-              '".$_SESSION["fristname"]."')";  
+              '".$_SESSION["fristname"]."',
+              '".$sid."')";  
 
   if (mysqli_query($connect, $sqlinserthistory)){
-         header('Refresh:0; url= /Couponweb/php/usesucess.php');
+         header('Refresh:0; url= /Couponweb/php/usereceivemoney.php?id='.$_SESSION['itemnumberuse1'].'');
   }
   else{
          header('Refresh:0; url= /Couponweb/php/useunsucess.php');

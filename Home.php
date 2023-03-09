@@ -14,6 +14,10 @@ require_once('php/connect.php');
  $durationnumalert = $connect->query($sqlnumalert);
  $recordnumalert = $durationnumalert->fetch_array();
  $totalnumalert = $recordnumalert['count'];
+
+ //image user
+$sqlimguser = "SELECT * FROM user WHERE username = '".$_SESSION['username']."'";
+$resultimguser = mysqli_query($connect, $sqlimguser);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -128,6 +132,8 @@ require_once('php/connect.php');
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="Usecoupon.php">UseCoupon</a>
                         <a class="collapse-item" href="Usehistory.php">UseHistory</a>
+                        <a class="collapse-item" href="Usetestbill.php">TestBill</a>
+
                     </div>
                 </div>
             </li>
@@ -487,14 +493,15 @@ require_once('php/connect.php');
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
-         <!-- Modal Profile-->
-        <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-body-id">
-                </div>
-            </div>
-        </div>
+<!-- Modal Profile-->
+<div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <?php while ($row = mysqli_fetch_assoc($resultimguser)):?>
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-body-id" style="background-image: url('img/<?php echo $row["imageuser"];?>')">
+                                        </div>
+                                    </div>
+                                    <?php endwhile?>
+                                </div>
     <style>
         #hidden-text{
             width:100%;
@@ -505,8 +512,7 @@ require_once('php/connect.php');
             word-break: break-all;
         }
         .modal-body-id{
-        background-image: url('img/picdew.png');
-        background-repeat: no-repeat;
+         background-repeat: no-repeat;
         background-size: cover;
         height: 400px;
         }
