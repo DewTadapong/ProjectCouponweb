@@ -324,6 +324,7 @@ $resultimguser = mysqli_query($connect, $sqlimguser);
                                 <tbody>
                                 <?php while ($row = mysqli_fetch_assoc($result)):?>
                                     <tr class="text-center">
+                                        <?php $sid=$row['sid'] ?>
                                         <td> <?php echo dateThai($row['use_at']) ?> </td>
                                         <td style="column-width:80px;white-space: normal;"> <?php echo $row['itemnumber_use'] ?> </td>     
                                         <td> <?php echo $row['coupon'] ?></td>
@@ -338,16 +339,13 @@ $resultimguser = mysqli_query($connect, $sqlimguser);
                                                         data-bs-target="#info-modal<?php echo $row['id'] ?>" 
                                                         style="width: 105px;"> รายละเอียด </button>
                                             </div>
-                                         
                                             <div class="btn-group">
                                                 <button name="print"
-                                                class="btn btn-warning" 
-                                                        data-bs-toggle="modal" 
-                                                        data-bs-target="#print-modal<?php echo $row['id'] ?>" 
-                                                        style="width: 75px;"> ปริ้น </button>
-                                            </div>
+                                                class="btn btn-warning" onclick="printbill()"> ปริ้น </button>
+                                            </div>                
                                         </td>
                                     </tr>
+
                                       
                                 <!-- Modal Read-->
                                 <form class="row gy-4" action="php/updateuseagain.php?id=<?php echo $row['id']?>"  method="POST">
@@ -430,6 +428,24 @@ $resultimguser = mysqli_query($connect, $sqlimguser);
             background-color: white;
         }    
     </style>
+                                    <script>
+                                    function printbill(){
+                                        Swal.fire({
+                                        title: 'เลือกขนาดบิลที่ต้องการปริ้น',
+                                        showDenyButton: true,
+                                        showCancelButton: true,
+                                        confirmButtonText: 'Print-Full',
+                                        denyButtonText: 'Print-Small',
+                                        timer:5000
+                                        }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.href = '/Couponweb/invoice/printusecoupon.php?id=<?php echo $sid?>';               
+                                        } else if (result.isDenied) {
+                                        }
+                                        })
+                                    }
+                                </script>
+
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

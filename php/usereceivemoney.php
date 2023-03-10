@@ -34,7 +34,7 @@ Swal.fire({
 }).then((result) => {
   /* Read more about isConfirmed, isDenied below */
   if (result.isConfirmed) {
-      window.location.href = '/Couponweb/invoice/print.php?id=<?php echo $sid?>';               
+      window.location.href = '/Couponweb/invoice/printusecoupon.php?id=<?php echo $sid?>';               
   } else if (result.isDenied) {
       window.location.href = '/Couponweb/Usecoupon.php';               
   }
