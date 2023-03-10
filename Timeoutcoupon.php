@@ -46,8 +46,6 @@ if(isset($_SESSION['fristname']))
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.css">
     <!-- Bootstrap5 แบบ bundle คือการนำ Popper มารวมไว้ในไฟล์เดียว -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-     <!-- table -->
-     <link  rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap5.min.css">
     <script> //session หมด ล้อกเอ้าใน 30 วิ  1000 = 1 วิ
                                         var keyboard_time_out = setTimeout('close_window()', 1800000);
                                         $(window).keypress(function(){
@@ -57,7 +55,7 @@ if(isset($_SESSION['fristname']))
                                         function close_window(){
                                         location.href="php/logout.php";
                                         } </script>
-
+                                          <!--css profile-->
    
 </head>
 <body id="page-top">
@@ -136,6 +134,7 @@ if(isset($_SESSION['fristname']))
                         <a class="collapse-item" href="Usecoupon.php">UseCoupon</a>
                         <a class="collapse-item" href="Usehistory.php">UseHistory</a>
                         <a class="collapse-item" href="Usetestbill.php">TestBill</a>
+
                     </div>
                 </div>
             </li>
@@ -155,99 +154,101 @@ if(isset($_SESSION['fristname']))
          
               <!-- Divider -->
               <hr class="sidebar-divider d-none d-md-block">
-      
-  
+     
+           
           </ul>
           <!-- End of Sidebar -->
   
           <!-- Content Wrapper -->
-          <div id="content-wrapper" class="d-flex flex-column">
-   
-            <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top" style="height:3.5rem;">
-
-            <!-- Sidebar Toggle (Topbar) -->
-            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                <i class="fa fa-bars"></i>
-            </button>
+        <div id="content-wrapper" class="d-flex flex-column">
  
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="border-0 fas fa-bars" id="sidebarToggle" style="background-color: white;color:gray;"></button>
-            </div>
+ <!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top" style="height:3.5rem;">
 
-            &nbsp;&nbsp;&nbsp;
-            <ol class="breadcrumb float-rm-right" style="width:300px;">
-              <li class="breadcrumb-item"><a href="Home.php">Home</a></li>
-              <li class="breadcrumb-item active">Timeoutcoupon</li>
-            </ol>
-            <script>
-                function hidebtn() {
-                if(document.getElementById("seachtop").style.visibility == 'hidden'){
-                    document.getElementById("seachtop").style="visibility: visible;"}else{
-                        document.getElementById("seachtop").style="visibility: hidden;"
-                    }
-                }
-                
-             </script>
+      <!-- Sidebar Toggle (Topbar) -->
+      <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+          <i class="fa fa-bars"></i>
+      </button>
 
-            <!-- Topbar Search -->
-             <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="seachtop" style="visibility: hidden;">
-                <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for ..."
-                        aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        
-                    </div>  
-                </div>
-            </form>
-            &nbsp;&nbsp;&nbsp;    
-            <!-- Topbar Navbar -->
-            <ul class="navbar-nav ml-auto">
-            <button class="btn btn-navbar" onclick="hidebtn()">
-                  <i class="fas fa-search"></i>
-            </button>
- 
-                <!-- Topbar Navbar -->
-<ul class="navbar-nav ml-auto">
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+          <button class="border-0 fas fa-bars" id="sidebarToggle" style="background-color: white;color:gray;"></button>
+      </div>
 
-<!-- Nav Item - Alerts -->
-<li class="nav-item dropdown no-arrow mx-1">
-    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-bell fa-fw"></i>
-        <!-- ใกล้หมดอยุ่ใน 24 ชม -->
-        <?php if (mysqli_num_rows($resultalert) >= 1): ?>
+      &nbsp;&nbsp;&nbsp;
+      <ol class="breadcrumb float-rm-right" style="width:300px;">
+      <li class="breadcrumb-item"><a href="Home.php">Home</a></li>
+      <li class="breadcrumb-item active">GenarateCoupon</li>
+      </ol>
+      <script>
+          function hidebtn() {
+          if(document.getElementById("seachtop").style.visibility == 'hidden'){
+              document.getElementById("seachtop").style="visibility: visible;"}else{
+                  document.getElementById("seachtop").style="visibility: hidden;"
+              }
+          }
+          
+      </script>
 
-        <span class="badge badge-danger badge-counter"><?php echo $totalnumalert?>+</span>
-    </a>
-    <!-- Dropdown - Alerts -->
-    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-        aria-labelledby="alertsDropdown">
-        <h6 class="dropdown-header">
-            แจ้งเตื่อนคูปองหมดอายุภายใน 24 ชั่วโมง 
-        </h6>
-        <?php while ($row = mysqli_fetch_assoc($resultalert)):?>
-        <a class="dropdown-item d-flex align-items-center" href="#">
-            <div class="mr-3">
-                <div class="icon-circle">
-                    <img style="width: 2rem;"
-                        src="img/couponalert.png" alt="...">
-                </div>
-            </div>
-            <div>
-                <div class="small text-gray-1000"><?php echo date("Y-m-d H:i:s")?> หมดอายุในอีก <?php echo $row['day'];?> ชม.</div>
-                <span class="font-weight-thin"><?php echo $row['name'];?></span>
-            </div>
-         
-        </a>
-        <?php endwhile?>           
-        <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-    </div>
-</li>
-<?php else:?>
+      <!-- Topbar Search -->
+      <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="seachtop" style="visibility: hidden;">
+          <div class="input-group">
+              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for ..."
+                  aria-label="Search" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                  
+              </div>  
+          </div>
+      </form>
+      &nbsp;&nbsp;&nbsp;    
+      <!-- Topbar Navbar -->
+      <ul class="navbar-nav ml-auto">
+      <button class="btn btn-navbar" onclick="hidebtn()">
+          <i class="fas fa-search"></i>
+      </button>
 
-<?php endif?>
+
+      <!-- Topbar Navbar -->
+      <ul class="navbar-nav ml-auto">
+
+          <!-- Nav Item - Alerts -->
+          <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-bell fa-fw"></i>
+                  <!-- ใกล้หมดอยุ่ใน 24 ชม -->
+                  <?php if (mysqli_num_rows($resultalert) >= 1): ?>
+
+                  <span class="badge badge-danger badge-counter"><?php echo $totalnumalert?>+</span>
+                  <?php else:?>
+
+                  <?php endif?>
+              </a>
+              <!-- Dropdown - Alerts -->
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                  aria-labelledby="alertsDropdown">
+                  <h6 class="dropdown-header">
+                      แจ้งเตื่อนคูปองหมดอายุภายใน 24 ชั่วโมง 
+                  </h6>
+                  <?php while ($row = mysqli_fetch_assoc($resultalert)):?>
+                  <a class="dropdown-item d-flex align-items-center" href="#">
+                      <div class="mr-3">
+                          <div class="icon-circle">
+                              <img style="width: 2rem;"
+                                  src="img/couponalert.png" alt="...">
+                          </div>
+                      </div>
+                      <div>
+                          <div class="small text-gray-1000"><?php echo date("Y-m-d H:i:s")?> หมดอายุในอีก <?php echo $row['day'];?> ชม.</div>
+                          <span class="font-weight-thin"><?php echo $row['name'];?></span>
+                      </div>
+                   
+                  </a>
+                  <?php endwhile?>           
+                  <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+              </div>
+          </li>
+
 
                 <div class="topbar-divider d-none d-sm-block"></div>
                 <!-- Nav Item - User Information -->
@@ -256,7 +257,7 @@ if(isset($_SESSION['fristname']))
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                         <?php
-                        echo $_SESSION["username"] 
+                        echo $_SESSION["username"]
                         ?>    
                         </span>
                         <i class="mr-2 d-none d-lg-inline text-gray-600 small">
@@ -295,23 +296,24 @@ if(isset($_SESSION['fristname']))
 
             </nav>
             <!-- End of Topbar -->
+                  
 
             <!-- Begin Page Content -->
                         
 <!-- Page Heading -->
-<div class="container-fluid">
+    <div class="container-fluid">
             <div class="shadow rounded p-4 bg-body h-100">
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
                         <div class="d-sm-flex align-items-center justify-content-between mb-2">
                             <h1 class="pb">คูปองที่หมดอายุแล้ว</h1>                                
-                        </div> <br>
-                        <!--    <span class="text-right" >หมดอายุทั้งหมด <?php echo mysqli_num_rows($result) ?> รายการ </span>  -->
-                    </div> 
+                        </div>
+                            <span class="text-right" >หมดอายุทั้งหมด <?php echo mysqli_num_rows($result) ?> รายการ </span>  
+                    </div>
                     <div class="col-lg-12">
                         <div class="table-responsive" >
                             <?php if (mysqli_num_rows($result) > 0): ?>
-                            <table class="table table-bordered" id="tbldata">
+                            <table class="table table-bordered">
                                 <thead>
                                 <tr class="text-center text-light bg-dark">
                                      <th>ชื่อคูปอง</th>
@@ -344,17 +346,7 @@ if(isset($_SESSION['fristname']))
                                             </div>
                                         </td>
                                     </tr>
-                                     
-                               <!-- Modal Profile-->
-                               <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <?php while ($row = mysqli_fetch_assoc($resultimguser)):?>
-                                    <div class="modal-dialog modal-sm">
-                                        <div class="modal-body-id" style="background-image: url('img/<?php echo $row["imageuser"];?>')">
-                                        </div>
-                                    </div>
-                                    <?php endwhile?>
-                                </div>
-       
+ 
                                     <!-- Modal Read-->
                                     <form class="row gy-4" action="php/updateuseagain.php?id=<?php echo $row['id']?>"  method="POST">
                                     <div class="modal fade" id="useagain-modal<?php echo $row['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"  >
@@ -408,7 +400,15 @@ if(isset($_SESSION['fristname']))
 
     </div>
     <!-- End of Page Wrapper -->
-
+  <!-- Modal Profile-->
+  <div class="modal fade" id="id-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <?php while ($row = mysqli_fetch_assoc($resultimguser)):?>
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-body-id" style="background-image: url('img/<?php echo $row["imageuser"];?>')">
+                                        </div>
+                                    </div>
+                                    <?php endwhile?>
+                                </div>
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
@@ -424,7 +424,7 @@ if(isset($_SESSION['fristname']))
             word-break: break-all;
         }
         .modal-body-id{
-        background-repeat: no-repeat;
+         background-repeat: no-repeat;
         background-size: cover;
         height: 400px;
         }
@@ -436,25 +436,16 @@ if(isset($_SESSION['fristname']))
             background-color: white;
         }  
     </style>
-    <!-- profile toggle-->
+    <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-    <!-- table จำกัดrow next ย้อนกลับ-->
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>
-    <script>
-        $(document).ready(function () {
-        $('#tbldata').DataTable();
-    });
-    </script>
+ 
     <?php mysqli_close($connect) ?>
 </body>
 </html>

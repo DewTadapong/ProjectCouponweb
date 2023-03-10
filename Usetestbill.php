@@ -9,6 +9,14 @@ if(isset($_SESSION['fristname']))
 //image user
 $sqlimguser = "SELECT * FROM user WHERE username = '".$_SESSION['username']."'";
 $resultimguser = mysqli_query($con, $sqlimguser);
+
+ // เเจ้งเตือน หมดอายุ ใน 24 ชม.
+ $sqlalert = "SELECT * FROM products WHERE hralert = 1 ";
+ $resultalert = mysqli_query($con, $sqlalert);
+ $sqlnumalert = "SELECT SUM(hralert) AS count FROM products";
+ $durationnumalert = $con->query($sqlnumalert);
+ $recordnumalert = $durationnumalert->fetch_array();
+ $totalnumalert = $recordnumalert['count'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -187,38 +195,62 @@ document.getElementById("seachtop").style="visibility: visible;"}else{
 }
 
 </script>
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       
+   
 <!-- Topbar Search -->
-<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="seachtop" style="visibility: hidden;">
-<div class="input-group">
-<input type="text" class="form-control bg-light border-0 small" placeholder="Search for ..."
-  aria-label="Search" aria-describedby="basic-addon2">
-<div class="input-group-append">
-  
-</div>  
-</div>
-</form>
-&nbsp;&nbsp;&nbsp;    
-<!-- Topbar Navbar -->
-<ul class="navbar-nav ml-auto">
-<button class="btn btn-navbar" onclick="hidebtn()">
-<i class="fas fa-search"></i>
+<form action="php/seachbilltest.php" method="POST" id="seachtop" style="visibility: hidden;">
+    <div class="input-group">
+        <input type="text" name="seachbilltest" class="form-control bg-light border-0 small" placeholder="Search for ..."
+        aria-label="Search" aria-describedby="basic-addon2" style="width: 300px;"> 
+         
+    </div>
+</form>&nbsp;&nbsp; 
+<button type="submit" class="btn btn-navbar" onclick=" hidebtn()">
+        <i class="fas fa-search"></i>
 </button>
+
 <!-- Topbar Navbar -->
 <ul class="navbar-nav ml-auto">
 
-<!-- Nav Item - Alerts -->
-<li class="nav-item dropdown no-arrow mx-1">
-<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-<i class="fas fa-bell fa-fw"></i>
-<!-- ใกล้หมดอยุ่ใน 24 ชม -->
+ <!-- Nav Item - Alerts -->
+ <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-bell fa-fw"></i>
+                  <!-- ใกล้หมดอยุ่ใน 24 ชม -->
+                  <?php if (mysqli_num_rows($resultalert) >= 1): ?>
 
-<span class="badge badge-danger badge-counter"> +</span>
-</a>
+                  <span class="badge badge-danger badge-counter"><?php echo $totalnumalert?>+</span>
+                  <?php else:?>
 
-</li>
+                  <?php endif?>
+              </a>
+              <!-- Dropdown - Alerts -->
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                  aria-labelledby="alertsDropdown">
+                  <h6 class="dropdown-header">
+                      แจ้งเตื่อนคูปองหมดอายุภายใน 24 ชั่วโมง 
+                  </h6>
+                  <?php while ($row = mysqli_fetch_assoc($resultalert)):?>
+                  <a class="dropdown-item d-flex align-items-center" href="#">
+                      <div class="mr-3">
+                          <div class="icon-circle">
+                              <img style="width: 2rem;"
+                                  src="img/couponalert.png" alt="...">
+                          </div>
+                      </div>
+                      <div>
+                          <div class="small text-gray-1000"><?php echo date("Y-m-d H:i:s")?> หมดอายุในอีก <?php echo $row['day'];?> ชม.</div>
+                          <span class="font-weight-thin"><?php echo $row['name'];?></span>
+                      </div>
+                   
+                  </a>
+                  <?php endwhile?>           
+                  <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+              </div>
+          </li>
 
+ 
       <div class="topbar-divider d-none d-sm-block"></div>
       <!-- Nav Item - User Information -->
       <li class="nav-item dropdown no-arrow">
@@ -320,15 +352,15 @@ data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<div class='col-md-8'>
 						<h5 class='text-success'>Customer Details</h5>
 						<div class='form-group'>
-							<label>Name</label>
+							<label>NicName</label>
 							<input type='text' name='cname' required class='form-control'>
 						</div>
 						<div class='form-group'>
-							<label>Address</label>
+							<label>Name</label>
 							<input type='text' name='caddress' required class='form-control'>
 						</div>
 						<div class='form-group'>
-							<label>City</label>
+							<label>Phone</label>
 							<input type='text' name='ccity' required class='form-control'>
 						</div>
 					</div>

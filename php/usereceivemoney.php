@@ -21,17 +21,27 @@ endwhile;
 </head>
 <body>
  <script>
- Swal.fire({
-  position: 'center',  
+  
+Swal.fire({
   icon: 'success',
   text: 'เงินทอน',
   title: document.getElementById("receivemoney").value,
-   showConfirmButton: true,
+  showDenyButton: true,
+  showCancelButton: false,
+  confirmButtonText: 'PrintBill',
+  denyButtonText: `Back`,
   timer: 5000
 }).then((result) => {
-   if(result){
-       window.location.href = '/Couponweb/invoice/print.php?id=<?php echo $sid?>';               
-      }})
+  /* Read more about isConfirmed, isDenied below */
+  if (result.isConfirmed) {
+      window.location.href = '/Couponweb/invoice/print.php?id=<?php echo $sid?>';               
+  } else if (result.isDenied) {
+      window.location.href = '/Couponweb/Usecoupon.php';               
+  }
+  else{
+    window.location.href = '/Couponweb/Usecoupon.php';               
+  }
+})      
 </script>
 <script src="sweetalert2.all.min.js"></script>
 </body>

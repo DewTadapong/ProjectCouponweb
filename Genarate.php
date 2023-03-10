@@ -49,8 +49,7 @@ $resultimguser = mysqli_query($connect, $sqlimguser);
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.css">
     <!-- Bootstrap5 แบบ bundle คือการนำ Popper มารวมไว้ในไฟล์เดียว -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- table -->
-     <link  rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap5.min.css">
+    
     <script> //session หมด ล้อกเอ้าใน 30 วิ  1000 = 1 วิ
                                         var keyboard_time_out = setTimeout('close_window()', 1800000);
                                         $(window).keypress(function(){
@@ -559,16 +558,7 @@ $resultimguser = mysqli_query($connect, $sqlimguser);
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-
-   <!-- table จำกัดโรด next ย้อนกลับ-->
-   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>
-    <script>
-        $(document).ready(function () {
-        $('#tbldata').DataTable();
-    });
-    </script>
+ 
     <?php mysqli_close($connect) ?>
 </body>
 
