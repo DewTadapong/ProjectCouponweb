@@ -1,6 +1,5 @@
 <?php
 session_start();
-$userimage = $_SESSION['lastname'];
 if (!isset($_SESSION['username'], $_SESSION['password'])){
     echo "<meta http-equiv='refresh' content='0; url=index.php'>" ;
     exit;
@@ -16,7 +15,7 @@ if(isset($_SESSION['fristname']))
     $durationnumalert = $connect->query($sqlnumalert);
     $recordnumalert = $durationnumalert->fetch_array();
     $totalnumalert = $recordnumalert['count'];
-    //image user
+    //im
     $sqlimguser = "SELECT * FROM user WHERE username = '".$_SESSION['username']."'";
     $resultimguser = mysqli_query($connect, $sqlimguser);
     
@@ -47,6 +46,8 @@ if(isset($_SESSION['fristname']))
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.css">
     <!-- Bootstrap5 แบบ bundle คือการนำ Popper มารวมไว้ในไฟล์เดียว -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+     <!-- table -->
+     <link  rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap5.min.css">
     <script> //session หมด ล้อกเอ้าใน 30 วิ  1000 = 1 วิ
                                         var keyboard_time_out = setTimeout('close_window()', 1800000);
                                         $(window).keypress(function(){
@@ -56,7 +57,6 @@ if(isset($_SESSION['fristname']))
                                         function close_window(){
                                         location.href="php/logout.php";
                                         } </script>
-     <link  rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap5.min.css">
 
    
 </head>
@@ -436,16 +436,17 @@ if(isset($_SESSION['fristname']))
             background-color: white;
         }  
     </style>
-    <!-- Bootstrap core JavaScript-->
+    <!-- profile toggle-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+  
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-    <!-- table จำกัดโรด next ย้อนกลับ-->
+    <!-- table จำกัดrow next ย้อนกลับ-->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>

@@ -58,8 +58,7 @@ $resultimguser = mysqli_query($connect, $sqlimguser);
                                         function close_window(){
                                         location.href="php/logout.php";
                                         } </script>
-                                          <!--css profile-->
-   
+    
 </head>
 <body id="page-top">
 
