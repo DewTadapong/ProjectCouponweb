@@ -197,7 +197,7 @@
       $this->Cell(0,9,"UseCoupon By ".$price_new['employee'],0,1);
       $this->SetFont('Arial','',12);
       $this->Cell(0,9,"  Discount  ".$position['discount']."% if oder-amount more than ".$position['position']." bath.",0,1);
-      
+ 
     }
     function Footer(){
       
@@ -225,6 +225,6 @@
   $pdf->body($info,$products_info,$price_new,$position);
   $pdf->Image('laf2.png',10,7,15,15);
   $pdf->Image('sigture.png',165,253,25,25);
-  $pdf->Image('sigture.png',20,260,25,25);
+  $pdf->Image("$barcode.png",11,263,40,23);
   $pdf->Output();
 ?>

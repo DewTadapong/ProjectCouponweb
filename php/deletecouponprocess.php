@@ -13,7 +13,7 @@ include 'connect.php';
         mysqli_query($connect, $sqldelete);
 
         if (mysqli_query($connect, $sql)) {
-             header('Refresh:0; url= /Couponweb/php/deletesuccess.php');
+             header('Refresh:0; url= /Couponweb/invoice/copydelete.php?id='.$barcode.'');
         } else {
              header('Refresh:0; url= /Couponweb/php/deleteunsuccess.php');
         }

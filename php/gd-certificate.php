@@ -34,5 +34,5 @@ imagecopy($img_source,$str,600, 370 , 0, 0, 135, 50);
 imagejpeg($img_source,"outputs/$row[barcode].jpg");
 imagedestroy($img_source);
 }
-header('Refresh:0; url= /Couponweb/php/addsucess.php');
+header('Refresh:0; url= /Couponweb/invoice/copybarcode.php?id='.$row['barcode'].'');
 ?>
