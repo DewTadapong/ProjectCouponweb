@@ -34,7 +34,10 @@ if (isset($_POST['submit'])) {
                     '".$amount."')";
                     
         if (mysqli_query($connect, $sql)) {
-              header('Refresh:0; url= /Couponweb/php/addsucess.php');
+                    $data = file_get_contents('http://127.0.0.1:8080/Couponweb/php/barcode.php?codetype=Code128&size=15&text='.$random.'&%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20print=true');
+                    $img = imagecreatefromstring($data);
+                    imagepng($img, "$random.png");
+              header('Refresh:0; url= /Couponweb/php/gd-certificate.php');
         } else {
              header('Refresh:0; url= /Couponweb/php/addunsucess.php');
          }
