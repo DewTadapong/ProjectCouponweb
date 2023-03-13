@@ -308,7 +308,7 @@ if(isset($_SESSION['fristname']))
                         <div class="d-sm-flex align-items-center justify-content-between mb-2">
                             <h1 class="pb">คูปองที่หมดอายุแล้ว</h1>                                
                         </div>
-                            <span class="text-right" >หมดอายุทั้งหมด <?php echo mysqli_num_rows($result) ?> รายการ </span>  
+                            <span class="text-right" >หมดอายุทั้งหมด <?php echo mysqli_num_rows($result)?> รายการ </span>  
                     </div>
                     <div class="col-lg-12">
                         <div class="table-responsive" >
