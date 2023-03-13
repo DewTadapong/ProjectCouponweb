@@ -10,6 +10,7 @@ if (isset($_SESSION['fristname']))
     // เเจ้งเตือน หมดอายุ ใน 24 ชม.
     $sqlalert = "SELECT * FROM products WHERE hralert = 1 ";
 $resultalert = mysqli_query($connect, $sqlalert);
+
 $sqlnumalert = "SELECT SUM(hralert) AS count FROM products";
 $durationnumalert = $connect->query($sqlnumalert);
 $recordnumalert = $durationnumalert->fetch_array();
@@ -42,6 +43,21 @@ $sqlcouponout = "SELECT SUM(amountnow) AS count FROM products where day ='หม
 $ducouponout = $connect->query($sqlcouponout);
 $recordcouponout = $ducouponout->fetch_array();
 $totalcouponout = $recordcouponout['count'];
+
+// ราคาขายทั้งหมดยังไม่ลด
+$sqlpricesellall = "SELECT SUM(pricesellall) AS count FROM productsuse";
+$ducpricesellall = $connect->query($sqlpricesellall);
+$recpricesellall = $ducpricesellall->fetch_array();
+$totalpricesellall = $recpricesellall['count'];
+
+// ราคาขายทั้งหมดลดแล้ว
+$sqlpricediscount = "SELECT SUM(discountbath) AS count FROM productsuse";
+$ducpricediscount = $connect->query($sqlpricediscount);
+$recpricediscount = $ducpricediscount->fetch_array();
+$totalpricediscount = $recpricediscount['count'];
+
+// ลดแล้วทั้งหมดกี่บาท
+$totaldiscount = $totalpricesellall - $totalpricediscount;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -409,43 +425,10 @@ $totalcouponout = $recordcouponout['count'];
                     </div>
                 </div>
 
+
                 <!-- Content Row -->
                 <div class="row">
-
-                    <div class="col-xl-8 col-lg-7">
-
-                        <!-- Area Chart -->
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-area">
-                                    <canvas id="myAreaChart"></canvas>
-                                </div>
-                                <hr>
-                                Styling for the area chart can be found in the
-                                <code>/js/demo/chart-area-demo.js</code> file.
-                            </div>
-                        </div>
-
-                        <!-- Bar Chart -->
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-bar">
-                                    <canvas id="myBarChart"></canvas>
-                                </div>
-                                <hr>
-                                Styling for the bar chart can be found in the
-                                <code>/js/demo/chart-bar-demo.js</code> file.
-                            </div>
-                        </div>
-
-                    </div>
-
+                    &nbsp;&nbsp;
                     <!-- Donut Chart -->
                     <div class="col-xl-4 col-lg-5">
                         <div class="card shadow mb-4">
@@ -460,13 +443,13 @@ $totalcouponout = $recordcouponout['count'];
                                 </div>
                                 <hr>
                                 <div class="text-center">
-                                <span class="mr-2">
+                                    <span class="mr-2">
                                         <i class="fas fa-circle text-primary"></i> ทั้งหมด
                                     </span>
                                     <span class="mr-2">
                                         <i class="fas fa-circle text-success"></i> ใช้ไป
                                     </span>
-                                    
+
                                     <span class="mr-2">
                                         <i class="fas fa-circle text-warning"></i> คงเหลือ
                                     </span><br>
@@ -477,17 +460,137 @@ $totalcouponout = $recordcouponout['count'];
                             </div>
                         </div>
                     </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="colum">
+                        
+                        <div class="col-xl-13 mb-3">
+                            <div class="card border-left-primary shadow h-80 py-2">
+                                <div class="card-body">
+                                   
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ลดไปกี่บาท -->
+                        <div class="col-xl-13 mb-3">
+                            <div class="card border-left-primary shadow h-80 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="display-4 font-weight-bold text-primary text-uppercase mb-1">
+                                                <?php echo $totaldiscount ?>
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">ลดราคาไปทั้งหมด : บาท</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-dollar-sign fa-4x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <!-- ยอดขาย -->
+                            <div class="col-xl-6 mb-3">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="display-4 font-weight-bold text-success text-uppercase mb-1">
+                                                    <?php echo $totalpricesellall ?>
+                                                </div>
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col-auto">
+                                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">ยอดขายไม่หักส่วนลด : บาท</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ยอดขายหักส่วนลด -->
+                            <div class="col-xl-6 mb-3">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="display-4 font-weight-bold text-success text-uppercase mb-1">
+                                                    <?php echo $totalpricesellall ?>
+                                                </div>
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col-auto">
+                                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">ยอดขายหักส่วนลด : บาท</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-            </div>
-            <!-- /.container-fluid -->
+                <div class="col-xl-12 col-lg-7">
 
+                    <!-- Area Chart -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <canvas id="myAreaChart"></canvas>
+                            </div>
+                        </div><br>
+                    </div>
+                </div>
+
+
+                <!-- /.container-fluid -->
+            </div>
+            <!-- End of Main Content -->
         </div>
-        <!-- End of Main Content -->
-    </div>
-    <!-- End of Content Wrapper -->
+        <!-- End of Content Wrapper -->
     </div>
     <!-- End of Page Wrapper -->
+
+    <?php
+    $sqlpricehighter = "SELECT * FROM productsuse where pricesellall > 10000";
+    $resultpricehighter = mysqli_query($connect, $sqlpricehighter);
+    mysqli_num_rows($resultpricehighter);
+    $sqlpricehight = "SELECT * FROM productsuse where pricesellall <= 10000 AND pricesellall >= 7500";
+    $resultpricehight = mysqli_query($connect, $sqlpricehight);
+    mysqli_num_rows($resultpricehight);
+    $sqlpricemidium = "SELECT * FROM productsuse where pricesellall < 7500 AND pricesellall >= 5000";
+    $resultpricemidium  = mysqli_query($connect, $sqlpricemidium);
+    mysqli_num_rows($resultpricemidium);
+    $sqlpricelow = "SELECT * FROM productsuse where pricesellall < 5000 AND pricesellall >= 2500";
+    $resultpricelow = mysqli_query($connect, $sqlpricelow);
+    mysqli_num_rows($resultpricelow);
+    $sqlpricelower = "SELECT * FROM productsuse where pricesellall < 2500 AND pricesellall >= 1000";
+    $resultpricelower = mysqli_query($connect, $sqlpricelower);
+    mysqli_num_rows($resultpricelower);
+    $sqlpricelowerthan = "SELECT * FROM productsuse where pricesellall < 1000";
+    $resultpricelowerthan = mysqli_query($connect, $sqlpricelowerthan);
+    mysqli_num_rows($resultpricelowerthan);
+    ?>
+
+    <input type="text" id="resultpricehighter" value=<?php echo mysqli_num_rows($resultpricehighter) ?> style="display: none;"></input>
+    <input type="text" id="resultpricehight" value=<?php echo mysqli_num_rows($resultpricehight) ?> style="display: none;"></input>
+    <input type="text" id="resultpricemidium" value=<?php echo mysqli_num_rows($resultpricemidium) ?> style="display: none;"></input>
+    <input type="text" id="resultpricelow" value=<?php echo mysqli_num_rows($resultpricelow) ?> style="display: none;"></input>
+    <input type="text" id="resultpricelower" value=<?php echo mysqli_num_rows($resultpricelower) ?> style="display: none;"></input>
+    <input type="text" id="resultpricelowerthan" value=<?php echo mysqli_num_rows($resultpricelowerthan) ?> style="display: none;"></input>
 
 
     <!-- Scroll to Top Button-->

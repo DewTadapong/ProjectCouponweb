@@ -5,7 +5,7 @@ Chart.defaults.global.defaultFontColor = '#858796';
 function number_format(number, decimals, dec_point, thousands_sep) {
   // *     example: number_format(1234.56, 2, ',', ' ');
   // *     return: '1 234,56'
-  number = (number + '').replace(',', '').replace(' ', '');
+   number = (number + '').replace(',', '').replace(' ', '');
   var n = !isFinite(+number) ? 0 : +number,
     prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
     sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
@@ -27,12 +27,19 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
+var resultpricehighter = document.getElementById("resultpricehighter").value;
+var resultpricehight = document.getElementById("resultpricehight").value;
+var resultpricemidium = document.getElementById("resultpricemidium").value;
+var resultpricelow = document.getElementById("resultpricelow").value;
+var resultpricelower = document.getElementById("resultpricelower").value;
+var resultpricelowerthan = document.getElementById("resultpricelowerthan").value;
+
 // Area Chart Example
 var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    labels: ['BillMore 10,000', 'BillMore 7,500', 'BillMore 5,000', 'BillMore 2,500', 'BillMore 1,000'],
     datasets: [{
       label: "Earnings",
       lineTension: 0.3,
@@ -46,7 +53,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
+      data: [resultpricehighter, resultpricehight, resultpricemidium, resultpricelow,resultpricelower, resultpricelowerthan],
     }],
   },
   options: {
@@ -78,7 +85,7 @@ var myLineChart = new Chart(ctx, {
           padding: 10,
           // Include a dollar sign in the ticks
           callback: function(value, index, values) {
-            return '$' + number_format(value);
+            return 'จำนวนบิล ' + number_format(value);
           }
         },
         gridLines: {
@@ -110,7 +117,7 @@ var myLineChart = new Chart(ctx, {
       callbacks: {
         label: function(tooltipItem, chart) {
           var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+          return ' จำนวนบิล ' + number_format(tooltipItem.yLabel);
         }
       }
     }
