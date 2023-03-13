@@ -312,7 +312,7 @@ $resultimguser = mysqli_query($connect, $sqlimguser);
                                                         data-bs-target="#add-modal" 
                                                         style="width: 105px;"> เพิ่มคูปอง </button>
                          </div><br>
-                          <!--  <span class="text-right" >จำนวนรายการคงเหลือ <?php echo mysqli_num_rows($result) ?> รายการ </span>  -->
+                             <span class="text-right" >จำนวนรายการคงเหลือ <?php echo mysqli_num_rows($result) ?> รายการ </span>   
                     </div>
                     <div class="col-lg-12">
                         <div class="table-responsive" >
@@ -344,8 +344,9 @@ $resultimguser = mysqli_query($connect, $sqlimguser);
                                                 <button name="info"class="btn-primary fa fa-search fa-sm" 
                                                         data-bs-toggle="modal" 
                                                         data-bs-target="#my-modal<?php echo $row['id'] ?>" 
-                                                        style="width: 45px;"></button>       
-                                                        <a href="GenarateUpdate.php?id=<?php echo $row['id'] ?>" class="btn-warning fas fa-fw fa-wrench" style="width: 45px;padding: 15px 0px;"></a>
+                                                        style="width: 45px;"></button>
+                                                 <a href="/Couponweb/php/aprintcoupon.php?id=<?php echo $row['id'] ?>" class="btn-success fa fa-print fa-lg" style="width: 45px;padding: 15px 0px;"></a>   
+                                                 <a href="GenarateUpdate.php?id=<?php echo $row['id'] ?>" class="btn-warning fas fa-fw fa-wrench" style="width: 45px;padding: 15px 0px;"></a>
                                                  <a href="/Couponweb/php/deletecouponprocess.php?id=<?php echo $row['id'] ?>" class="btn-danger fa fa-trash" style="width: 45px;padding: 15px 0px;"></a>   
                                             </div>      
                                         </td>
@@ -376,7 +377,7 @@ $resultimguser = mysqli_query($connect, $sqlimguser);
                                                         <div class="col-md-6">
                                                             <br>
                                                             <label for="amount" class="form-label">จำนวน</label>
-                                                            <input type="number" class="form-control" id="amount" name="amount" min="0" max="100" placeholder="จำนวน" required>
+                                                            <input type="number" class="form-control" id="amount" name="amount" min="0" max="50" placeholder="จำนวน" required>
                                                         </div>
                                                          <div class="col-md-6">
                                                         <br>

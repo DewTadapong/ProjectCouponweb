@@ -287,8 +287,9 @@ $resultimguser = mysqli_query($connect, $sqlimguser);
                                                     <div class="row">    
                                                         <div class="col-md-6">
                                                             <br>
+                                                            <?php $amountnow = 50 - $row['amountnow'] ?>
                                                             <label for="amount" class="form-label">เพิ่มจำนวนคูปองจากเดิม</label>
-                                                            <input type="number" class="form-control" id="amount" name="amount" min="0" max="100">
+                                                            <input type="number" class="form-control" id="amount" name="amount" min="0" max=<?php echo $amountnow ?>>
                                                             <input type="number" class="form-control" name="amountvariable" value="<?php echo $row['amount'] ?>" style="visibility: hidden;">
                                                             <input type="number" class="form-control" name="amountnowvariable" value="<?php echo $row['amountnow'] ?>" style="visibility: hidden;">
                                                         </div>

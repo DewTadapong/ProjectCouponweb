@@ -145,101 +145,103 @@ $resultimguser = mysqli_query($connect, $sqlimguser);
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
- 
+      
         </ul>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
  
-        <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top" style="height:3.5rem;">
+               <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top" style="height:3.5rem;">
 
-        <!-- Sidebar Toggle (Topbar) -->
-        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-        </button>
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+ 
+                    <!-- Sidebar Toggler (Sidebar) -->
+                    <div class="text-center d-none d-md-inline">
+                        <button class="border-0 fas fa-bars" id="sidebarToggle" style="background-color: white;color:gray;"></button>
+                    </div>
 
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="border-0 fas fa-bars" id="sidebarToggle" style="background-color: white;color:gray;"></button>
-        </div>
+                    &nbsp;&nbsp;&nbsp;
+                    <ol class="breadcrumb float-rm-right" style="width:300px;">
+                    <li class="breadcrumb-item"><a href="Home.php">Home</a></li>
+                    <li class="breadcrumb-item active">Preview</li>
+                    </ol>
+                    <script>
+                        function hidebtn() {
+                        if(document.getElementById("seachtop").style.visibility == 'hidden'){
+                            document.getElementById("seachtop").style="visibility: visible;"}else{
+                                document.getElementById("seachtop").style="visibility: hidden;"
+                            }
+                        }
+                        
+                    </script>
 
-        &nbsp;&nbsp;&nbsp;
-        <ol class="breadcrumb float-rm-right" style="width:300px;">
-        <li class="breadcrumb-item"><a href="Home.php">Home</a></li>
-        <li class="breadcrumb-item active">Preview</li>
-        </ol>
-        <script>
-            function hidebtn() {
-            if(document.getElementById("seachtop").style.visibility == 'hidden'){
-                document.getElementById("seachtop").style="visibility: visible;"}else{
-                    document.getElementById("seachtop").style="visibility: hidden;"
-                }
-            }
-            
-        </script>
-
-        <!-- Topbar Search -->
-        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="seachtop" style="visibility: hidden;">
-            <div class="input-group">
-                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for ..."
-                    aria-label="Search" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    
-                </div>  
-            </div>
-        </form>
-        &nbsp;&nbsp;&nbsp;    
-        <!-- Topbar Navbar -->
-        <ul class="navbar-nav ml-auto">
-        <button class="btn btn-navbar" onclick="hidebtn()">
-            <i class="fas fa-search"></i>
-        </button>
+                    <!-- Topbar Search -->
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="seachtop" style="visibility: hidden;">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for ..."
+                                aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                
+                            </div>  
+                        </div>
+                    </form>
+                    &nbsp;&nbsp;&nbsp;    
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                    <button class="btn btn-navbar" onclick="hidebtn()">
+                        <i class="fas fa-search"></i>
+                    </button>
 
 
-        <!-- Topbar Navbar -->
-        <ul class="navbar-nav ml-auto">
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+ 
+                        <!-- Nav Item - Alerts -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- ใกล้หมดอยุ่ใน 24 ชม -->
+                                <?php if (mysqli_num_rows($resultalert) >= 1): ?>
 
-            <!-- Nav Item - Alerts -->
-            <li class="nav-item dropdown no-arrow mx-1">
-                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-bell fa-fw"></i>
-                    <!-- ใกล้หมดอยุ่ใน 24 ชม -->
-                    <?php if (mysqli_num_rows($resultalert) >= 1): ?>
-
-                    <span class="badge badge-danger badge-counter"><?php echo $totalnumalert?>+</span>
-                </a>
-                <!-- Dropdown - Alerts -->
-                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                    aria-labelledby="alertsDropdown">
-                    <h6 class="dropdown-header">
-                        แจ้งเตื่อนคูปองหมดอายุภายใน 24 ชั่วโมง 
-                    </h6>
-                    <?php while ($row = mysqli_fetch_assoc($resultalert)):?>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                        <div class="mr-3">
-                            <div class="icon-circle">
-                                <img style="width: 2rem;"
-                                    src="img/couponalert.png" alt="...">
+                                <span class="badge badge-danger badge-counter"><?php echo $totalnumalert?>+</span>
+                                <?php else:?>
+  
+                                <?php endif?>
+                            </a>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    แจ้งเตื่อนคูปองหมดอายุภายใน 24 ชั่วโมง 
+                                </h6>
+                                <?php while ($row = mysqli_fetch_assoc($resultalert)):?>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle">
+                                            <img style="width: 2rem;"
+                                                src="img/couponalert.png" alt="...">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-1000"><?php echo date("Y-m-d H:i:s")?> หมดอายุในอีก <?php echo $row['day'];?> ชม.</div>
+                                        <span class="font-weight-thin"><?php echo $row['name'];?></span>
+                                    </div>
+                                 
+                                </a>
+                                <?php endwhile?>           
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                             </div>
-                        </div>
-                        <div>
-                            <div class="small text-gray-1000"><?php echo date("Y-m-d H:i:s")?> หมดอายุในอีก <?php echo $row['day'];?> ชม.</div>
-                            <span class="font-weight-thin"><?php echo $row['name'];?></span>
-                        </div>
-                    
-                    </a>
-                    <?php endwhile?>           
-                    <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                </div>
-            </li>
-            <?php else:?>
-
-            <?php endif?>
+                        </li>
+                      
 
                         <div class="topbar-divider d-none d-sm-block"></div>
+
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"

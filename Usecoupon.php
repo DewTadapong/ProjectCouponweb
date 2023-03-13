@@ -154,148 +154,151 @@ if (isset($_SESSION['fristname']))
                     <span>&nbsp;TimeoutCoupon</span></a>
             </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-  
-        </ul>
-        <!-- End of Sidebar -->
+               <!-- Divider -->
+               <hr class="sidebar-divider d-none d-md-block">
+      
+      </ul>
+      <!-- End of Sidebar -->
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
-            <div id="content">
+             <!-- Topbar -->
+          <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top" style="height:3.5rem;">
 
-              <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top" style="height:3.5rem;">
+                  <!-- Sidebar Toggle (Topbar) -->
+                  <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                      <i class="fa fa-bars"></i>
+                  </button>
 
-<!-- Sidebar Toggle (Topbar) -->
-<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-    <i class="fa fa-bars"></i>
-</button>
+                  <!-- Sidebar Toggler (Sidebar) -->
+                  <div class="text-center d-none d-md-inline">
+                      <button class="border-0 fas fa-bars" id="sidebarToggle" style="background-color: white;color:gray;"></button>
+                  </div>
 
-<!-- Sidebar Toggler (Sidebar) -->
-<div class="text-center d-none d-md-inline">
-    <button class="border-0 fas fa-bars" id="sidebarToggle" style="background-color: white;color:gray;"></button>
-</div>
+                  &nbsp;&nbsp;&nbsp;
+                  <ol class="breadcrumb float-rm-right" style="width:300px;">
+                  <li class="breadcrumb-item"><a href="Home.php">Home</a></li>
+                  <li class="breadcrumb-item active">UseCoupon</li>
+                  </ol>
+                  <script>
+                      function hidebtn() {
+                      if(document.getElementById("seachtop").style.visibility == 'hidden'){
+                          document.getElementById("seachtop").style="visibility: visible;"}else{
+                              document.getElementById("seachtop").style="visibility: hidden;"
+                          }
+                      }
+                      
+                  </script>
 
-&nbsp;&nbsp;&nbsp;
-<ol class="breadcrumb float-rm-right" style="width:300px;">
-  <li class="breadcrumb-item"><a href="Home.php">Home</a></li>
-  <li class="breadcrumb-item active">UseCoupon</li>
-</ol>
-<script>
-    function hidebtn() {
-    if(document.getElementById("seachtop").style.visibility == 'hidden'){
-        document.getElementById("seachtop").style="visibility: visible;"}else{
-            document.getElementById("seachtop").style="visibility: hidden;"
-        }
-    }
-    
- </script>
+                  <!-- Topbar Search -->
+                  <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="seachtop" style="visibility: hidden;">
+                      <div class="input-group">
+                          <input type="text" class="form-control bg-light border-0 small" placeholder="Search for ..."
+                              aria-label="Search" aria-describedby="basic-addon2">
+                          <div class="input-group-append">
+                              
+                          </div>  
+                      </div>
+                  </form>
+                  &nbsp;&nbsp;&nbsp;    
+                  <!-- Topbar Navbar -->
+                  <ul class="navbar-nav ml-auto">
+                  <button class="btn btn-navbar" onclick="hidebtn()">
+                      <i class="fas fa-search"></i>
+                  </button>
 
-<!-- Topbar Search -->
- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="seachtop" style="visibility: hidden;">
-    <div class="input-group">
-        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for ..."
-            aria-label="Search" aria-describedby="basic-addon2">
-        <div class="input-group-append">
-            
-        </div>  
-    </div>
-</form>
-&nbsp;&nbsp;&nbsp;    
-<!-- Topbar Navbar -->
-<ul class="navbar-nav ml-auto">
-<button class="btn btn-navbar" onclick="hidebtn()">
-      <i class="fas fa-search"></i>
-</button>
-<ul class="navbar-nav ml-auto">
 
-   <!-- Nav Item - Alerts -->
-   <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- ใกล้หมดอยุ่ใน 24 ชม -->
-                                <?php if (mysqli_num_rows($resultalert) >= 1): ?>
+                  <!-- Topbar Navbar -->
+                  <ul class="navbar-nav ml-auto">
 
-                                <span class="badge badge-danger badge-counter"><?php echo $totalnumalert?>+</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    แจ้งเตื่อนคูปองหมดอายุภายใน 24 ชั่วโมง 
-                                </h6>
-                                <?php while ($row = mysqli_fetch_assoc($resultalert)):?>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle">
-                                            <img style="width: 2rem;"
-                                                src="img/couponalert.png" alt="...">
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-1000"><?php echo date("Y-m-d H:i:s")?> หมดอายุในอีก <?php echo $row['day'];?> ชม.</div>
-                                        <span class="font-weight-thin"><?php echo $row['name'];?></span>
-                                    </div>
-                                 
-                                </a>
-                                <?php endwhile?>           
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
-                        </li>
-                        <?php else:?>
+                      <!-- Nav Item - Alerts -->
+                      <li class="nav-item dropdown no-arrow mx-1">
+                          <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="fas fa-bell fa-fw"></i>
+                              <!-- ใกล้หมดอยุ่ใน 24 ชม -->
+                              <?php if (mysqli_num_rows($resultalert) >= 1): ?>
 
-                        <?php endif?>
+                              <span class="badge badge-danger badge-counter"><?php echo $totalnumalert?>+</span>
+                              <?php else:?>
 
-                        <div class="topbar-divider d-none d-sm-block"></div>
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                                <?php
-                                echo $_SESSION["username"]
-                                ?>    
-                                </span>
-                                <i class="mr-2 d-none d-lg-inline text-gray-600 small">
-                                <?php
-                                echo $_SESSION["department"]
-                                ?>    
-                                </i>  
+                              <?php endif?>
+                          </a>
+                          <!-- Dropdown - Alerts -->
+                          <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                              aria-labelledby="alertsDropdown">
+                              <h6 class="dropdown-header">
+                                  แจ้งเตื่อนคูปองหมดอายุภายใน 24 ชั่วโมง 
+                              </h6>
+                              <?php while ($row = mysqli_fetch_assoc($resultalert)):?>
+                              <a class="dropdown-item d-flex align-items-center" href="#">
+                                  <div class="mr-3">
+                                      <div class="icon-circle">
+                                          <img style="width: 2rem;"
+                                              src="img/couponalert.png" alt="...">
+                                      </div>
+                                  </div>
+                                  <div>
+                                      <div class="small text-gray-1000"><?php echo date("Y-m-d H:i:s")?> หมดอายุในอีก <?php echo $row['day'];?> ชม.</div>
+                                      <span class="font-weight-thin"><?php echo $row['name'];?></span>
+                                  </div>
+                               
+                              </a>
+                              <?php endwhile?>           
+                              <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                          </div>
+                      </li>
+                    
 
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
-                            </a>
-                            
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                            aria-labelledby="userDropdown">
-                            <a class="dropdown-item" 
-                                                        class="btn btn-primary" 
-                                                        data-bs-toggle="modal" 
-                                                        data-bs-target="#id-modal" 
-                                                         >
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                               Profile 
-                            </a>
-                            <a class="dropdown-item" href="#" >
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Settings
-                            </a> 
-                            <a class="dropdown-item" href="index.php" onclick="return confirm('Do you want to sign out?')">                                
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout
-                            </a> 
-                            </div>
-                         </li>
+                      <div class="topbar-divider d-none d-sm-block"></div>
 
-                    </ul>
+                      <!-- Nav Item - User Information -->
+                      <li class="nav-item dropdown no-arrow">
+                          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                              <?php
+                              echo $_SESSION["username"]
+                              ?>    
+                              </span>
+                              <i class="mr-2 d-none d-lg-inline text-gray-600 small">
+                              <?php
+                              echo $_SESSION["department"]
+                              ?>    
+                              </i>  
 
-                </nav>
-                <!-- End of Topbar -->
+                              <img class="img-profile rounded-circle"
+                                  src="img/undraw_profile.svg">
+                          </a>
+                          
+                          <!-- Dropdown - User Information -->
+                          <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                          aria-labelledby="userDropdown" name="dropid">
+                          <a class="dropdown-item" 
+                                                      class="btn btn-primary" 
+                                                      data-bs-toggle="modal" 
+                                                      data-bs-target="#id-modal" 
+                                                       >
+                              <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                             Profile 
+                          </a>
+                          <a class="dropdown-item" href="#" >
+                              <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                              Settings
+                          </a> 
+                          <a class="dropdown-item" href="php/logout.php" onclick="return confirm('Do you want to sign out?')">                                
+                              <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                              Logout
+                          </a> 
+                          </div>
+                               
+                       </li>
+
+                  </ul>
+
+              </nav>
+              <!-- End of Topbar -->
              
             
                 <!-- ใช้งานคูปอง -->
