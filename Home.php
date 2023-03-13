@@ -462,14 +462,21 @@ $totaldiscount = $totalpricesellall - $totalpricediscount;
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <div class="colum">
-                        
-                        <div class="col-xl-13 mb-3">
-                            <div class="card border-left-primary shadow h-80 py-2">
-                                <div class="card-body">
-                                   
-                                </div>
+
+
+                        <div class="wrapper-range card border-left-primary shadow h-80 py-2  mb-3">
+                            <div class="field">
+                                <div class="value left">0</div>
+                                <?php $totalnow = $totalcouponall - $totalcouponout?>
+                                <input type="range" min="1" max=<?php echo$totalnow?> 
+                                    value=<?php echo mysqli_num_rows($resultuse)?> steps="1">
+                                <div class="value right"><?php echo $totalcouponall?></div>
+                            </div>
+                            <div class="text-center h6 mb-0 font-weight-bold text-gray-800">
+                            <span>จำนวนการใช้คูปอง</span>
                             </div>
                         </div>
+                      
 
                         <!-- ลดไปกี่บาท -->
                         <div class="col-xl-13 mb-3">
@@ -632,6 +639,103 @@ $totaldiscount = $totalpricesellall - $totalpricediscount;
         .breadcrumb {
             margin-bottom: 0px;
             background-color: white;
+        }
+
+        .wrapper-range {
+            height: 75px;
+            width: 680px;
+            margin: 0px auto;
+            background: #fff;
+            border-radius: 10px;
+            padding: 0 65px 0 45px;
+            box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .field {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            position: relative;
+            flex-wrap
+        }
+
+        .field .value {
+            position: absolute;
+            font-size: 18px;
+            color: #045fa4;
+            font-weight: 600;
+        }
+
+        .field .value.left {
+            left: -22px;
+        }
+
+        .field .value.right {
+            right: -43px;
+        }
+
+        .field input {
+            flex: 1 1 auto;
+        }
+
+        .sliderValue {
+            position: relative;
+            width: 100%;
+        }
+
+        .sliderValue span {
+            position: absolute;
+            height: 45px;
+            width: 45px;
+            transform: translateX(-70%) scale(0);
+            font-weight: 500;
+            top: -40px;
+            line-height: 55px;
+            z-index: 2;
+            color: #fff;
+            transform-origin: bottom;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .sliderValue span.show {
+            transform: translateX(-70%) scale(1);
+        }
+
+        .sliderValue span:after {
+            position: absolute;
+            content: '';
+            height: 100%;
+            width: 100%;
+            background: #045fa4;
+            border: 3px solid #fff;
+            z-index: -1;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+            border-bottom-left-radius: 50%;
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+            border-top-left-radius: 50%;
+            border-top-right-radius: 50%;
+        }
+
+        .range input::-webkit-slider-thumb {
+
+            -webkit-appearance: none;
+
+            width: 20px;
+
+            height: 20px;
+
+            background: red;
+
+            border-radius: 50%;
+
+            background: #045fa4;
+
+            border: 1px solid #045fa4;
+
+            cursor: pointer;
+
         }
     </style>
     <!-- Bootstrap core JavaScript-->
