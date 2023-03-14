@@ -356,7 +356,7 @@ $totaldiscount = $totalpricesellall - $totalpricediscount;
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">คูปองทั้งหมด</div>
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-arrow-circle-right"></i>
+                                        <i class="fa fa-archive fa-3x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
@@ -379,7 +379,7 @@ $totaldiscount = $totalpricesellall - $totalpricediscount;
                                         </div>
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                        <i class="fas fa-plus-square fa-3x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
@@ -398,7 +398,7 @@ $totaldiscount = $totalpricesellall - $totalpricediscount;
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">คูปองคงเหลือ</div>
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                        <i class="fas fa-database fa-3x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
@@ -417,7 +417,7 @@ $totaldiscount = $totalpricesellall - $totalpricediscount;
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">คูปองหมดอายุ</div>
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                        <i class="fas fa-trash fa-3x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
@@ -444,17 +444,17 @@ $totaldiscount = $totalpricesellall - $totalpricediscount;
                                 <hr>
                                 <div class="text-center">
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-primary"></i> ทั้งหมด
+                                        <i class="fa fa-archive text-primary"></i> ทั้งหมด
                                     </span>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-success"></i> ใช้ไป
+                                        <i class="fas fa-plus-square text-success"></i> ใช้ไป
                                     </span>
 
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-warning"></i> คงเหลือ
+                                        <i class="fas fa-database text-warning"></i> คงเหลือ
                                     </span><br>
                                     <span class="mr-2">
-                                        <i class="fas fa-circle text-danger"></i> หมดอายุ
+                                        <i class="fas fa-trash text-danger"></i> หมดอายุ
                                     </span>
                                 </div>
                             </div>
@@ -480,11 +480,11 @@ $totaldiscount = $totalpricesellall - $totalpricediscount;
 
                         <!-- ลดไปกี่บาท -->
                         <div class="col-xl-13 mb-3">
-                            <div class="card border-left-primary shadow h-80 py-2">
+                            <div class="card border-left-danger shadow h-80 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="display-4 font-weight-bold text-primary text-uppercase mb-1">
+                                            <div class="display-4 font-weight-bold text-danger text-uppercase mb-1">
                                                 <?php echo $totaldiscount ?>
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">ลดราคาไปทั้งหมด : บาท</div>
@@ -500,11 +500,11 @@ $totaldiscount = $totalpricesellall - $totalpricediscount;
                         <div class="row">
                             <!-- ยอดขาย -->
                             <div class="col-xl-6 mb-3">
-                                <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card border-left-warning shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
-                                                <div class="display-4 font-weight-bold text-success text-uppercase mb-1">
+                                                <div class="display-4 font-weight-bold text-warning text-uppercase mb-1">
                                                     <?php echo $totalpricesellall ?>
                                                 </div>
                                                 <div class="row no-gutters align-items-center">
@@ -514,7 +514,7 @@ $totaldiscount = $totalpricesellall - $totalpricediscount;
                                                 </div>
                                             </div>
                                             <div class="col-auto">
-                                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                            <i class="fas fa-dollar-sign fa-3x text-gray-300"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -523,12 +523,12 @@ $totaldiscount = $totalpricesellall - $totalpricediscount;
 
                             <!-- ยอดขายหักส่วนลด -->
                             <div class="col-xl-6 mb-3">
-                                <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card border-left-info shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
-                                                <div class="display-4 font-weight-bold text-success text-uppercase mb-1">
-                                                    <?php echo $totalpricesellall ?>
+                                                <div class="display-4 font-weight-bold text-info text-uppercase mb-1">
+                                                    <?php echo $totalpricediscount ?>
                                                 </div>
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col-auto">
@@ -537,7 +537,7 @@ $totaldiscount = $totalpricesellall - $totalpricediscount;
                                                 </div>
                                             </div>
                                             <div class="col-auto">
-                                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                            <i class="fas fa-dollar-sign fa-3x text-gray-300"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -546,11 +546,10 @@ $totaldiscount = $totalpricesellall - $totalpricediscount;
                         </div>
                     </div>
                 </div>
-
                 <div class="col-xl-12 col-lg-7">
 
-                    <!-- Area Chart -->
-                    <div class="card shadow mb-4">
+                    <!-- Area Chart --> 
+                    <div class="card shadow mb-4 ">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
                         </div>
